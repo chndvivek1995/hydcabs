@@ -1,0 +1,92 @@
+---
+title: "SLA metrics that matter: on-time %, no-show, trip adherence"
+description: "The employee transport SLA metrics worth tracking, with definitions, how to measure each one and the ranges Hyderabad offices commonly target."
+pubDate: 2026-10-10
+updatedDate: 2026-10-10
+author: "Operations Team"
+cluster: "vendor-selection"
+primaryKeyword: "employee transport SLA metrics"
+moneyPage: "/services/transport-management-solution/"
+needsVerification: false
+tags: ["SLA", "metrics", "transport management", "vendor performance"]
+faqs:
+  - q: "How many SLA metrics should a transport contract have?"
+    a: "Fewer than most contracts include. Six to eight well-defined metrics that both sides can measure from the same data beat twenty that nobody reviews. Start with on-time pickup, on-time drop, vehicle no-show, trip adherence, escalation closure time and document compliance, then add occupancy and employee no-show as management metrics rather than penalty triggers."
+  - q: "Should on-time performance be measured against scheduled time or employee arrival?"
+    a: "Against the scheduled pickup time communicated to the employee, with a defined tolerance window. Measuring against when the employee reached the cab rewards drivers for waiting and punishes them for employees who are late. Use GPS arrival at the geofenced pickup point as the timestamp so neither side relies on memory or manual logs."
+  - q: "What is a sensible tolerance window for on-time pickup in Hyderabad?"
+    a: "Most offices set a window of a few minutes either side of the scheduled time and treat anything beyond it as late. Tighter windows are common for first pickups on a route, since a late start cascades down the whole cab. Agree the window per shift; a 2 AM drop route has very different traffic from an 8 AM run through Kukatpally Y Junction."
+  - q: "Who should produce the SLA report, the vendor or the company?"
+    a: "The vendor produces it from trip data, and the company audits it. Ask for the raw trip-level export alongside the summary so your admin team can spot-check any month. Where you have your own tracking or an employee app, reconcile the two sources quarterly. Metrics that only one party can see tend to drift."
+---
+
+Employee transport SLA metrics are where a vendor relationship either becomes manageable or stays a monthly argument. Without agreed definitions, an on-time pickup means whatever the driver's memory says, a no-show is anyone's guess and trip adherence is not measured at all. With them, both sides look at the same numbers each month and spend the review meeting on fixes rather than on whose version is right.
+
+This post lists the metrics that are worth putting in an employee transport agreement, explains how each is defined and measured, and gives the ranges Hyderabad offices commonly target. The ranges are not promises and should not be copied blindly; a US-shift drop route through the ORR at 3 AM and a day run from Dilsukhnagar to Madhapur through Begumpet flyover at 8:30 AM face very different conditions. They are a starting point for your own scorecard. For how these metrics are produced in practice, see our [transport management solution](/services/transport-management-solution/) page.
+
+## The metrics table
+
+| Metric | Definition | How to measure | Commonly targeted range |
+| --- | --- | --- | --- |
+| On-time pickup % | Share of pickups where the vehicle reached the geofenced pickup point within the agreed window of the scheduled time | GPS arrival timestamp versus scheduled time; count per shift and per month | High nineties as a percentage for day shifts; a slightly wider window at night |
+| On-time drop % | Share of drops completed within the agreed window of the scheduled shift start or committed drop time | GPS arrival at the office or home geofence versus commitment | High nineties for shift-start drops; home drops measured against the committed window |
+| Vehicle no-show rate | Trips where the assigned vehicle did not arrive and no substitute reached within a defined threshold | Count of unfulfilled scheduled trips over total scheduled trips | Close to zero; treated as a severe event rather than a percentage game |
+| Employee no-show rate | Scheduled riders who did not board and did not cancel before cut-off | Boarding confirmation (OTP or driver mark) against the roster | Managed, not penalised; used to tune rosters and cab fill |
+| Trip adherence % | Trips that followed the planned route and stop sequence without unauthorised deviations or skipped stops | GPS trace compared to planned route within a tolerance | High nineties; deviations reviewed individually |
+| Average occupancy | Riders boarded divided by seats planned per trip | From boarding data and vehicle capacity | Depends on model; tracked for cost rather than penalty |
+| Escalation response time | Time from an employee or admin raising an issue to first response from the control desk | Ticket or call-log timestamps | Minutes for safety issues, longer for billing queries |
+| Escalation closure time | Time to resolve by severity category | Ticket close timestamps by category | Same day for operational issues; agreed windows for others |
+| Safety incidents | Reportable events: accidents, harassment complaints, SOS triggers, serious driving violations | Incident register with root cause and action | Zero tolerance for unreported incidents; trend reviewed monthly |
+| Document compliance % | Vehicles and drivers on the account with all required documents valid on every operating day | Document master checked against operating dates | One hundred percent; a lapsed document should mean the vehicle does not run |
+| Driving behaviour flags | Speeding, harsh braking and night-time over-speed alerts per thousand kilometres | Telematics alerts normalised by distance | Downward trend month on month; thresholds agreed per road type |
+| MIS delivery | Monthly trip annexure and SLA report delivered within an agreed number of working days after month-end | Delivery date versus commitment | Within a few working days; late reports delay billing review |
+
+## The metrics explained
+
+### On-time pickup and on-time drop
+
+These are the two numbers employees feel. A cab that is late to the first pickup in Chandanagar makes everyone after it late, and a drop that misses the shift start puts the employee in trouble with a team lead. Define the window per shift, use GPS arrival at a geofence as the timestamp, and separate first-pickup punctuality from the rest of the route, because the first pickup is almost entirely within the vendor's control while later ones depend on traffic and on earlier riders being ready.
+
+For night drops, measure against the committed drop window rather than a fixed clock time, since the sequence after a 2 AM shift end depends on how many riders are on board and where they live. Our [night shift cab](/services/night-shift-cab-hyderabad/) page explains how we sequence those routes.
+
+### Vehicle no-show
+
+This is the metric that should carry the heaviest consequence. An employee left standing at a Kukatpally pickup at 6 AM with no cab and no call is the failure that erodes trust fastest. Define the threshold after which a trip is counted as a no-show, require a substitute vehicle within a stated time, and insist that every such event is logged with a cause. The target is not a percentage; it is a count that should be very close to zero, with every instance explained.
+
+### Employee no-show
+
+Riders who skip without cancelling waste seats and distort route planning. It is tempting to penalise the vendor for low occupancy caused by rider behaviour, but that is unfair and it hides the real fix, which sits with your shift leads and roster discipline. Track it, review it with HR, and use cut-off rules to bring it down. A good vendor will share the data to help; see our [technology page](/technology/) for the boarding and roster tools involved.
+
+### Trip adherence
+
+Adherence means the cab did what the plan said: the right stops, in the right order, by a sensible route. Deviations are sometimes justified, such as avoiding waterlogging at Biodiversity Junction during a monsoon evening, so the metric should flag deviations for review rather than penalise them automatically. What you are really watching for are skipped stops, unauthorised detours and riders dropped in a different order from the one the women's safety protocol requires.
+
+### Occupancy
+
+Occupancy is a cost metric. Low fill on a per-vehicle contract means you are paying for empty seats; low fill on a per-employee contract is the vendor's problem. Either way it is worth tracking by route and shift because it tells you where the roster has drifted from the routing. Routes from the Financial District to Kokapet and Narsingi often fill well; long single-rider tails to Kompally or Shamshabad are where to look for savings.
+
+### Escalation response and closure
+
+Separate response from closure and separate severity levels. A safety concern raised from a cab at night needs a response within minutes; a question about a kilometre reading on an invoice can wait until the next working day. Agree the categories, the clock start, and who on each side owns the ticket.
+
+### Safety incidents and driving behaviour
+
+The incident register should capture every reportable event with a root cause and a corrective action, and the review should look at trends rather than a single month. Driving behaviour data from telematics, normalised per kilometre, is the leading indicator: a rise in night-time over-speed alerts on the PVNR Expressway is a warning before an incident, not after. Our [safety page](/safety/) covers the practices that feed this register.
+
+### Document compliance
+
+This is the one metric where the target is genuinely one hundred percent. A vehicle whose insurance or fitness has lapsed should not carry your employees, full stop. Ask for a document master that your admin team can check, and make a lapsed document an automatic stop rather than a penalty.
+
+### MIS delivery
+
+Late reports delay invoice review, which delays payment, which strains the relationship. Agree a delivery window after month-end for the trip annexure and the SLA summary, and require the raw trip-level export alongside the summary so you can audit it.
+
+## Building the scorecard
+
+Pick six to eight metrics for the contract and treat the rest as management information. Weight them by what matters to you: a 24x7 contact centre in Madhapur with mostly women on the night roster will weight vehicle no-show, trip adherence and escalation response heavily; a day-shift office in [HITEC City](/locations/hitec-city/) may care most about on-time pickup and occupancy.
+
+Review monthly with the vendor using the same report, and quarterly with a reconciliation against your own data where you have it. Tie service credits to the handful of contractual metrics, and use the rest to drive improvement conversations rather than penalties. Metrics that are never reviewed are decoration.
+
+## Next step
+
+If you are drafting or renewing a transport agreement, use the table above as the starting annexure and adapt the windows to your shifts. To see how these metrics are reported in a live operation, or to ask for a sample SLA pack built on your roster, reach us through our [contact page](/contact/).

@@ -1,0 +1,24 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import CTASection from '../../components/CTASection.astro';
+import Icon from '../../components/Icon.astro';
+import { services, solutions, url } from '../../lib/data';
+import { breadcrumbs } from '../../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }];
+const groups = [
+  { name: 'Daily employee commute', slugs: ['employee-transportation-hyderabad', 'office-pickup-and-drop-hyderabad', 'monthly-cab-for-office-hyderabad', 'night-shift-cab-hyderabad', 'employee-shuttle-bus-hyderabad', 'electric-cab-employee-transport-hyderabad'] },
+  { name: 'Corporate cabs & cars', slugs: ['corporate-taxi-hyderabad', 'corporate-cab-vendor-hyderabad', 'corporate-car-rental-hyderabad', 'corporate-vehicle-leasing-hyderabad', 'executive-chauffeur-hyderabad', 'hourly-cab-rental-hyderabad'] },
+  { name: 'Travel, events & platform', slugs: ['airport-transfers-hyderabad', 'outstation-corporate-travel-hyderabad', 'corporate-event-transport-hyderabad', 'transport-management-solution'] },
+];
+---
+<PageLayout title="Corporate Cab Services — All 16" description="All 16 corporate transport services in Hyderabad: office pickup and drop, monthly cabs, night shift, shuttles, airport, car rental and leasing. Get a quote." path="/services/" h1="Corporate cab and employee transport services in Hyderabad" eyebrow="Services" intro="One vendor for every way employees and guests move: daily commute routes, dedicated cars, shuttles, airport runs and the platform that reports on all of it." {crumbs} schema={[breadcrumbs(crumbs)]}>
+  <section class="section-tight"><div class="wrap prose-hc max-w-3xl reveal"><h2>How to choose the right corporate cab service</h2><p>Start with the shift pattern, not the vehicle. A day-shift office in Gachibowli with employees spread across Kukatpally, Miyapur and LB Nagar is a clubbed per-employee programme. A night team that finishes at 2 AM needs the night-shift service with its women-safety protocol and escorts. A plant in Patancheru running A, B and C shifts needs buses and tempo travellers on trunk routes with gate-time guarantees. A leadership team that travels to client sites and RGIA needs dedicated cars with chauffeurs, priced by the hour or the month.</p><p>Most companies end up with two or three of these services under one contract and one monthly MIS, which is the point: one vendor who can run the 6 AM Kukatpally pickup, the 2 AM Kompally drop and the Tuesday airport run, and report on all of them in the same pack. If you are not sure where to start, the quote form below is enough — describe the team and we will propose the mix.</p></div></section>
+  {groups.map((g) => (
+    <section class="section-tight"><div class="wrap"><h2 class="h2 reveal">{g.name}</h2><div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{g.slugs.map((sl, i) => { const s = services.find((x) => x.slug === sl); return s ? <ServiceCard service={s} delay={(i % 3) as 0 | 1 | 2} /> : null; })}</div></div></section>
+  ))}
+  <section class="section-tight bg-mist"><div class="wrap"><p class="eyebrow reveal">Use cases</p><h2 class="h2 mt-3 reveal">Solutions for specific transport problems</h2><div class="mt-8 grid gap-4 sm:grid-cols-3">{solutions.map((s) => <a href={url.solution(s.slug)} class="card card-hover flex h-full flex-col gap-3 reveal"><span class="icon-tile"><Icon name={s.icon} size={22} /></span><span class="h3">{s.shortTitle}</span><span class="text-sm text-slate">{s.cardBlurb}</span></a>)}</div></div></section>
+  <section class="section"><div class="wrap grid gap-10 lg:grid-cols-2 lg:items-center"><div class="reveal"><p class="eyebrow">Not sure which service fits?</p><h2 class="h2 mt-3">Describe the problem; we will propose the model</h2><p class="lede">Most companies end up with a blend — a per-employee plan for the day shift, a dedicated vehicle for the night team and an airport package for visitors. Tell us the shape of your team and we will map it.</p></div><div class="reveal reveal-d1"><QuoteForm /></div></div></section>
+  <CTASection />
+</PageLayout>

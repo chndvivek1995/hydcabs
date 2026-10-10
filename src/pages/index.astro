@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import StatsBar from '../components/StatsBar.astro';
+import LogoStrip from '../components/LogoStrip.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import SafetyGrid from '../components/SafetyGrid.astro';
+import TechFeatures from '../components/TechFeatures.astro';
+import ShiftPatterns from '../components/ShiftPatterns.astro';
+import FleetCard from '../components/FleetCard.astro';
+import AreaGrid from '../components/AreaGrid.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import FAQ from '../components/FAQ.astro';
+import CTASection from '../components/CTASection.astro';
+import PlaceholderTestimonial from '../components/PlaceholderTestimonial.astro';
+import Icon from '../components/Icon.astro';
+import { coreServices, fleet, topAreas, industries, solutions, faqs, url } from '../lib/data';
+import { getCollection } from 'astro:content';
+import { faqPage, service as serviceSchema } from '../lib/schema';
+
+const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 3);
+const title = 'Corporate Cab Services in Hyderabad';
+const description = 'Corporate cab services in Hyderabad: office pickup and drop, monthly plans, night shifts and shuttles. GPS-tracked, verified drivers, 24×7 desk. Get a quote.';
+const usps = [
+  { icon: 'map', title: 'Hyderabad-first routing', text: 'Routes planned by people who run the ORR, Gachibowli flyover and Kukatpally Y Junction every day — not a template.' },
+  { icon: 'shield-check', title: 'Safety as standard', text: 'Verified drivers, GPS, SOS, number masking and a women-safety protocol on every night route.' },
+  { icon: 'clock', title: 'Every shift, every day', text: 'Day commute, rotating shifts, 2 AM drops and plant shifts covered by a command desk that never closes.' },
+  { icon: 'bar-chart-3', title: 'Bills that match the MIS', text: 'Trips, km and no-shows reported monthly; the invoice follows the report, not the other way round.' },
+  { icon: 'repeat', title: 'Flexible contracts', text: 'Per-employee or dedicated-vehicle pricing, scale up or down with headcount, trial week before you commit.' },
+];
+---
+<BaseLayout {title} {description} path="/" rawTitle={false} transparentHeader schema={[faqPage(faqs.home), serviceSchema({ path: '/', name: 'Corporate cab services in Hyderabad', description, areaServed: topAreas(16).map((a) => `${a.name}, Hyderabad`) })]}>
+  <Hero title="Corporate cab services in Hyderabad your employees actually show up for" text="Managed employee transportation for companies across HITEC City, Gachibowli, the Financial District and the ORR belt — office pickup and drop, monthly cab plans, night-shift cabs and shuttles, run on a GPS-tracked fleet with a 24×7 command desk." />
+  <StatsBar />
+  <LogoStrip />
+
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-6 reveal">
+        <div class="max-w-2xl"><p class="eyebrow">Services</p><h2 class="h2 mt-3">Employee transport services built around how Hyderabad offices work</h2><p class="lede">From a handful of sedans on a Kondapur loop to a bus fleet for a Patancheru plant — one vendor, one MIS, one invoice.</p></div>
+        <a href="/services/" class="btn btn-ghost">All 16 services <Icon name="arrow-right" size={16} /></a>
+      </div>
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{coreServices.map((s, i) => <ServiceCard service={s} delay={(i % 3) as 0 | 1 | 2} />)}</div>
+    </div>
+  </section>
+
+  <section class="section bg-mist" id="why-us">
+    <div class="wrap grid gap-10 lg:grid-cols-[1fr_1.5fr]">
+      <div class="reveal"><p class="eyebrow">Why companies switch to us</p><h2 class="h2 mt-3">Five things HR and admin teams stop worrying about</h2><p class="lede">Employee transport is usually the most complained-about line in an admin budget. These are the reasons it stops being one.</p><a href="/about/" class="btn btn-outline mt-6">About our team <Icon name="arrow-right" size={16} /></a></div>
+      <ul class="grid gap-4 sm:grid-cols-2">{usps.map((u, i) => <li class:list={['card reveal', i % 2 && 'reveal-d1']}><span class="icon-tile"><Icon name={u.icon} size={22} /></span><h3 class="h3 mt-4">{u.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate">{u.text}</p></li>)}</ul>
+    </div>
+  </section>
+
+  <HowItWorks />
+  <SafetyGrid />
+  <TechFeatures />
+  <ShiftPatterns />
+
+  <section class="section bg-mist" id="fleet">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-6 reveal"><div class="max-w-2xl"><p class="eyebrow">Fleet</p><h2 class="h2 mt-3">Sedans to 40-seaters, sized to each route</h2><p class="lede">Vehicle mix is chosen per route from occupancy and road width — a sedan for a Manikonda lane, a tempo traveller for a Raidurg Metro shuttle.</p></div><a href="/fleet/" class="btn btn-ghost">Full fleet details <Icon name="arrow-right" size={16} /></a></div>
+      <div class="mt-10 flex snap-x gap-4 overflow-x-auto pb-4 [scrollbar-width:thin] lg:grid lg:grid-cols-4 lg:overflow-visible">{fleet.slice(0, 4).map((v) => <div class="min-w-[280px] snap-start lg:min-w-0 reveal"><FleetCard v={v} /></div>)}</div>
+    </div>
+  </section>
+
+  <AreaGrid areas={topAreas(16)} text="Office clusters and the residential belts that feed them. Each area page covers routes, peak timings and the services available there." />
+
+  <section class="section" id="industries">
+    <div class="wrap">
+      <div class="max-w-2xl reveal"><p class="eyebrow">Industries & use cases</p><h2 class="h2 mt-3">Transport programmes shaped by the shift pattern, not the other way round</h2></div>
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {industries.map((i) => <a href={url.industry(i.slug)} class="card card-hover flex items-center gap-4 reveal"><span class="icon-tile"><Icon name={i.icon} size={22} /></span><span><span class="h3 block">{i.name}</span><span class="text-sm text-slate">Employee transport for {i.name.toLowerCase()}</span></span></a>)}
+        {solutions.map((s) => <a href={url.solution(s.slug)} class="card card-hover flex items-center gap-4 border-dashed reveal"><span class="icon-tile"><Icon name={s.icon} size={22} /></span><span><span class="text-[11px] font-bold uppercase tracking-wide text-accent-700">{s.kicker || 'Use case'}</span><span class="h3 block">{s.shortTitle}</span></span></a>)}
+      </div>
+    </div>
+  </section>
+
+  <PlaceholderTestimonial />
+
+  <section class="section bg-mist" id="pricing-teaser">
+    <div class="wrap grid items-center gap-10 lg:grid-cols-2">
+      <div class="reveal"><p class="eyebrow">Pricing</p><h2 class="h2 mt-3">Two pricing models. No hidden charges.</h2><p class="lede">Pay per employee per month on a distance slab, or take a dedicated vehicle on a monthly package with a km cap. Night allowance, escorts, tolls and dead km are itemised before you sign.</p>
+        <ul class="mt-6 space-y-2 text-[15px]">{['Per-employee monthly pick & drop by distance slab (10 / 15 / 20 km)', 'Dedicated sedan / SUV / MUV monthly packages with km caps', 'Local hourly packages and airport transfers', 'Interactive estimator with a route-study disclaimer'].map((t) => <li class="flex gap-2"><span class="tick mt-1"><Icon name="check" size={12} /></span>{t}</li>)}</ul>
+        <a href="/pricing/" class="btn btn-brand mt-8">See pricing & estimator <Icon name="arrow-right" size={18} /></a></div>
+      <div class="reveal reveal-d1"><QuoteForm /></div>
+    </div>
+  </section>
+
+  <FAQ items={faqs.home} title="Questions companies ask before switching" intro="Short answers to the questions HR and admin teams raise in the first call." />
+
+  {posts.length > 0 && (
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-6 reveal"><div><p class="eyebrow">From the blog</p><h2 class="h2 mt-3">Guides for people who run employee transport</h2></div><a href="/blog/" class="btn btn-ghost">All articles <Icon name="arrow-right" size={16} /></a></div>
+      <ul class="mt-8 grid gap-4 md:grid-cols-3">{posts.map((p) => <li><a href={url.blog(p.id)} class="card card-hover flex h-full flex-col gap-3 reveal"><span class="text-xs font-bold uppercase tracking-wide text-accent-700">{p.data.cluster.replace('-', ' & ')}</span><span class="h3">{p.data.title}</span><span class="text-sm text-slate">{p.data.description}</span></a></li>)}</ul>
+    </div>
+  </section>
+  )}
+
+  <CTASection />
+</BaseLayout>

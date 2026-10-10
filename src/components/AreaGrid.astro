@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+import { url } from '../lib/data';
+import type { Location } from '../lib/data';
+interface Props { areas: Location[]; title?: string; eyebrow?: string; text?: string; compact?: boolean; showAll?: boolean }
+const { areas, title = 'Areas we serve across Hyderabad', eyebrow = 'Coverage', text, compact = false, showAll = true } = Astro.props;
+---
+<section class:list={[compact ? 'section-tight' : 'section', 'bg-mist']} id="areas">
+  <div class="wrap">
+    <div class="flex flex-wrap items-end justify-between gap-6 reveal">
+      <div>
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 class="h2 mt-3">{title}</h2>
+        {text && <p class="lede">{text}</p>}
+      </div>
+      {showAll && <a href="/locations/" class="btn btn-ghost">All locations <Icon name="arrow-right" size={16} /></a>}
+    </div>
+    <ul class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 reveal reveal-d1">
+      {areas.map((a) => (
+        <li>
+          <a href={url.location(a.slug)} class="card card-hover flex items-center gap-3 !p-4">
+            <span class="icon-tile size-9 rounded-lg"><Icon name="map-pin" size={16} /></span>
+            <span class="font-semibold text-ink">{a.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

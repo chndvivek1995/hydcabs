@@ -1,0 +1,84 @@
+---
+// Shared renderer for /services/[slug] and /solutions/[slug] (same data shape).
+import PageLayout from '../layouts/PageLayout.astro';
+import Icon from './Icon.astro';
+import QuoteForm from './QuoteForm.astro';
+import FleetCard from './FleetCard.astro';
+import FAQ from './FAQ.astro';
+import AreaGrid from './AreaGrid.astro';
+import RelatedLinks from './RelatedLinks.astro';
+import CTASection from './CTASection.astro';
+import HowItWorks from './HowItWorks.astro';
+import { locationBySlug, serviceBySlug, vehicleBySlug, url, type Service } from '../lib/data';
+import { breadcrumbs, faqPage, service as serviceSchema } from '../lib/schema';
+import { getCollection } from 'astro:content';
+interface Props { s: Service; kind: 'service' | 'solution' }
+const { s, kind } = Astro.props;
+const path = kind === 'service' ? url.service(s.slug) : url.solution(s.slug);
+const parent = kind === 'service' ? { name: 'Services', path: '/services/' } : { name: 'Use cases', path: '/industries/' };
+const crumbs = [{ name: 'Home', path: '/' }, parent, { name: s.shortTitle, path }];
+const areas = s.areas.map(locationBySlug).filter(Boolean) as NonNullable<ReturnType<typeof locationBySlug>>[];
+const vehicles = s.vehicles.map(vehicleBySlug).filter(Boolean) as NonNullable<ReturnType<typeof vehicleBySlug>>[];
+const related = s.related.map(serviceBySlug).filter(Boolean) as Service[];
+const allPosts = await getCollection('blog');
+const posts = s.blogs.map((b) => allPosts.find((p) => p.id === b)).filter(Boolean) as typeof allPosts;
+const schema = [breadcrumbs(crumbs), faqPage(s.faqs), serviceSchema({ path, name: s.h1, description: s.metaDescription, areaServed: areas.map((a) => `${a.name}, Hyderabad`), serviceType: s.primaryKeyword })];
+const who = ['building-2', 'headset', 'factory', 'hospital', 'briefcase', 'users'];
+---
+<PageLayout title={s.metaTitle} description={s.metaDescription} {path} h1={s.h1} eyebrow={s.kicker || (kind === 'service' ? 'Service' : 'Use case')} intro={s.intro} {crumbs} {schema} whatsapp={s.whatsapp}>
+  <section class="section-tight bg-mist" id="quote-section">
+    <div class="wrap grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-start">
+      <div class="reveal">
+        <p class="eyebrow">What's included</p>
+        <h2 class="h2 mt-3">Everything the programme covers</h2>
+        <ul class="mt-8 grid gap-4 sm:grid-cols-2">{s.whatsIncluded.map((f) => <li class="flex gap-3"><span class="icon-tile shrink-0"><Icon name={f.icon} size={20} /></span><div><h3 class="font-display text-[1.02rem] font-bold">{f.title}</h3><p class="mt-1 text-sm leading-relaxed text-slate">{f.text}</p></div></li>)}</ul>
+      </div>
+      <div class="reveal reveal-d1 lg:sticky lg:top-24"><QuoteForm defaultService={kind === 'service' ? s.slug : ''} whatsapp={s.whatsapp} title={`Get a quote for ${s.shortTitle.toLowerCase()}`} /></div>
+    </div>
+  </section>
+
+  <section class="section" id="who">
+    <div class="wrap">
+      <div class="max-w-2xl reveal"><p class="eyebrow">Who it's for</p><h2 class="h2 mt-3">Teams this works best for</h2></div>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{s.whoItsFor.map((w, i) => <li class:list={['card reveal', i % 3 && `reveal-d${i % 3}`]}><span class="icon-tile"><Icon name={who[i % who.length]} size={20} /></span><h3 class="h3 mt-4">{w.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate">{w.text}</p></li>)}</ul>
+    </div>
+  </section>
+
+  <HowItWorks steps={s.process} title="How we set it up" dark />
+
+  <section class="section" id="content">
+    <div class="wrap grid gap-12 lg:grid-cols-[2fr_1fr]">
+      <div class="prose-hc">
+        {s.sections.map((sec) => <><h2>{sec.h2}</h2>{sec.paragraphs.map((p) => <p>{p}</p>)}{sec.bullets?.length ? <ul>{sec.bullets.map((b) => <li>{b}</li>)}</ul> : null}</>)}
+        <h2>Pricing guidance</h2>
+        <p>{s.pricingNote}</p>
+        <p><a href="/pricing/">See how pricing works and use the estimator →</a></p>
+      </div>
+      <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+        <div class="dark rounded-2xl bg-ink p-6 text-paper">
+          <span class="icon-tile"><Icon name="shield-check" size={22} /></span>
+          <h2 class="h3 mt-4 text-paper">Safety & compliance</h2>
+          <p class="mt-2 text-sm leading-relaxed text-slate-400">{s.safetyNote}</p>
+          <a href="/safety/" class="btn btn-outline mt-5 w-full">Our safety standards</a>
+        </div>
+        <div class="card">
+          <h2 class="h3">Vehicles used</h2>
+          <ul class="mt-3 space-y-2 text-sm">{vehicles.map((v) => <li class="flex items-center gap-2"><Icon name={v.icon} size={16} class="text-accent-700" /><a href={`/fleet/#${v.slug}`} class="font-medium hover:underline">{v.name}</a><span class="text-slate">· {v.seats} seats</span></li>)}</ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section-tight bg-mist" id="vehicles">
+    <div class="wrap">
+      <div class="max-w-2xl reveal"><p class="eyebrow">Fleet for this service</p><h2 class="h2 mt-3">Vehicles we deploy</h2></div>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{vehicles.map((v) => <div class="reveal"><FleetCard v={v} /></div>)}</div>
+    </div>
+  </section>
+
+  <AreaGrid {areas} title={`Where we run ${s.shortTitle.toLowerCase()}`} eyebrow="Areas served" compact />
+  <FAQ items={s.faqs} title={`${s.shortTitle}: frequently asked questions`} />
+  <RelatedLinks title="Related services" links={related.map((r) => ({ title: r.shortTitle, href: url.service(r.slug), blurb: r.cardBlurb, icon: r.icon }))} />
+  <RelatedLinks title="Further reading" eyebrow="From the blog" links={posts.map((p) => ({ title: p.data.title, href: url.blog(p.id), blurb: p.data.description, icon: 'file-check' }))} />
+  <CTASection whatsapp={s.whatsapp} />
+</PageLayout>

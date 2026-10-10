@@ -1,0 +1,14 @@
+---
+// Renders only when clients.json has entries. Greyscale logos.
+import { clients } from '../lib/data';
+---
+{clients.length > 0 && (
+<section class="section-tight border-b border-mist-200" aria-label="Clients">
+  <div class="wrap">
+    <p class="text-center text-xs font-bold uppercase tracking-[.18em] text-slate">Trusted by teams across Hyderabad</p>
+    <ul class="mt-6 flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+      {clients.map((c) => <li><img src={c.logo} alt={c.alt || c.name} width="140" height="40" loading="lazy" class="h-8 w-auto grayscale opacity-70 transition hover:grayscale-0 hover:opacity-100" /></li>)}
+    </ul>
+  </div>
+</section>
+)}

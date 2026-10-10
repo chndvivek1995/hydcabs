@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+import type { FAQ } from '../lib/data';
+interface Props { items: FAQ[]; title?: string; eyebrow?: string; id?: string; compact?: boolean; intro?: string }
+const { items, title = 'Frequently asked questions', eyebrow = 'FAQ', id = 'faq', compact = false, intro } = Astro.props;
+---
+{items?.length > 0 && (
+<section id={id} class:list={[compact ? 'section-tight' : 'section']}>
+  <div class="wrap">
+    <div class:list={['grid gap-10', !compact && 'lg:grid-cols-[1fr_2fr]']}>
+      <div class="reveal">
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 class="h2 mt-3">{title}</h2>
+        {intro && <p class="lede">{intro}</p>}
+      </div>
+      <div class="divide-y divide-mist-200 rounded-2xl border border-mist-200 bg-paper px-5 sm:px-7 reveal reveal-d1">
+        {items.map((f, i) => (
+          <details class="faq group py-4" name={id} open={i === 0}>
+            <summary class="flex items-start justify-between gap-4 py-1 text-left">
+              <h3 class="font-display text-[1.05rem] font-bold leading-snug text-ink">{f.q}</h3>
+              <span class="faq-plus icon-tile size-8 shrink-0 rounded-lg" aria-hidden="true"><Icon name="plus" size={16} /></span>
+            </summary>
+            <p class="pb-2 pr-10 pt-2 text-[1rem] leading-relaxed text-slate">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+)}

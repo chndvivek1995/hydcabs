@@ -1,0 +1,17 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Icon from '../../components/Icon.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import CTASection from '../../components/CTASection.astro';
+import { p1Locations, p2Locations, url } from '../../lib/data';
+import { breadcrumbs } from '../../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Locations', path: '/locations/' }];
+---
+<PageLayout title="Corporate Cabs by Area in Hyderabad" description="Corporate cab and employee transport coverage across 30 Hyderabad areas: HITEC City, Gachibowli, Financial District, Kukatpally, Secunderabad and Uppal." path="/locations/" h1="Corporate cab services across Hyderabad, area by area" eyebrow="Locations" intro="Office clusters along the IT corridor, the residential belts that feed them, and the industrial zones on the city's edges. Each page covers routes, peak timings and local FAQs." {crumbs} schema={[breadcrumbs(crumbs)]}>
+  {[['Office & IT corridor', p1Locations, 'Where most Hyderabad companies are headquartered — HITEC City to Kokapet, plus Begumpet, Banjara Hills, Uppal and the airport belt.'], ['Residential pickup belts & industrial areas', p2Locations, 'Where employees live and where plants run shifts — the west corridor, Secunderabad, the northern industrial estates, Genome Valley and the east.']].map(([title, list, text]) => (
+    <section class="section-tight"><div class="wrap"><h2 class="h2 reveal">{title as string}</h2><p class="lede reveal">{text as string}</p>
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{(list as typeof p1Locations).map((l) => <li><a href={url.location(l.slug)} class="card card-hover flex h-full flex-col gap-2 reveal"><span class="flex items-center gap-2"><span class="icon-tile size-9 rounded-lg"><Icon name="map-pin" size={16} /></span><span class="h3">{l.name}</span></span><span class="text-sm text-slate">{l.tagline}</span></a></li>)}</ul></div></section>
+  ))}
+  <section class="section bg-mist"><div class="wrap grid gap-10 lg:grid-cols-2 lg:items-center"><div class="reveal"><p class="eyebrow">Not listed?</p><h2 class="h2 mt-3">We cover all of Greater Hyderabad</h2><p class="lede">The area pages are where demand concentrates, but routes run anywhere inside the ORR and to the industrial belts beyond it. Tell us your office and the pickup spread.</p></div><div class="reveal reveal-d1"><QuoteForm /></div></div></section>
+  <CTASection />
+</PageLayout>

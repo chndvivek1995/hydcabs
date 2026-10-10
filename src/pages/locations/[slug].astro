@@ -1,0 +1,76 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Icon from '../../components/Icon.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import FleetCard from '../../components/FleetCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import CTASection from '../../components/CTASection.astro';
+import { locations, serviceBySlug, locationBySlug, fleet, url, type Service, type Location } from '../../lib/data';
+import { breadcrumbs, faqPage, service as serviceSchema } from '../../lib/schema';
+export function getStaticPaths() { return locations.map((l) => ({ params: { slug: l.slug }, props: { l } })); }
+const { l } = Astro.props as { l: Location };
+const path = url.location(l.slug);
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Locations', path: '/locations/' }, { name: l.name, path }];
+const svcs = l.services.map(serviceBySlug).filter(Boolean) as Service[];
+const nearby = l.nearby.map(locationBySlug).filter(Boolean) as Location[];
+const vehicles = fleet.slice(0, 4);
+const schema = [breadcrumbs(crumbs), faqPage(l.faqs), serviceSchema({ path, name: l.h1, description: l.metaDescription, areaServed: [`${l.name}, Hyderabad`], serviceType: `corporate cab services in ${l.name}` })];
+---
+<PageLayout title={l.metaTitle} description={l.metaDescription} {path} h1={l.h1} eyebrow={`Hyderabad · ${l.name}`} intro={[l.tagline]} {crumbs} {schema} whatsapp={l.whatsapp}>
+  <Fragment slot="hero-extra">
+    <ul class="mt-8 flex flex-wrap gap-2 text-sm">{l.landmarks.slice(0, 6).map((lm) => <li class="chip border-white/15 bg-white/5 text-paper hover:border-brand hover:text-brand"><Icon name="map-pin" size={13} />{lm}</li>)}</ul>
+  </Fragment>
+
+  <section class="section-tight bg-mist">
+    <div class="wrap grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-start">
+      <div class="prose-hc reveal">
+        <h2>Why companies in {l.name} use managed employee transport</h2>
+        {l.intro.map((p) => <p>{p}</p>)}
+        {(l.techParks.length > 0 || l.metro.length > 0) && (
+          <div class="not-prose mt-6 grid gap-4 sm:grid-cols-2">
+            {l.techParks.length > 0 && <div class="card"><h3 class="h3 flex items-center gap-2"><Icon name="building-2" size={18} class="text-accent-700" /> Offices & parks served</h3><ul class="mt-3 space-y-1.5 text-sm text-slate">{l.techParks.map((t) => <li class="flex gap-2"><span class="tick mt-0.5"><Icon name="check" size={11} /></span>{t}</li>)}</ul></div>}
+            {l.metro.length > 0 && <div class="card"><h3 class="h3 flex items-center gap-2"><Icon name="navigation" size={18} class="text-accent-700" /> Metro & last-mile</h3><ul class="mt-3 space-y-1.5 text-sm text-slate">{l.metro.map((t) => <li class="flex gap-2"><span class="tick mt-0.5"><Icon name="check" size={11} /></span>{t}</li>)}</ul></div>}
+          </div>
+        )}
+      </div>
+      <div class="reveal reveal-d1 lg:sticky lg:top-24"><QuoteForm defaultArea={l.slug} whatsapp={l.whatsapp} title={`Get a quote for ${l.name}`} note={`Tell us how many employees commute to or from ${l.name} and their shift timings. We reply with a route plan and indicative pricing.`} /></div>
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="max-w-2xl reveal"><p class="eyebrow">Services in {l.name}</p><h2 class="h2 mt-3">Corporate cab services available in {l.name}</h2></div>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{svcs.map((s, i) => <li class:list={['reveal', i % 3 && `reveal-d${i % 3}`]}><a href={url.service(s.slug)} class="card card-hover flex h-full flex-col gap-3"><span class="icon-tile"><Icon name={s.icon} size={22} /></span><span class="h3">{s.shortTitle} in {l.name}</span><span class="text-sm text-slate">{s.cardBlurb}</span><span class="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-accent-700">Details <Icon name="arrow-right" size={14} /></span></a></li>)}</ul>
+    </div>
+  </section>
+
+  <section class="dark section relative overflow-hidden bg-ink text-paper" id="routes">
+    <div class="grid-bg absolute inset-0 opacity-60" aria-hidden="true"></div>
+    <div class="wrap relative grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+      <div class="reveal">
+        <p class="eyebrow">Popular routes</p>
+        <h2 class="h2 mt-3">Employee pickup routes we run around {l.name}</h2>
+        <div class="mt-8 overflow-x-auto rounded-2xl border border-white/10">
+          <table class="w-full text-left text-sm"><thead class="bg-white/5 text-xs uppercase tracking-wide text-slate-400"><tr><th class="px-4 py-3 font-semibold">Route</th><th class="px-4 py-3 font-semibold">Distance</th><th class="px-4 py-3 font-semibold">Typical peak time</th></tr></thead>
+            <tbody class="divide-y divide-white/10">{l.commonRoutes.map((r) => <tr><td class="px-4 py-3"><span class="font-semibold">{r.from} → {r.to}</span>{r.note && <span class="block text-xs text-slate-400">{r.note}</span>}</td><td class="px-4 py-3 whitespace-nowrap">{r.km}</td><td class="px-4 py-3 whitespace-nowrap">{r.peak}</td></tr>)}</tbody></table>
+        </div>
+        <p class="mt-3 text-xs text-slate-400">Times are typical ranges from our route planning, not guarantees. Monsoon days and events add 15–30 minutes.</p>
+      </div>
+      <div class="reveal reveal-d1">
+        <p class="eyebrow">Typical commute times</p>
+        <h2 class="h3 mt-3 text-paper">Door-to-desk at peak, from common pickup belts</h2>
+        <ul class="mt-6 divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[.04]">{l.commuteTimes.map((c) => <li class="flex items-center justify-between gap-4 px-4 py-3 text-sm"><span>{c.origin}</span><span class="font-semibold text-brand">{c.minutes} min</span></li>)}</ul>
+        <div class="prose-hc mt-8 [&_p]:text-slate-400">{l.travelNotes.map((p) => <p>{p}</p>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight bg-mist" id="fleet">
+    <div class="wrap"><div class="max-w-2xl reveal"><p class="eyebrow">Fleet</p><h2 class="h2 mt-3">Vehicles we deploy in {l.name}</h2></div><div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{vehicles.map((v) => <div class="reveal"><FleetCard v={v} /></div>)}</div><a href="/fleet/" class="btn btn-ghost mt-6 -ml-4">Full fleet <Icon name="arrow-right" size={16} /></a></div>
+  </section>
+
+  <FAQ items={l.faqs} title={`Corporate cabs in ${l.name}: FAQs`} />
+  <RelatedLinks title="Nearby areas we also serve" eyebrow="Nearby" links={nearby.map((n) => ({ title: `Corporate cabs in ${n.name}`, href: url.location(n.slug), blurb: n.tagline, icon: 'map-pin' }))} />
+  <CTASection whatsapp={l.whatsapp} title={`Need employee transport in ${l.name}?`} />
+</PageLayout>

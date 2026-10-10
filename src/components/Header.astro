@@ -1,0 +1,95 @@
+---
+import Icon from './Icon.astro';
+import { SITE, telLink, isPlaceholder } from '../config/site';
+import { services, industries, solutions, topAreas, url } from '../lib/data';
+interface Props { transparent?: boolean }
+const { transparent = false } = Astro.props;
+const path = Astro.url.pathname;
+const active = (p: string) => path === p || (p !== '/' && path.startsWith(p));
+const areas = topAreas(12);
+---
+<header class:list={['fixed inset-x-0 top-0 z-40 transition-colors', transparent ? 'hdr-dark border-b border-white/10 bg-ink/85 text-paper backdrop-blur-md' : 'border-b border-mist-200 bg-paper/92 text-ink backdrop-blur-md']} id="hdr" data-transparent={transparent ? '1' : undefined}>
+  <div class="wrap flex h-[68px] items-center justify-between gap-6">
+    <a href="/" class="flex shrink-0 items-center gap-2.5 font-display text-lg font-extrabold tracking-tight" aria-label={`${SITE.brand} — home`}>
+      <span class="inline-flex size-9 items-center justify-center rounded-xl bg-brand text-brand-ink"><Icon name="car-front" size={20} stroke={2.4} /></span>
+      <span class="brand-name">{isPlaceholder(SITE.brand) ? <span class="ph">{SITE.brand}</span> : SITE.brand}</span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+      <div class="group relative">
+        <a href="/services/" class:list={['nav-link', active('/services/') && 'is-active']}>Services <Icon name="chevron-down" size={14} /></a>
+        <div class="mega">
+          <div class="grid w-[720px] grid-cols-2 gap-1 p-3">
+            {services.map((s) => <a href={url.service(s.slug)} class="mega-item"><span class="icon-tile size-8 rounded-lg"><Icon name={s.icon} size={15} /></span><span><span class="block font-semibold">{s.shortTitle}</span></span></a>)}
+          </div>
+        </div>
+      </div>
+      <div class="group relative">
+        <a href="/industries/" class:list={['nav-link', (active('/industries/') || active('/solutions/')) && 'is-active']}>Industries <Icon name="chevron-down" size={14} /></a>
+        <div class="mega">
+          <div class="grid w-[560px] grid-cols-2 gap-3 p-3">
+            <div><p class="mega-head">Industries</p>{industries.map((i) => <a href={url.industry(i.slug)} class="mega-item"><span class="icon-tile size-8 rounded-lg"><Icon name={i.icon} size={15} /></span><span class="font-semibold">{i.name}</span></a>)}</div>
+            <div><p class="mega-head">Use cases</p>{solutions.map((s) => <a href={url.solution(s.slug)} class="mega-item"><span class="icon-tile size-8 rounded-lg"><Icon name={s.icon} size={15} /></span><span class="font-semibold">{s.shortTitle}</span></a>)}<a href="/services/night-shift-cab-hyderabad/" class="mega-item"><span class="icon-tile size-8 rounded-lg"><Icon name="moon" size={15} /></span><span class="font-semibold">Night shift transport</span></a></div>
+          </div>
+        </div>
+      </div>
+      <div class="group relative">
+        <a href="/locations/" class:list={['nav-link', active('/locations/') && 'is-active']}>Locations <Icon name="chevron-down" size={14} /></a>
+        <div class="mega">
+          <div class="w-[520px] p-3">
+            <div class="grid grid-cols-3 gap-1">{areas.map((a) => <a href={url.location(a.slug)} class="mega-item !py-1.5"><span class="font-semibold">{a.name}</span></a>)}</div>
+            <a href="/locations/" class="mt-2 flex items-center gap-1 px-3 py-2 text-sm font-semibold text-accent-700">All 30 areas <Icon name="arrow-right" size={14} /></a>
+          </div>
+        </div>
+      </div>
+      <a href="/pricing/" class:list={['nav-link', active('/pricing/') && 'is-active']}>Pricing</a>
+      <a href="/fleet/" class:list={['nav-link', active('/fleet/') && 'is-active']}>Fleet</a>
+      <a href="/safety/" class:list={['nav-link', active('/safety/') && 'is-active']}>Safety</a>
+      <a href="/technology/" class:list={['nav-link', active('/technology/') && 'is-active']}>Technology</a>
+      <a href="/blog/" class:list={['nav-link', active('/blog/') && 'is-active']}>Blog</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={telLink} class="hidden items-center gap-2 text-sm font-semibold xl:inline-flex" data-track="header_call"><Icon name="phone" size={16} />{SITE.phoneDisplay}</a>
+      <a href="/contact/" class="btn btn-brand hidden !min-h-10 !px-4 !py-2 text-sm md:inline-flex">Get a quote</a>
+      <button class="inline-flex size-10 items-center justify-center rounded-lg lg:hidden" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu"><Icon name="menu" size={24} /></button>
+    </div>
+  </div>
+
+  <div class="hidden border-t border-mist-200 bg-paper text-ink lg:hidden" id="mobile-nav">
+    <nav class="wrap max-h-[calc(100dvh-68px)] overflow-y-auto py-4" aria-label="Mobile">
+      {[['Services', '/services/', services.map((s) => [s.shortTitle, url.service(s.slug)])], ['Industries & use cases', '/industries/', [...industries.map((i) => [i.name, url.industry(i.slug)]), ...solutions.map((s) => [s.shortTitle, url.solution(s.slug)])]], ['Locations', '/locations/', areas.map((a) => [a.name, url.location(a.slug)])]].map(([label, href, items]) => (
+        <details class="border-b border-mist-200 py-2">
+          <summary class="flex cursor-pointer items-center justify-between py-2 font-display font-bold">{label as string}<Icon name="chevron-down" size={18} /></summary>
+          <ul class="grid grid-cols-2 gap-1 pb-3 text-sm">
+            <li class="col-span-2"><a href={href as string} class="block rounded-lg px-2 py-1.5 font-semibold text-accent-700">All {(label as string).toLowerCase()}</a></li>
+            {(items as string[][]).map(([t, h]) => <li><a href={h} class="block rounded-lg px-2 py-1.5 hover:bg-mist">{t}</a></li>)}
+          </ul>
+        </details>
+      ))}
+      <ul class="grid grid-cols-2 gap-1 py-3 text-sm font-semibold">
+        {[['Pricing', '/pricing/'], ['Fleet', '/fleet/'], ['Safety', '/safety/'], ['Technology', '/technology/'], ['About', '/about/'], ['Blog', '/blog/'], ['FAQ', '/faq/'], ['Attach your cab', '/attach-your-cab/'], ['Contact', '/contact/']].map(([t, h]) => <li><a href={h} class="block rounded-lg px-2 py-2 hover:bg-mist">{t}</a></li>)}
+      </ul>
+      <a href="/contact/" class="btn btn-brand w-full">Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  @reference "../styles/global.css";
+  .nav-link { @apply inline-flex items-center gap-1 rounded-lg px-3 py-2 text-[14px] font-semibold transition-colors hover:bg-ink/5; }
+  .hdr-dark .nav-link { @apply hover:bg-white/10; }
+  .nav-link.is-active { @apply text-accent-700; }
+  .hdr-dark .nav-link.is-active { @apply text-brand; }
+  .mega { @apply invisible absolute left-0 top-full pt-2 opacity-0 transition-[opacity,visibility] duration-150; }
+  .group:hover .mega, .group:focus-within .mega { @apply visible opacity-100; }
+  .mega > div { @apply rounded-2xl border border-mist-200 bg-paper text-ink shadow-lift; }
+  .mega-item { @apply flex items-center gap-3 rounded-xl px-3 py-2 text-[14px] transition-colors hover:bg-mist; }
+  .mega-head { @apply px-3 pb-1 pt-2 text-[11px] font-bold uppercase tracking-[.16em] text-slate; }
+  #hdr.scrolled[data-transparent] { @apply bg-ink/95; }
+</style>
+<script>
+  const t = document.getElementById('nav-toggle'); const m = document.getElementById('mobile-nav');
+  t?.addEventListener('click', () => { const open = m!.classList.toggle('hidden') === false; t.setAttribute('aria-expanded', String(open)); t.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); document.body.classList.toggle('lock', open); });
+  const h = document.getElementById('hdr'); const onScroll = () => h?.classList.toggle('scrolled', scrollY > 24); onScroll(); addEventListener('scroll', onScroll, { passive: true });
+</script>

@@ -1,0 +1,1 @@
+{ "name": "Corporate Cabs Hyderabad", "short_name": "Corp Cabs", "icons": [{ "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }], "theme_color": "#0B0F19", "background_color": "#ffffff", "display": "browser", "start_url": "/" }

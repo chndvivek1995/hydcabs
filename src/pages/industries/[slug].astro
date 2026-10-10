@@ -1,0 +1,57 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Icon from '../../components/Icon.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import FAQ from '../../components/FAQ.astro';
+import AreaGrid from '../../components/AreaGrid.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import CTASection from '../../components/CTASection.astro';
+import { industries, locationBySlug, serviceBySlug, url, type Industry, type Service, type Location } from '../../lib/data';
+import { breadcrumbs, faqPage, service as serviceSchema } from '../../lib/schema';
+import { getCollection } from 'astro:content';
+export function getStaticPaths() { return industries.map((i) => ({ params: { slug: i.slug }, props: { i } })); }
+const { i } = Astro.props as { i: Industry };
+const path = url.industry(i.slug);
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Industries', path: '/industries/' }, { name: i.name, path }];
+const areas = i.areas.map(locationBySlug).filter(Boolean) as Location[];
+const svcs = i.services.map(serviceBySlug).filter(Boolean) as Service[];
+const allPosts = await getCollection('blog');
+const posts = i.blogs.map((b) => allPosts.find((p) => p.id === b)).filter(Boolean) as typeof allPosts;
+const wa = `Hi, I need employee transport for our ${i.name} company in Hyderabad.`;
+const schema = [breadcrumbs(crumbs), faqPage(i.faqs), serviceSchema({ path, name: i.h1, description: i.metaDescription, areaServed: areas.map((a) => `${a.name}, Hyderabad`), serviceType: `employee transport for ${i.name}` })];
+---
+<PageLayout title={i.metaTitle} description={i.metaDescription} {path} h1={i.h1} eyebrow={`Industry · ${i.name}`} intro={i.intro} {crumbs} {schema} whatsapp={wa}>
+  <section class="section-tight bg-mist">
+    <div class="wrap grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-start">
+      <div class="reveal">
+        <p class="eyebrow">The challenge</p>
+        <h2 class="h2 mt-3">What makes transport hard for {i.name.toLowerCase()} teams</h2>
+        <ul class="mt-8 space-y-4">{i.challenges.map((c, n) => <li class="flex gap-4"><span class="inline-flex size-9 shrink-0 items-center justify-center rounded-xl bg-ink font-display text-sm font-extrabold text-paper">{n + 1}</span><div><h3 class="font-display text-[1.02rem] font-bold">{c.title}</h3><p class="mt-1 text-sm leading-relaxed text-slate">{c.text}</p></div></li>)}</ul>
+        {i.hubs.length > 0 && <p class="mt-8 text-sm text-slate"><strong class="text-ink">Where this industry clusters:</strong> {i.hubs.join(' · ')}</p>}
+      </div>
+      <div class="reveal reveal-d1 lg:sticky lg:top-24"><QuoteForm whatsapp={wa} title={`Get a transport plan for your ${i.name.toLowerCase()} team`} /></div>
+    </div>
+  </section>
+
+  <section class="dark section relative overflow-hidden bg-ink text-paper">
+    <div class="grid-bg absolute inset-0 opacity-60" aria-hidden="true"></div><div class="glow absolute inset-0" aria-hidden="true"></div>
+    <div class="wrap relative">
+      <div class="max-w-2xl reveal"><p class="eyebrow">How we solve it</p><h2 class="h2 mt-3">A programme designed for {i.name.toLowerCase()}</h2></div>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{i.solutions.map((s, n) => <li class:list={['rounded-2xl border border-white/10 bg-white/[.04] p-6 reveal', n % 3 && `reveal-d${n % 3}`]}><span class="icon-tile"><Icon name={s.icon} size={22} /></span><h3 class="h3 mt-4 text-paper">{s.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate-400">{s.text}</p></li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid gap-12 lg:grid-cols-[1fr_1.4fr]">
+      <div class="reveal"><p class="eyebrow">Shift patterns</p><h2 class="h2 mt-3">Shifts we run for this sector</h2>
+        <ul class="mt-8 space-y-4">{i.shiftPatterns.map((s) => <li class="card !p-5"><h3 class="font-display font-bold">{s.title}</h3><p class="mt-1 text-sm leading-relaxed text-slate">{s.text}</p></li>)}</ul></div>
+      <div class="prose-hc reveal reveal-d1">{i.sections.map((sec) => <><h2>{sec.h2}</h2>{sec.paragraphs.map((p) => <p>{p}</p>)}</>)}</div>
+    </div>
+  </section>
+
+  <RelatedLinks title={`Services ${i.name.toLowerCase()} companies use most`} eyebrow="Services" links={svcs.map((s) => ({ title: s.shortTitle, href: url.service(s.slug), blurb: s.cardBlurb, icon: s.icon }))} />
+  <AreaGrid {areas} title={`Where we serve ${i.name.toLowerCase()} teams`} eyebrow="Areas" compact />
+  <FAQ items={i.faqs} title={`Employee transport for ${i.name}: FAQs`} />
+  <RelatedLinks title="Further reading" eyebrow="From the blog" links={posts.map((p) => ({ title: p.data.title, href: url.blog(p.id), blurb: p.data.description, icon: 'file-check' }))} />
+  <CTASection whatsapp={wa} />
+</PageLayout>

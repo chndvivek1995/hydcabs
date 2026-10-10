@@ -1,0 +1,13 @@
+---
+import { getCollection, render } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (p) => !p.data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, all: posts } }));
+}
+const { post, all } = Astro.props;
+const { Content } = await render(post);
+const related = all.filter((p) => p.id !== post.id && p.data.cluster === post.data.cluster).slice(0, 4);
+const minutes = Math.max(3, Math.round((post.body || '').split(/\s+/).length / 220));
+---
+<BlogLayout {post} {related} {minutes}><Content /></BlogLayout>

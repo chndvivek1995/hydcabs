@@ -1,0 +1,106 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PricingTable from '../components/PricingTable.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import FAQ from '../components/FAQ.astro';
+import CTASection from '../components/CTASection.astro';
+import Icon from '../components/Icon.astro';
+import { pricing } from '../data/pricing';
+import { faqs as allFaqs } from '../lib/data';
+import { breadcrumbs, faqPage } from '../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Pricing', path: '/pricing/' }];
+const pricingFaqs = allFaqs.groups.find((g) => g.name === 'Pricing')?.items || [];
+const drivers = [
+  { icon: 'route', title: 'Distance slab', text: 'Per-employee plans are priced by one-way distance band (10 / 15 / 20 km). A Kukatpally → Mindspace run sits in a different slab from Kompally → Gachibowli.' },
+  { icon: 'moon', title: 'Shift timing', text: 'Night routes carry a driver allowance and, where the women-safety protocol requires, an escort. Both are itemised, never buried in the per-km rate.' },
+  { icon: 'user-check', title: 'Escort requirement', text: 'Escorts are priced per route per night, not per employee, so clubbing night pickups sensibly reduces the line.' },
+  { icon: 'ticket', title: 'Tolls & parking', text: 'ORR and PVNR Expressway tolls are either included for defined routes or billed at actuals with receipts — the contract states which.' },
+  { icon: 'trending-down', title: 'Dead kilometres', text: 'Empty running from depot to first pickup and after last drop. Good routing cuts it; a transparent contract shows it rather than hiding it in the rate.' },
+  { icon: 'calendar-check', title: 'Contract length & volume', text: 'Longer terms and higher stable headcounts earn better rates because vehicles can be committed. Short pilots cost a little more per trip.' },
+];
+const wa = 'Hi, I need corporate cab rates for our office in Hyderabad.';
+---
+<PageLayout title="Corporate Cab Rates in Hyderabad" description="Corporate cab rates in Hyderabad explained: per-employee monthly slabs, dedicated sedan, SUV and MUV packages, hourly and airport rates, plus an estimator." path="/pricing/" h1="Corporate cab rates in Hyderabad: how monthly cab charges work" eyebrow="Pricing" intro={['Two models, itemised line by line. Per-employee pricing on a distance slab, or a dedicated vehicle on a monthly package with a km cap. Exact rates follow a free route study of your roster — the structure below is what you will be quoted against.']} {crumbs} schema={[breadcrumbs(crumbs), faqPage(pricingFaqs)]} whatsapp={wa}>
+  <section class="section-tight"><div class="wrap grid gap-6 lg:grid-cols-2">
+    <div class="reveal"><PricingTable id="per-employee" title="Per-employee monthly pick & drop" caption={`By one-way distance slab · ${pricing.workingDays} working days · shared routes`} columns={pricing.perEmployee.columns} rows={pricing.perEmployee.rows} note={pricing.perEmployee.note} /></div>
+    <div class="reveal reveal-d1"><PricingTable id="dedicated" title="Dedicated vehicle monthly packages" caption="One vehicle with driver, reserved for your team" columns={pricing.dedicated.columns} rows={pricing.dedicated.rows} note={pricing.dedicated.note} /></div>
+    <div class="reveal"><PricingTable id="local" title="Local hourly packages" caption="Client visits, interviews, events" columns={pricing.local.columns} rows={pricing.local.rows} note={pricing.local.note} /></div>
+    <div class="reveal reveal-d1"><PricingTable id="airport" title="Airport transfers (RGIA)" caption="One-way, per vehicle" columns={pricing.airport.columns} rows={pricing.airport.rows} note={pricing.airport.note} /></div>
+  </div></section>
+
+  <section class="section bg-mist" id="estimator">
+    <div class="wrap grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
+      <div class="reveal">
+        <p class="eyebrow">Estimator</p>
+        <h2 class="h2 mt-3">Rough out your programme in 30 seconds</h2>
+        <p class="lede">Pick a distance slab, headcount and shifts. The estimator shows the shape of the programme — routes, vehicles, what drives the price — and a rupee range when rates are configured.</p>
+        <form class="card mt-8 grid gap-5" id="est" data-rates={JSON.stringify(pricing.estimatorRates)}>
+          <div><span class="field-label">Average one-way distance</span><div class="flex flex-wrap gap-2">{[['10', 'Up to 10 km'], ['15', 'Up to 15 km'], ['20', 'Up to 20 km']].map(([v, l], i) => <label class="chip cursor-pointer has-[:checked]:border-accent has-[:checked]:bg-accent/10 has-[:checked]:text-accent-700"><input type="radio" name="slab" value={v} class="sr-only" checked={i === 1}>{l}</label>)}</div></div>
+          <div><label class="field-label" for="est-emp">Employees to transport: <output id="est-emp-out" for="est-emp">60</output></label><input id="est-emp" name="employees" type="range" min="4" max="500" step="2" value="60" class="w-full accent-accent"></div>
+          <div><span class="field-label">Shift pattern</span><div class="flex flex-wrap gap-2">{[['day', 'Day only'], ['night', 'Night only'], ['both', 'Day + night']].map(([v, l], i) => <label class="chip cursor-pointer has-[:checked]:border-accent has-[:checked]:bg-accent/10 has-[:checked]:text-accent-700"><input type="radio" name="shift" value={v} class="sr-only" checked={i === 0}>{l}</label>)}</div></div>
+          <label class="flex items-center gap-3 text-sm"><input type="checkbox" name="escort" class="size-4 accent-accent"> Women employees on night routes (escort protocol applies)</label>
+        </form>
+      </div>
+      <div class="reveal reveal-d1 lg:sticky lg:top-24">
+        <div class="dark rounded-3xl bg-ink p-6 text-paper sm:p-8" id="est-out" aria-live="polite">
+          <p class="eyebrow">Your programme shape</p>
+          <dl class="mt-6 grid grid-cols-2 gap-4">
+            <div class="rounded-2xl bg-white/5 p-4"><dt class="text-xs uppercase tracking-wide text-slate-400">Shared routes</dt><dd class="font-display text-3xl font-extrabold" data-k="routes">—</dd></div>
+            <div class="rounded-2xl bg-white/5 p-4"><dt class="text-xs uppercase tracking-wide text-slate-400">Vehicles / shift</dt><dd class="font-display text-3xl font-extrabold" data-k="vehicles">—</dd></div>
+            <div class="rounded-2xl bg-white/5 p-4"><dt class="text-xs uppercase tracking-wide text-slate-400">Trips / month</dt><dd class="font-display text-3xl font-extrabold" data-k="trips">—</dd></div>
+            <div class="rounded-2xl bg-white/5 p-4"><dt class="text-xs uppercase tracking-wide text-slate-400">Indicative monthly range</dt><dd class="font-display text-2xl font-extrabold text-brand" data-k="range">On request</dd></div>
+          </dl>
+          <ul class="mt-6 space-y-2 text-sm text-slate-400" data-k="notes"></ul>
+          <p class="mt-6 text-xs text-slate-400">Estimates assume shared sedan/SUV routes at typical occupancy and {pricing.workingDays} working days. They are a planning aid, not a quote; the route study sets the actual price.</p>
+          <a href="#quote" class="btn btn-brand mt-6 w-full" data-track="estimator_quote">Get the exact quote <Icon name="arrow-right" size={18} /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section"><div class="wrap">
+    <div class="max-w-2xl reveal"><p class="eyebrow">What affects price</p><h2 class="h2 mt-3">Six things that move monthly cab charges in Hyderabad</h2></div>
+    <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{drivers.map((d, i) => <li class:list={['card reveal', i % 3 && `reveal-d${i % 3}`]}><span class="icon-tile"><Icon name={d.icon} size={22} /></span><h3 class="h3 mt-4">{d.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate">{d.text}</p></li>)}</ul>
+  </div></section>
+
+  <section class="section-tight bg-mist"><div class="wrap grid gap-10 lg:grid-cols-2 lg:items-start">
+    <div class="prose-hc reveal"><h2>Per-employee or dedicated vehicle: which should you pick?</h2><p>Per-employee pricing suits teams with mixed home locations and shifting rosters: you pay for seats used, routes are rebuilt weekly and the vendor carries the occupancy risk. Dedicated vehicles suit a fixed night team, an executive pool or a plant route where the vehicle must be at the gate at 5:45 AM regardless of headcount — you pay for availability.</p><p>Most Hyderabad programmes end up blended. A clubbed per-employee plan carries the day shift from Kukatpally, Miyapur and LB Nagar into the IT corridor; a dedicated MUV covers the US-shift drops after 2 AM; and an airport package handles visitors. Each line is priced separately so the invoice can be checked against the MIS.</p><p>Read the detailed comparison: <a href="/blog/per-employee-vs-dedicated-vehicle-pricing/">per-employee vs dedicated-vehicle pricing</a>, and what to watch for in <a href="/blog/hidden-charges-corporate-cab-contracts/">hidden charges in cab contracts</a>.</p></div>
+    <div class="reveal reveal-d1"><QuoteForm title="Get exact rates for your routes" note="Share your roster and shift timings. The route study is free and takes one working day." whatsapp={wa} /></div>
+  </div></section>
+
+  <FAQ items={pricingFaqs} title="Pricing FAQs" />
+  <CTASection whatsapp={wa} />
+</PageLayout>
+
+<script>
+  const form = document.getElementById('est') as HTMLFormElement | null;
+  const out = document.getElementById('est-out');
+  if (form && out) {
+    const rates = JSON.parse(form.dataset.rates || '{}') as Record<string, number | null>;
+    const inr = (n: number) => '₹' + Math.round(n / 1000) * 1000 .toLocaleString ? ('₹' + (Math.round(n / 1000) * 1000).toLocaleString('en-IN')) : '₹' + Math.round(n);
+    const set = (k: string, v: string) => { const el = out.querySelector(`[data-k="${k}"]`); if (el) el.textContent = v; };
+    const calc = () => {
+      const fd = new FormData(form); const slab = Number(fd.get('slab')); const emp = Number(fd.get('employees')); const shift = String(fd.get('shift')); const escort = fd.get('escort') === 'on';
+      (document.getElementById('est-emp-out') as HTMLOutputElement).value = String(emp);
+      const shifts = shift === 'both' ? 2 : 1; const perShift = shift === 'both' ? Math.ceil(emp / 2) : emp;
+      const occupancy = slab <= 10 ? 3.6 : slab <= 15 ? 3.4 : 3.2; // avg employees per shared sedan/SUV trip
+      const vehicles = Math.max(1, Math.ceil(perShift / occupancy)); const routes = Math.max(1, Math.round(vehicles * 0.85));
+      const trips = vehicles * 2 * 22 * shifts;
+      set('routes', String(routes)); set('vehicles', String(vehicles)); set('trips', trips.toLocaleString('en-IN'));
+      const notes: string[] = [];
+      if (shift !== 'day') notes.push('Night routes add a driver allowance' + (escort ? ' and an escort per route under the women-safety protocol.' : '.'));
+      if (slab >= 20) notes.push('Routes over 20 km usually run on the ORR; tolls are shown as a separate line.');
+      if (emp >= 120) notes.push('At this headcount a tempo-traveller shuttle from the nearest metro station often lowers cost per seat.');
+      if (emp <= 12) notes.push('Small teams are usually better served by a dedicated vehicle package than per-employee pricing.');
+      notes.push('Dead km, tolls and parking are itemised in the quote.');
+      const ul = out.querySelector('[data-k="notes"]')!; ul.innerHTML = notes.map((n) => `<li class="flex gap-2"><span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand"></span>${n}</li>`).join('');
+      const rate = rates[String(slab)];
+      if (rate) {
+        let base = emp * rate; if (shift === 'night') base *= 1 + (rates.nightUplift || 0); if (shift === 'both') base *= 1 + (rates.nightUplift || 0) / 2;
+        if (escort && shift !== 'day' && rates.escortPerRoute) base += routes * 22 * rates.escortPerRoute;
+        set('range', `${inr(base * 0.9)} – ${inr(base * 1.15)}`);
+      } else set('range', 'On request');
+    };
+    form.addEventListener('input', calc); calc();
+  }
+</script>

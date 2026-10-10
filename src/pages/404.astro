@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { coreServices, topAreas, url } from '../lib/data';
+---
+<BaseLayout title="Page not found" description="The page you were looking for has moved or does not exist." path="/404/" noindex>
+  <section class="section"><div class="wrap max-w-3xl text-center">
+    <p class="eyebrow justify-center">404</p>
+    <h1 class="mt-4 !text-4xl">That route does not exist</h1>
+    <p class="lede mx-auto">The page may have moved. Try one of these instead, or head back to the home page.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-2">{coreServices.map((s) => <a href={url.service(s.slug)} class="chip">{s.shortTitle}</a>)}{topAreas(6).map((a) => <a href={url.location(a.slug)} class="chip"><Icon name="map-pin" size={13} />{a.name}</a>)}</div>
+    <a href="/" class="btn btn-brand mt-10">Back to home <Icon name="arrow-right" size={18} /></a>
+  </div></section>
+</BaseLayout>

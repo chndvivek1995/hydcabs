@@ -1,0 +1,175 @@
+---
+// The lead form. Used on home, every service & location page, contact. Posts JSON to SITE.leadWebhook,
+// then redirects to /thank-you/ (which fires GA4 generate_lead + Meta Lead with a shared event_id).
+import Icon from './Icon.astro';
+import { SITE, waLink } from '../config/site';
+import { services, locations } from '../lib/data';
+interface Props { title?: string; note?: string; defaultService?: string; defaultArea?: string; leadType?: 'quote' | 'vendor' | 'contact'; compact?: boolean; id?: string; whatsapp?: string; dark?: boolean }
+const {
+  title = 'Get a transport quote in one working day',
+  note = 'Tell us about your team and shifts. We reply with a route plan, fleet mix and indicative pricing.',
+  defaultService = '', defaultArea = '', leadType = 'quote', compact = false, id = 'quote',
+  whatsapp = 'Hi, I need a quote for corporate cab services in Hyderabad.', dark = false,
+} = Astro.props;
+const serviceOptions = services.map((s) => ({ v: s.slug, l: s.shortTitle }));
+const areaOptions = locations.map((l) => ({ v: l.slug, l: l.name }));
+const empRanges = ['1–10', '11–25', '26–50', '51–100', '101–250', '251–500', '500+'];
+const uid = id;
+---
+<div class:list={['quote-form rounded-2xl border p-6 sm:p-8', dark ? 'dark border-white/10 bg-ink-800 text-paper' : 'border-mist-200 bg-paper shadow-soft']} id={uid}>
+  <form class="qf" action={SITE.leadWebhook || '#'} method="post" novalidate data-webhook={SITE.leadWebhook} data-wa={waLink(whatsapp)} data-lead-type={leadType}>
+    <p class="eyebrow">{leadType === 'vendor' ? 'Partner with us' : 'Request a quote'}</p>
+    <h2 class="h3 mt-2 text-2xl">{title}</h2>
+    <p class:list={['mt-2 text-sm', dark ? 'text-slate-400' : 'text-slate']}>{note}</p>
+
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      <div>
+        <label class="field-label" for={`${uid}-name`}>Your name</label>
+        <input class="field" id={`${uid}-name`} name="name" type="text" autocomplete="name" required maxlength="80">
+        <span class="field-err" data-err="name"></span>
+      </div>
+      <div>
+        <label class="field-label" for={`${uid}-company`}>Company</label>
+        <input class="field" id={`${uid}-company`} name="company" type="text" autocomplete="organization" required maxlength="100">
+        <span class="field-err" data-err="company"></span>
+      </div>
+      <div>
+        <label class="field-label" for={`${uid}-phone`}>Mobile number</label>
+        <div class="flex items-stretch">
+          <span class:list={['flex items-center rounded-l-lg border border-r-0 px-3 text-sm', dark ? 'border-white/15 text-slate-400' : 'border-mist-300 bg-mist text-slate']} aria-hidden="true">+91</span>
+          <input class="field rounded-l-none" id={`${uid}-phone`} name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile">
+        </div>
+        <span class="field-err" data-err="phone"></span>
+      </div>
+      <div>
+        <label class="field-label" for={`${uid}-email`}>Work email</label>
+        <input class="field" id={`${uid}-email`} name="email" type="email" autocomplete="email" required maxlength="120">
+        <span class="field-err" data-err="email"></span>
+      </div>
+      {leadType !== 'contact' && (
+        <>
+          <div>
+            <label class="field-label" for={`${uid}-emp`}>{leadType === 'vendor' ? 'Vehicle type' : 'Employees to transport'}</label>
+            {leadType === 'vendor'
+              ? <select class="field" id={`${uid}-emp`} name="vehicle_type" required><option value="">Select</option><option>Sedan</option><option>SUV</option><option>Innova / MUV</option><option>Tempo Traveller</option><option>Mini bus / Bus</option><option>Electric car</option></select>
+              : <select class="field" id={`${uid}-emp`} name="employees" required><option value="">Select range</option>{empRanges.map((r) => <option value={r}>{r}</option>)}</select>}
+            <span class="field-err" data-err={leadType === 'vendor' ? 'vehicle_type' : 'employees'}></span>
+          </div>
+          <div>
+            <label class="field-label" for={`${uid}-svc`}>{leadType === 'vendor' ? 'Model year' : 'Service needed'}</label>
+            {leadType === 'vendor'
+              ? <input class="field" id={`${uid}-svc`} name="model_year" type="number" min="2012" max="2026" placeholder="e.g. 2021">
+              : <select class="field" id={`${uid}-svc`} name="service"><option value="">Not sure yet</option>{serviceOptions.map((o) => <option value={o.v} selected={o.v === defaultService}>{o.l}</option>)}</select>}
+          </div>
+          <div>
+            <label class="field-label" for={`${uid}-area`}>{leadType === 'vendor' ? 'Area you operate in' : 'Employee pickup area(s)'}</label>
+            <select class="field" id={`${uid}-area`} name="pickup_area"><option value="">Select area</option>{areaOptions.map((o) => <option value={o.v} selected={o.v === defaultArea}>{o.l}</option>)}<option value="multiple">Multiple areas</option></select>
+          </div>
+          <div>
+            <label class="field-label" for={`${uid}-office`}>{leadType === 'vendor' ? 'Permit type' : 'Office location'}</label>
+            {leadType === 'vendor'
+              ? <select class="field" id={`${uid}-office`} name="permit"><option value="">Select</option><option>Yellow board (commercial)</option><option>All-India tourist permit</option><option>Not sure</option></select>
+              : <input class="field" id={`${uid}-office`} name="office_location" type="text" maxlength="120" placeholder="e.g. Mindspace, HITEC City">}
+          </div>
+          {leadType !== 'vendor' && (
+            <div class="sm:col-span-2">
+              <span class="field-label">Shift type</span>
+              <div class="flex flex-wrap gap-2">
+                {['Day shift', 'Night shift', '24x7 rotational', 'Ad hoc / events'].map((s, i) => (
+                  <label class:list={['chip cursor-pointer has-[:checked]:border-accent has-[:checked]:bg-accent/10 has-[:checked]:text-accent-700', dark && 'border-white/15 bg-transparent text-paper']}>
+                    <input type="radio" name="shift_type" value={s} class="sr-only" checked={i === 0}>{s}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
+      )}
+      <div class="sm:col-span-2">
+        <label class="field-label" for={`${uid}-msg`}>Anything else? <span class="font-normal opacity-70">(optional)</span></label>
+        <textarea class="field min-h-20" id={`${uid}-msg`} name="message" maxlength="1000" rows="3" placeholder={leadType === 'vendor' ? 'Vehicle model, years driving, preferred shifts' : 'Shift timings, number of routes, current vendor issues'}></textarea>
+      </div>
+    </div>
+
+    {/* Honeypot + hidden tracking fields */}
+    <div class="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true"><label for={`${uid}-web`}>Website</label><input id={`${uid}-web`} name="website" tabindex="-1" autocomplete="off"></div>
+    <input type="hidden" name="lead_type" value={leadType}>
+    <input type="hidden" name="page_url" value="">
+    <input type="hidden" name="page_slug" value="">
+    <input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="utm_content" value="">
+    <input type="hidden" name="gclid" value=""><input type="hidden" name="fbclid" value="">
+    <input type="hidden" name="event_id" value="">
+
+    <label class:list={['mt-5 flex items-start gap-3 text-xs leading-relaxed', dark ? 'text-slate-400' : 'text-slate']}>
+      <input class="mt-0.5 size-4 shrink-0 accent-accent" type="checkbox" name="consent" value="yes" required>
+      <span>I agree to be contacted about this enquiry by phone, WhatsApp or email. <a class="underline" href="/privacy-policy/">Privacy policy</a>.</span>
+    </label>
+    <span class="field-err" data-err="consent"></span>
+
+    <button class="btn btn-brand mt-5 w-full sm:w-auto" type="submit"><span class="lbl">{leadType === 'vendor' ? 'Submit vehicle details' : 'Get my quote'}</span><Icon name="arrow-right" size={18} /></button>
+    <p class="fmsg mt-3 hidden text-sm text-danger" role="alert"></p>
+    <p class:list={['mt-4 text-xs', dark ? 'text-slate-400' : 'text-slate']}>Prefer chat? <a class="font-semibold text-success-700 underline" href={waLink(whatsapp)} target="_blank" rel="noopener" data-track="form_whatsapp">Message us on WhatsApp</a> or call <a class="font-semibold underline" href={`tel:${SITE.phoneDial}`} data-track="form_call">{SITE.phoneDisplay}</a>.</p>
+  </form>
+</div>
+
+<script>
+  // Progressive enhancement: validation, hidden-field fill, JSON POST, redirect. Runs once per page for every .qf form.
+  const forms = document.querySelectorAll<HTMLFormElement>('form.qf');
+  const params = new URLSearchParams(location.search);
+  const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
+  const rules: Record<string, (v: string, f: HTMLFormElement) => string> = {
+    name: (v) => (v.trim().length < 2 ? 'Please enter your name.' : ''),
+    company: (v) => (v.trim().length < 2 ? 'Please enter your company name.' : ''),
+    phone: (v) => (/^[6-9]\d{9}$/.test(v.replace(/\D/g, '').replace(/^91/, '')) ? '' : 'Enter a valid 10-digit Indian mobile number.'),
+    email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Enter a valid work email.'),
+    employees: (v, f) => (f.dataset.leadType === 'quote' && !v ? 'Select an employee range.' : ''),
+    vehicle_type: (v, f) => (f.dataset.leadType === 'vendor' && !v ? 'Select your vehicle type.' : ''),
+    consent: (v) => (v ? '' : 'Please tick the consent box.'),
+  };
+  forms.forEach((form) => {
+    const setHidden = (n: string, v: string) => { const el = form.elements.namedItem(n) as HTMLInputElement | null; if (el) el.value = v; };
+    setHidden('page_url', location.href);
+    setHidden('page_slug', location.pathname);
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach((k) => setHidden(k, params.get(k) || sessionStorage.getItem(k) || ''));
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach((k) => { const v = params.get(k); if (v) try { sessionStorage.setItem(k, v); } catch {} });
+    setHidden('event_id', uuid());
+
+    const show = (name: string, msg: string) => {
+      const el = form.querySelector<HTMLElement>(`[data-err="${name}"]`); if (el) el.textContent = msg;
+      const input = form.elements.namedItem(name) as HTMLElement | null; input?.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    };
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      if ((fd.get('website') as string)?.length) return; // honeypot
+      let firstBad: string | null = null;
+      for (const [k, rule] of Object.entries(rules)) {
+        const v = k === 'consent' ? ((form.elements.namedItem('consent') as HTMLInputElement)?.checked ? 'yes' : '') : String(fd.get(k) ?? '');
+        const msg = (form.elements.namedItem(k) || k === 'consent') ? rule(v, form) : '';
+        show(k, msg); if (msg && !firstBad) firstBad = k;
+      }
+      if (firstBad) { (form.elements.namedItem(firstBad) as HTMLElement | null)?.focus(); return; }
+      // Basic client rate limit: 1 submission per 20s per browser.
+      const last = Number(sessionStorage.getItem('lead_last') || 0);
+      if (Date.now() - last < 20000) { showMsg('Please wait a moment before submitting again.'); return; }
+      const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!; const lbl = btn.querySelector('.lbl')!; const orig = lbl.textContent;
+      btn.disabled = true; lbl.textContent = 'Sending…';
+      const payload: Record<string, string> = {}; fd.forEach((v, k) => (payload[k] = String(v))); payload.phone = '+91' + payload.phone.replace(/\D/g, '').slice(-10); payload.submitted_at = new Date().toISOString(); payload.referrer = document.referrer;
+      try {
+        if (!form.dataset.webhook) throw new Error('no-webhook');
+        const r = await fetch(form.dataset.webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), mode: 'cors' });
+        if (!r.ok) throw new Error('bad-status');
+        sessionStorage.setItem('lead_last', String(Date.now()));
+        try { sessionStorage.setItem('lead_ctx', JSON.stringify({ event_id: payload.event_id, lead_type: payload.lead_type, service: payload.service, area: payload.pickup_area })); } catch {}
+        location.assign('/thank-you/');
+      } catch (err) {
+        btn.disabled = false; lbl.textContent = orig;
+        showMsg('We could not send the form right now. Please message us on WhatsApp instead.', form.dataset.wa);
+      }
+      function showMsg(text: string, wa?: string) {
+        const m = form.querySelector<HTMLElement>('.fmsg')!; m.classList.remove('hidden'); m.textContent = text;
+        if (wa) { const a = document.createElement('a'); a.href = wa; a.target = '_blank'; a.rel = 'noopener'; a.className = 'ml-1 font-semibold underline'; a.textContent = 'Open WhatsApp'; m.append(' ', a); }
+      }
+    });
+  });
+</script>

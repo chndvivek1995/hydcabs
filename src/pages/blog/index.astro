@@ -1,0 +1,21 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CTASection from '../../components/CTASection.astro';
+import Icon from '../../components/Icon.astro';
+import { getCollection } from 'astro:content';
+import { url } from '../../lib/data';
+import { breadcrumbs } from '../../lib/schema';
+const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const clusters = [...new Set(posts.map((p) => p.data.cluster))];
+const label: Record<string, string> = { 'cost-pricing': 'Cost & pricing', 'vendor-selection': 'Vendor selection', 'safety-compliance': 'Safety & compliance', 'commute-guides': 'Hyderabad commute guides', 'operations-tech': 'Operations & tech', 'use-cases': 'Use cases', 'ev-sustainability': 'EV & sustainability', hr: 'HR & return to office' };
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Blog', path: '/blog/' }];
+const fmt = (x: Date) => x.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+<PageLayout title="Employee Transport Blog" description="Practical guides for HR and admin teams running employee transport in Hyderabad: monthly cab costs, vendor selection, SLAs, safety rules and commute planning." path="/blog/" h1="Guides for people who run employee transport" eyebrow="Blog" intro="Costs, contracts, safety and Hyderabad route planning — written by the team that runs the routes." {crumbs} schema={[breadcrumbs(crumbs)]} ctas={false}>
+  <section class="section-tight"><div class="wrap prose-hc max-w-3xl reveal"><h2>What this blog covers</h2><p>Employee transport is usually bought by HR or admin, paid for by finance and complained about by everyone, and there is very little practical writing about how to do it well in Hyderabad specifically. These guides fill that gap: how monthly cab costs are actually built up, when per-employee pricing beats a dedicated vehicle, how to run a vendor selection or an RFP, which SLA metrics are worth writing into a contract, how to switch vendors without a single missed shift, and what the night-shift safety rules mean for your roster. Each article links to the service or pricing page it relates to, and the FAQ at the end of each one answers the follow-up questions we hear most. New articles are added two to three times a week; the launch set is grouped by topic below.</p><p>A note on how we write: every figure that depends on the market — rates, GST treatment, statutory rules for night work — is described structurally rather than quoted as a number, because the number changes and the structure does not. Where an article touches law or tax, it carries a verification note and points to the official source. Everything else comes from running routes in Hyderabad: the Gachibowli flyover at 7 PM, the Kukatpally Y Junction at 8:30 AM, the PVNR Expressway at 4 AM for a US-shift drop near Shamshabad. If you want a topic covered — a route guide for your office, a template for your RFP — tell us on the <a href="/contact/">contact page</a> and we will add it to the queue.</p></div></section>
+  {clusters.map((c) => (
+    <section class="section-tight"><div class="wrap"><h2 class="h2 reveal">{label[c] || c}</h2>
+      <ul class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{posts.filter((p) => p.data.cluster === c).map((p) => <li><a href={url.blog(p.id)} class="card card-hover flex h-full flex-col gap-3 reveal"><span class="text-xs text-slate">{fmt(p.data.updatedDate || p.data.pubDate)}</span><span class="h3">{p.data.title}</span><span class="text-sm text-slate">{p.data.description}</span><span class="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-accent-700">Read <Icon name="arrow-right" size={14} /></span></a></li>)}</ul></div></section>
+  ))}
+  <CTASection quoteHref="/contact/" />
+</PageLayout>

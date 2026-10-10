@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import FleetCard from '../components/FleetCard.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import FAQ from '../components/FAQ.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import SafetyGrid from '../components/SafetyGrid.astro';
+import DashboardMockup from '../components/DashboardMockup.astro';
+import RouteMap from '../components/RouteMap.astro';
+import CTASection from '../components/CTASection.astro';
+import { services, fleet, faqs } from '../lib/data';
+const colors = [['ink', '#0B0F19'], ['paper', '#FFFFFF'], ['mist', '#F4F6FA'], ['brand', '#FFC400'], ['accent', '#1E5BFF'], ['success', '#12B76A'], ['slate', '#4B5567']];
+---
+<BaseLayout title="Styleguide" description="Internal design review page." path="/styleguide/" noindex hideSticky>
+  <section class="section"><div class="wrap space-y-16">
+    <div><p class="eyebrow">Tokens</p><h1 class="mt-3">Styleguide</h1><div class="mt-8 grid grid-cols-4 gap-3 sm:grid-cols-7">{colors.map(([n, v]) => <div><div class="h-16 rounded-xl border border-mist-200" style={`background:${v}`}></div><p class="mt-2 text-xs font-semibold">{n}</p><p class="font-mono text-[11px] text-slate">{v}</p></div>)}</div></div>
+    <div><p class="eyebrow">Type</p><p class="mt-3 font-display text-5xl font-extrabold tracking-tight">H1 Plus Jakarta Sans 800</p><h2 class="h2 mt-4">H2 heading .h2</h2><h3 class="h3 mt-3">H3 heading .h3</h3><p class="lede">Lede paragraph in Inter, muted slate.</p><p class="mt-3">Body copy at 17px / 1.6 in Inter. <a class="text-accent-700 underline" href="#">A link</a>.</p></div>
+    <div><p class="eyebrow">Buttons & chips</p><div class="mt-4 flex flex-wrap gap-3"><a class="btn btn-brand" href="#">Brand <Icon name="arrow-right" size={16} /></a><a class="btn btn-outline" href="#">Outline</a><a class="btn btn-wa" href="#"><Icon name="message-circle" size={16} /> WhatsApp</a><a class="btn btn-ghost" href="#">Ghost</a><span class="chip"><Icon name="map-pin" size={13} /> Chip</span><span class="icon-tile"><Icon name="route" /></span><span class="ph">{'{{PLACEHOLDER}}'}</span></div><div class="dark mt-4 flex flex-wrap gap-3 rounded-2xl bg-ink p-6"><a class="btn btn-brand" href="#">Brand</a><a class="btn btn-outline" href="#">Outline dark</a><a class="btn btn-wa" href="#">WhatsApp dark</a><span class="icon-tile"><Icon name="route" /></span></div></div>
+    <div><p class="eyebrow">Cards</p><div class="mt-4 grid gap-4 md:grid-cols-3">{services.slice(0, 2).map((s) => <ServiceCard service={s} />)}<FleetCard v={fleet[0]} /></div></div>
+    <div><p class="eyebrow">Route map</p><div class="dark mt-4 max-w-xl rounded-3xl bg-ink p-4"><RouteMap /></div></div>
+    <div><p class="eyebrow">Dashboard mockup</p><div class="mt-4 max-w-xl"><DashboardMockup /></div></div>
+    <div><p class="eyebrow">Quote form</p><div class="mt-4 max-w-2xl"><QuoteForm /></div></div>
+  </div></section>
+  <HowItWorks />
+  <SafetyGrid compact />
+  <FAQ items={faqs.home.slice(0, 3)} compact />
+  <CTASection />
+</BaseLayout>

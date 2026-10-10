@@ -1,0 +1,36 @@
+---
+// Standard inner page: dark compact hero with breadcrumbs + H1 + intro, then slot content.
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import { waLink } from '../config/site';
+interface Props {
+  title: string; description: string; path: string; h1: string; eyebrow?: string; intro?: string | string[];
+  crumbs: { name: string; path: string }[]; schema?: (object | null)[]; noindex?: boolean; whatsapp?: string;
+  quoteHref?: string; ctas?: boolean; image?: string; imageAlt?: string; ogType?: string; rawTitle?: boolean; wide?: boolean; hideSticky?: boolean;
+}
+const { title, description, path, h1, eyebrow, intro, crumbs, schema = [], noindex = false, whatsapp = 'Hi, I need corporate cab services in Hyderabad for our team.', quoteHref = '#quote', ctas = true, image, imageAlt, ogType, rawTitle, wide = false, hideSticky } = Astro.props;
+const intros = Array.isArray(intro) ? intro : intro ? [intro] : [];
+---
+<BaseLayout {title} {description} {path} {schema} {noindex} {whatsapp} {quoteHref} {image} {imageAlt} {ogType} {rawTitle} {hideSticky}>
+  <section class="dark relative overflow-hidden bg-ink text-paper">
+    <div class="glow absolute inset-0" aria-hidden="true"></div>
+    <div class="grid-bg absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_80%)]" aria-hidden="true"></div>
+    <div class="wrap relative pb-12 pt-10 sm:pb-16 sm:pt-12">
+      <Breadcrumbs items={crumbs} dark />
+      <div class:list={['mt-6', wide ? 'max-w-4xl' : 'max-w-3xl']}>
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        <h1 class="mt-3 text-paper">{h1}</h1>
+        {intros.map((p, i) => <p class:list={['mt-4 max-w-2xl leading-relaxed text-slate-400', i === 0 ? 'text-lg sm:text-xl' : 'text-base']}>{p}</p>)}
+        {ctas && (
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href={quoteHref} class="btn btn-brand" data-track="page_quote">Get a quote <Icon name="arrow-right" size={18} /></a>
+            <a href={waLink(whatsapp)} class="btn btn-outline" target="_blank" rel="noopener" data-track="page_whatsapp"><Icon name="message-circle" size={18} /> WhatsApp</a>
+          </div>
+        )}
+        <slot name="hero-extra" />
+      </div>
+    </div>
+  </section>
+  <slot />
+</BaseLayout>

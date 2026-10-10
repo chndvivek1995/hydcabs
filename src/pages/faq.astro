@@ -1,0 +1,16 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import FAQ from '../components/FAQ.astro';
+import CTASection from '../components/CTASection.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { faqs } from '../lib/data';
+import { breadcrumbs, faqPage } from '../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'FAQ', path: '/faq/' }];
+const all = faqs.groups.flatMap((g) => g.items);
+---
+<PageLayout title="Corporate Cab FAQs — Hyderabad" description="Answers to the questions Hyderabad companies ask about corporate cab services: pricing models, safety protocols, operations, billing and contracts." path="/faq/" h1="Corporate cab services in Hyderabad: frequently asked questions" eyebrow="FAQ" intro={['Grouped by what HR, admin and finance teams ask most. If your question is not here, the command desk is one call away.']} {crumbs} schema={[breadcrumbs(crumbs), faqPage(all)]}>
+  <Fragment slot="hero-extra"><ul class="mt-8 flex flex-wrap gap-2 text-sm">{faqs.groups.map((g) => <li><a href={`#faq-${g.name.toLowerCase()}`} class="chip border-white/15 bg-white/5 text-paper hover:border-brand hover:text-brand">{g.name} ({g.items.length})</a></li>)}</ul></Fragment>
+  {faqs.groups.map((g, i) => <div class:list={[i % 2 && 'bg-mist']}><FAQ items={g.items} title={`${g.name} questions`} eyebrow={g.name} id={`faq-${g.name.toLowerCase()}`} /></div>)}
+  <section class="section"><div class="wrap grid gap-10 lg:grid-cols-2 lg:items-center"><div class="reveal"><p class="eyebrow">Still have a question?</p><h2 class="h2 mt-3">Ask it with your roster attached</h2><p class="lede">Most questions are answered best against your actual routes and shifts. Send the requirement and we will answer in context.</p></div><div class="reveal reveal-d1"><QuoteForm /></div></div></section>
+  <CTASection />
+</PageLayout>

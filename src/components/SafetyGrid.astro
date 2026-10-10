@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+interface Props { title?: string; eyebrow?: string; text?: string; compact?: boolean; items?: { icon: string; title: string; text: string }[] }
+const defaults = [
+  { icon: 'user-check', title: 'Driver KYC & police verification', text: 'Identity, licence, address and police verification before a driver is rostered; periodic re-checks.' },
+  { icon: 'radar', title: 'GPS tracking & geofencing', text: 'Every trip tracked live with pickup and office geofences; deviations raise alerts at the command desk.' },
+  { icon: 'siren', title: 'SOS & 24×7 command desk', text: 'In-trip SOS for employees and drivers, monitored round the clock with an escalation matrix for your admin team.' },
+  { icon: 'lock', title: 'Number masking', text: 'Employees and drivers coordinate through masked numbers so personal phone numbers are never shared.' },
+  { icon: 'moon', title: 'Women-safety protocol for night shifts', text: 'No woman employee is the first pickup or last drop on a night route without an escort; drop confirmation is logged.' },
+  { icon: 'shield-check', title: 'Vehicle fitness, permits & insurance', text: 'Commercial permits, fitness certificates, insurance and PUC tracked by expiry date; vehicles are cleaned between shifts.' },
+];
+const { title = 'Safety is designed into every route, not added on', eyebrow = 'Safety & compliance', text = 'Practices that HR and admin teams expect from a managed employee-transport programme in Hyderabad.', compact = false, items = defaults } = Astro.props;
+---
+<section class:list={['dark relative overflow-hidden bg-ink text-paper', compact ? 'section-tight' : 'section']} id="safety">
+  <div class="grid-bg absolute inset-0 opacity-60" aria-hidden="true"></div>
+  <div class="glow absolute inset-0" aria-hidden="true"></div>
+  <div class="wrap relative">
+    <div class="flex flex-wrap items-end justify-between gap-6 reveal">
+      <div class="max-w-2xl">
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 class="h2 mt-3">{title}</h2>
+        <p class="lede">{text}</p>
+      </div>
+      <a href="/safety/" class="btn btn-outline">Our safety standards <Icon name="arrow-right" size={16} /></a>
+    </div>
+    <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((it, i) => (
+        <li class:list={['rounded-2xl border border-white/10 bg-white/[.04] p-6 backdrop-blur-sm transition-colors hover:border-brand/50 reveal', i % 3 && `reveal-d${i % 3}`]}>
+          <span class="icon-tile"><Icon name={it.icon} size={22} /></span>
+          <h3 class="h3 mt-4 text-paper">{it.title}</h3>
+          <p class="mt-2 text-[15px] leading-relaxed text-slate-400">{it.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,34 @@
+---
+import Icon from './Icon.astro';
+import type { TitledItem } from '../lib/data';
+interface Props { steps?: TitledItem[]; title?: string; eyebrow?: string; text?: string; icons?: string[]; dark?: boolean }
+const defaults: TitledItem[] = [
+  { title: 'Share your roster', text: 'Send employee home locations, office address and shift timings — a spreadsheet is enough. We do a free route study.' },
+  { title: 'We plan routes & fleet', text: 'Pickups are clubbed by corridor and shift, vehicles are sized to occupancy, and pickup windows are agreed with your team.' },
+  { title: 'Trial week', text: 'Run the plan live for a week with tracking and a dedicated coordinator. Adjust routes, timings and escorts before you commit.' },
+  { title: 'Go live with MIS', text: 'Trips, on-time %, no-shows and km run are reported monthly; billing follows the agreed model and the MIS, not estimates.' },
+];
+const { steps = defaults, title = 'From roster to running routes in about a week', eyebrow = 'How it works', text, icons = ['file-check', 'route', 'calendar-check', 'bar-chart-3'], dark = false } = Astro.props;
+---
+<section class:list={['section', dark && 'dark bg-ink text-paper']} id="how-it-works">
+  <div class="wrap">
+    <div class="max-w-2xl reveal">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 class="h2 mt-3">{title}</h2>
+      {text && <p class="lede">{text}</p>}
+    </div>
+    <ol class="relative mt-12 grid gap-8 md:grid-cols-4">
+      <span class:list={['absolute left-0 right-0 top-6 hidden h-px md:block', dark ? 'bg-white/15' : 'bg-mist-300']} aria-hidden="true"></span>
+      {steps.map((s, i) => (
+        <li class:list={['relative reveal', i && `reveal-d${Math.min(i, 3)}`]}>
+          <div class="flex items-center gap-3 md:block">
+            <span class:list={['relative z-10 inline-flex size-12 items-center justify-center rounded-2xl font-display text-lg font-extrabold', dark ? 'bg-brand text-brand-ink' : 'bg-ink text-paper']}>{i + 1}</span>
+            <span class:list={['icon-tile md:hidden']}><Icon name={icons[i] || 'circle'} size={18} /></span>
+          </div>
+          <h3 class="h3 mt-5">{s.title}</h3>
+          <p class:list={['mt-2 text-[15px] leading-relaxed', dark ? 'text-slate-400' : 'text-slate']}>{s.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

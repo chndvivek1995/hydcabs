@@ -1,0 +1,35 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import CTASection from '../components/CTASection.astro';
+import AreaGrid from '../components/AreaGrid.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, isPlaceholder } from '../config/site';
+import { topAreas } from '../lib/data';
+import { breadcrumbs } from '../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }];
+const creds = [
+  { icon: 'file-check', title: 'GST-registered business', text: isPlaceholder(SITE.gstin) ? 'GSTIN shown in the footer and on every invoice.' : `GSTIN ${SITE.gstin}, shown on every invoice.` },
+  { icon: 'badge-check', title: 'Commercial permits', text: 'Every vehicle on a corporate roster carries commercial registration and the applicable permit; copies available on request.' },
+  { icon: 'shield-check', title: 'Insurance & fitness', text: 'Comprehensive vehicle insurance, fitness certificates and PUC tracked by expiry and summarised in the monthly MIS.' },
+  { icon: 'user-check', title: 'Verified drivers', text: 'Police verification, licence and address checks before rostering; refresher training on a fixed cycle.' },
+];
+const team = [
+  { icon: 'map', title: 'Route planning', text: 'Builds and re-plans routes weekly from your roster; knows which Hyderabad junctions to avoid at which hour.' },
+  { icon: 'headset', title: '24×7 command desk', text: 'Watches live trips, handles breakdowns and delays, and is the number your employees and admins call at 2 AM.' },
+  { icon: 'heart-handshake', title: 'Client success', text: 'One coordinator per client who owns the SLA, the monthly review and the escalation matrix.' },
+  { icon: 'bar-chart-3', title: 'MIS & billing', text: 'Turns tracking data into the monthly report and an invoice that reconciles to it, line by line.' },
+];
+---
+<PageLayout title="About Us — Hyderabad Corporate Cabs" description="A Hyderabad-first corporate cab and employee transportation company: our story, operations team, IT-corridor and ORR coverage, and compliance credentials." path="/about/" h1="A Hyderabad-first employee transport company" eyebrow="About us" intro={['We run employee transportation for companies across Hyderabad — from a few sedans on a Kondapur loop to shift buses for a Patancheru plant — with the same discipline: verified drivers, tracked trips, and bills that match the MIS.']} {crumbs} schema={[breadcrumbs(crumbs)]} whatsapp="Hi, I'd like to know more about your company and corporate transport services in Hyderabad.">
+  <section class="section-tight"><div class="wrap grid gap-10 lg:grid-cols-2 lg:items-start">
+    <div class="prose-hc reveal"><h2>Our story</h2><p>{isPlaceholder(SITE.founded) ? <span class="ph">{'{{FOUNDING_STORY}}'}</span> : `Founded in ${SITE.founded}, `}we started with a handful of sedans running office pickups into HITEC City and learned the business the hard way: a late cab at 6 AM in Kukatpally is a complaint on an HR manager's desk by 9. Everything we have built since — the routing discipline, the command desk, the women-safety protocol, the MIS — came from fixing problems like that one for real clients.</p><p>Today we plan routes across the IT corridor, Secunderabad, the northern industrial belt and the airport zone, for day shifts, rotating shifts and the 2 AM drops that most vendors avoid.</p><h2>Our mission</h2><p>Make employee transport the one line in an admin budget nobody complains about: predictable, safe, transparent, and sized to what the business actually needs this month.</p><h2>Hyderabad-first, deliberately</h2><p>We do not claim all-India coverage. Depth in one city — knowing that the Gachibowli flyover backs up after 6 PM, that Narsingi junction needs ten extra minutes on Monday mornings, that colony roads in Manikonda will not take a tempo traveller — is what makes routes run on time. Our <a href="/locations/">location pages</a> show that depth area by area.</p></div>
+    <div class="space-y-4 reveal reveal-d1"><div class="card"><p class="eyebrow">Compliance credentials</p><ul class="mt-4 space-y-4">{creds.map((c) => <li class="flex gap-3"><span class="icon-tile shrink-0"><Icon name={c.icon} size={20} /></span><div><h3 class="font-display font-bold">{c.title}</h3><p class="mt-1 text-sm text-slate">{c.text}</p></div></li>)}</ul></div></div>
+  </div></section>
+  <section class="section bg-mist"><div class="wrap"><div class="max-w-2xl reveal"><p class="eyebrow">Operations team</p><h2 class="h2 mt-3">Four functions behind every on-time pickup</h2></div><div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{team.map((t, i) => <div class:list={['card reveal', i && `reveal-d${Math.min(i, 3)}`]}><span class="icon-tile"><Icon name={t.icon} size={22} /></span><h3 class="h3 mt-4">{t.title}</h3><p class="mt-2 text-sm leading-relaxed text-slate">{t.text}</p></div>)}</div></div></section>
+  <HowItWorks dark />
+  <AreaGrid areas={topAreas(16)} compact />
+  <section class="section"><div class="wrap grid gap-10 lg:grid-cols-2 lg:items-center"><div class="reveal"><p class="eyebrow">Talk to us</p><h2 class="h2 mt-3">Tell us about your team</h2><p class="lede">A route study takes one working day and costs nothing. We come back with a plan, a fleet mix and indicative pricing.</p></div><div class="reveal reveal-d1"><QuoteForm /></div></div></section>
+  <CTASection />
+</PageLayout>

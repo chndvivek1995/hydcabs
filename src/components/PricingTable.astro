@@ -1,0 +1,28 @@
+---
+// Pricing tables show structure + drivers; actual ₹ figures come ONLY from the `rates` prop (config / owner data).
+// When a rate is missing, the cell shows "On request" instead of inventing numbers.
+import Icon from './Icon.astro';
+interface Row { label: string; sub?: string; cells: (string | null | undefined)[] }
+interface Props { title: string; caption?: string; columns: string[]; rows: Row[]; note?: string; id?: string }
+const { title, caption, columns, rows, note, id } = Astro.props;
+const cell = (v: string | null | undefined) => (v && !/\{\{/.test(v) ? v : null);
+---
+<div class="card !p-0 overflow-hidden" id={id}>
+  <div class="flex flex-wrap items-start justify-between gap-3 border-b border-mist-200 bg-mist px-5 py-4 sm:px-6">
+    <div><h3 class="h3">{title}</h3>{caption && <p class="mt-1 text-sm text-slate">{caption}</p>}</div>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm">
+      <thead><tr class="border-b border-mist-200 text-xs uppercase tracking-wide text-slate"><th class="px-5 py-3 font-semibold sm:px-6">Plan</th>{columns.map((c) => <th class="px-4 py-3 font-semibold">{c}</th>)}</tr></thead>
+      <tbody class="divide-y divide-mist-200">
+        {rows.map((r) => (
+          <tr class="align-top">
+            <th scope="row" class="px-5 py-3.5 font-semibold text-ink sm:px-6">{r.label}{r.sub && <span class="block text-xs font-normal text-slate">{r.sub}</span>}</th>
+            {r.cells.map((c) => <td class="px-4 py-3.5">{cell(c) ? <span class="font-semibold text-ink">{cell(c)}</span> : <a href="#quote" class="inline-flex items-center gap-1 font-semibold text-accent-700">On request <Icon name="arrow-right" size={12} /></a>}</td>)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {note && <p class="border-t border-mist-200 px-5 py-3 text-xs text-slate sm:px-6">{note}</p>}
+</div>

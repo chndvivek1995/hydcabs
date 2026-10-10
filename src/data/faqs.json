@@ -1,0 +1,171 @@
+{
+  "home": [
+    {
+      "q": "Which parts of Hyderabad do your corporate cab services cover?",
+      "a": "We cover the whole Hyderabad metropolitan area, with the densest operations along the IT corridor from HITEC City and Madhapur through Gachibowli to the Financial District and Kokapet. Pickup belts routinely reach Kukatpally, Miyapur, Kompally, Secunderabad, Uppal, LB Nagar and Dilsukhnagar, and we run plant routes to Jeedimetla, Patancheru and Genome Valley. Share your office location and roster and we will confirm coverage."
+    },
+    {
+      "q": "How do we start a corporate cab service for our office?",
+      "a": "Share your office location, approximate headcount, shift timings and the localities your employees live in, and we run a route study. From that we propose routes, vehicle types and a service plan, run a trial on your live shifts and then move to a monthly contract with MIS reporting. Most companies go from first call to trial within a couple of weeks."
+    },
+    {
+      "q": "Can you handle night shifts and rotating rosters?",
+      "a": "Yes. Night shifts, US and UK logins, A/B/C plant rotations and weekly rotating rosters are the core of our work. Each shift pattern gets its own route set, rosters are ingested weekly or at each rotation change, and a desk that is awake through the night monitors every trip, so a 3:30 AM drop runs with the same discipline as a 9 AM pickup."
+    },
+    {
+      "q": "What safety measures protect employees, especially women on night shifts?",
+      "a": "Drivers are identity-verified and background-checked, vehicles are GPS-tracked, and employees have SOS in the app and by phone with a monitored desk behind it. On night routes, women employees are sequenced first-pickup/last-drop, escorts ride where your policy requires, numbers are masked and every drop is confirmed. The protocol is documented with your HR team before go-live."
+    },
+    {
+      "q": "How are corporate cab services billed each month?",
+      "a": "Billing follows the model agreed after the route study, usually per employee per month for shared routes or per vehicle per month for dedicated vehicles, with night allowance, escort hours, tolls and waiting time itemised where they apply. Every invoice is reconciled against trip logs from GPS tracking, so your finance team can audit each line rather than accept a vehicle count."
+    },
+    {
+      "q": "Can we run a trial before signing a contract?",
+      "a": "Yes. After the route study we run routes live for one to two weeks on your actual shifts, with the desk watching every trip and adjusting pickup points and timings as needed. The trial is how both sides confirm travel times, gate arrangements and safety sequencing work in practice before the roster is locked and monthly billing begins."
+    },
+    {
+      "q": "What vehicles are in your corporate fleet?",
+      "a": "Sedans for small groups and executives, SUVs and MUVs for shared routes of up to six or seven, tempo travellers in 12- and 17-seat configurations for dense belts, mini buses and buses for plant and campus shuttles, and EV sedans for day-shift routes where range suits. Vehicle type is matched to each route's headcount, which is how occupancy and cost are kept sensible."
+    },
+    {
+      "q": "Do you serve offices outside the IT corridor, such as Secunderabad, Uppal or Banjara Hills?",
+      "a": "Yes. Alongside HITEC City, Gachibowli and the Financial District, we run programmes for offices and hospitals in Banjara Hills, Jubilee Hills, Begumpet and Secunderabad, contact centres in Uppal and Pocharam, and plants in Balanagar, Jeedimetla, Patancheru and Genome Valley. If your location is anywhere in the Hyderabad metropolitan area, we can route to it."
+    }
+  ],
+  "groups": [
+    {
+      "name": "Pricing",
+      "items": [
+        {
+          "q": "What determines the cost of a corporate cab service in Hyderabad?",
+          "a": "Cost is driven by kilometres actually run, vehicle type, number of routes, shift timings and night allowance, escort requirements, dead kilometres, toll and parking exposure, working days per month and contract length. Dense pickup belts and well-filled vehicles lower per-head cost; scattered addresses and small groups raise it. Rates are shared after a route study of your roster, not from a rate card."
+        },
+        {
+          "q": "Is per-employee pricing or a dedicated vehicle package cheaper?",
+          "a": "It depends on how your employees are distributed. Per-employee pricing suits dense, stable belts where shared vehicles fill reliably; a dedicated vehicle package suits small, scattered or senior groups with variable timings. Many companies use a mixed model by route group. The route study compares both for your roster and recommends the structure that costs less for the same service level."
+        },
+        {
+          "q": "Are night shifts priced differently from day shifts?",
+          "a": "Yes, usually. Night routes carry a night allowance for drivers, and escort hours are added on routes where your policy requires an escort. On the other hand, night roads are faster and routes run tighter, so vehicles cover more employees per trip. The net difference depends on your shift mix and is itemised in the proposal after the route study."
+        },
+        {
+          "q": "Are tolls, parking and fuel included in the quoted rate?",
+          "a": "Fuel and driver costs are built into the rate. Tolls and parking are either included or passed through at actuals with receipts, depending on what you prefer; ORR toll exposure matters for routes to Kokapet, Shamshabad or Genome Valley. The treatment is fixed in the contract so there are no surprise lines on the invoice."
+        },
+        {
+          "q": "How do dead kilometres affect what we pay?",
+          "a": "Dead kilometres are the distance a vehicle runs empty between the depot, first pickup, last drop and the next route. On a per-kilometre or vehicle-day basis you pay for them whether or not you see them. We position drivers near first pickups and sequence routes to minimise them, and trip logs show the empty legs so you can verify the saving."
+        },
+        {
+          "q": "Do rates reduce for longer contracts or larger headcounts?",
+          "a": "Longer commitments and larger, denser headcounts generally allow better rates because vehicles fill more reliably and fleet planning is more predictable. Rather than a blanket discount, we show the effect of term and headcount in the proposal after the route study, so you can see what a twelve-month term or an additional shift does to cost per employee."
+        }
+      ]
+    },
+    {
+      "name": "Safety",
+      "items": [
+        {
+          "q": "How are your drivers verified?",
+          "a": "Drivers are identity-verified, their licences and documents checked, and background checks completed to the standard agreed in your contract before they are assigned to your routes. They are briefed on conduct, phone use and route adherence, and any complaint is recorded and investigated with you. Verification records are available to your HR team on request."
+        },
+        {
+          "q": "Are all vehicles GPS-tracked?",
+          "a": "Yes. Every vehicle on a corporate route is GPS-tracked, and the transport desk sees all live trips on one screen. Route deviations and unexpected halts raise alerts that the desk acts on immediately. Employees receive ETAs, and trip logs from the same tracking feed the MIS and invoice reconciliation."
+        },
+        {
+          "q": "What happens if an employee presses SOS?",
+          "a": "The monitored desk sees the vehicle location at once, calls the employee first and the driver second, and escalates to your designated security or HR contact if the employee does not answer or reports a concern. Every SOS is logged with its response timeline and reviewed with you, including false triggers, so the process keeps improving."
+        },
+        {
+          "q": "What rules apply to women employees on night routes?",
+          "a": "Women employees are sequenced so they are not the first pickup on an empty vehicle or the last drop alone, escorts ride where your policy requires, drivers are verified, numbers are masked and every drop is confirmed to the desk. The protocol is documented with your HR team; where law is implied, confirm requirements under applicable Telangana rules with your compliance team."
+        },
+        {
+          "q": "How do you maintain vehicle condition and documentation?",
+          "a": "Vehicles are checked for fitness, permits, insurance and pollution certificates, and these documents are kept on file and shared with your facilities team on request. Regular maintenance schedules and cleanliness checks are part of the operating standard, and a vehicle with a defect is swapped out rather than sent on a route."
+        }
+      ]
+    },
+    {
+      "name": "Operations",
+      "items": [
+        {
+          "q": "How do we update the roster when employees join, leave or change shifts?",
+          "a": "Your admin or HR point of contact shares roster changes with the transport desk by email, spreadsheet or app, weekly or at each rotation change. We re-cut routes before the affected shift runs, and employees receive their updated pickup time and vehicle details. Large changes such as a new team or an office move are handled as a reroute with a short trial."
+        },
+        {
+          "q": "What happens when an employee does not show up for a pickup?",
+          "a": "Drivers wait a defined window agreed with you, the no-show is logged against the roster with a timestamp, and the route continues so other employees are not delayed. The MIS reports no-shows by team so managers can act on repeat cases, and the billing treatment of no-shows is fixed in the contract to avoid disputes."
+        },
+        {
+          "q": "What if a cab is late or breaks down?",
+          "a": "The desk sees delays and halts on live tracking before the employee calls. For a delay, the employee gets an updated ETA; for a breakdown, a reserve vehicle is dispatched and your coordinator is informed through the agreed escalation path. Every incident is logged with its response time and appears in the monthly MIS."
+        },
+        {
+          "q": "Who is our day-to-day point of contact?",
+          "a": "A dedicated transport coordinator who knows your campus, roster cadence and escalation matrix, backed by the 24x7 desk for live trips. Your admin team deals with one person for changes and queries, and most operational issues are resolved at the desk without reaching you at all."
+        },
+        {
+          "q": "Can you run multiple shifts and locations from one programme?",
+          "a": "Yes. Each shift pattern and office gets its own route set, all run from one desk and one roster, so general, US and night shifts, or a HITEC City office plus a Financial District office, share a vehicle pool without clashing. Shared pickup belts across locations are clubbed wherever that saves vehicles."
+        },
+        {
+          "q": "Do employees get an app or live ETA?",
+          "a": "Employees receive vehicle details and a live ETA through the app or SMS before each pickup, confirm boarding with OTP where configured, and can trigger SOS from the same place. Where a company prefers not to roll out an app, SMS and call-based coordination through masked numbers provide the same information."
+        }
+      ]
+    },
+    {
+      "name": "Billing",
+      "items": [
+        {
+          "q": "What does a monthly invoice include?",
+          "a": "The invoice lists each route or employee plan, working days, kilometres where applicable, night allowance, escort hours, waiting time, tolls and parking as per the agreed treatment, and any approved ad-hoc trips. It is backed by trip logs from GPS tracking and a monthly MIS, so every line can be traced to a trip."
+        },
+        {
+          "q": "How is GST handled on corporate cab invoices?",
+          "a": "GST is charged on the invoice at the rate applicable to the service structure agreed in your contract, and the invoice carries our GST registration details for your records. Whether and how your company can claim input tax credit depends on your circumstances, so please confirm the treatment with your tax adviser or finance team before finalising the contract structure."
+        },
+        {
+          "q": "How do we raise and resolve a billing dispute?",
+          "a": "Raise it with your coordinator, naming the invoice line in question, and we pull the trip logs for that route and date. Most disputes are settled within the billing cycle because the data is already there. The contract fixes a dispute window and process so neither side is left arguing over a vehicle count at month-end."
+        },
+        {
+          "q": "What is the payment cycle?",
+          "a": "Invoices are raised monthly after the MIS is shared and reconciled with your team, with a payment term agreed in the contract. Companies that prefer fortnightly or route-wise invoicing for internal cost allocation can request it, and ad-hoc trips such as airport transfers can be billed on the same account or separately."
+        },
+        {
+          "q": "What reports come with the billing?",
+          "a": "A monthly MIS covering on-time performance, trip adherence, no-shows, occupancy and vehicle utilisation, exceptions and incidents, with shift-wise, route-wise or location-wise cuts as needed. The MIS and the invoice are built from the same trip data, so your finance and facilities teams review one consistent picture."
+        }
+      ]
+    },
+    {
+      "name": "Contracts",
+      "items": [
+        {
+          "q": "What is the minimum contract term?",
+          "a": "There is no fixed minimum for shared monthly plans; most companies start with a trial followed by a monthly or quarterly arrangement and move to an annual contract once routes stabilise. Dedicated vehicles and shift buses are usually contracted for longer terms because fleet is committed to you. The term is agreed in the proposal."
+        },
+        {
+          "q": "How do we exit or scale down if our needs change?",
+          "a": "The contract sets a notice period for exit and a simpler monthly process for scaling vehicles up or down with headcount. Right-sizing the pool after a release or a team move is a reroute, not a penalty event, and we share occupancy data each month so you can make the call on evidence."
+        },
+        {
+          "q": "Are there SLA commitments and penalties?",
+          "a": "Yes. The contract defines SLAs such as on-time percentage at the gate or login, maximum ride time, response time for breakdowns and incident reporting, measured from the same trip data as the MIS. Service credits or penalties for missed SLAs are agreed up front so both sides know what is at stake."
+        },
+        {
+          "q": "What is included in the contract document?",
+          "a": "Scope and routes, vehicle types and counts, shift timings, the pricing model and treatment of tolls, parking, night allowance, escorts and no-shows, SLAs and credits, the safety protocol, reporting, the roster-change process, notice periods and dispute resolution. We share a plain-language draft so your admin and legal teams can review it without surprises."
+        },
+        {
+          "q": "Can you take over from our current transport vendor without disrupting shifts?",
+          "a": "Yes. We audit the existing routes and roster, plan a parallel run or a shift-by-shift cutover, and keep the pickup points and timings employees already know unless the route study shows a better option. Most transitions are completed over a few weeks with your coordinator informed at each step."
+        }
+      ]
+    }
+  ]
+}

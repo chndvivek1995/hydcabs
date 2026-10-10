@@ -1,0 +1,34 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SafetyGrid from '../components/SafetyGrid.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import FAQ from '../components/FAQ.astro';
+import CTASection from '../components/CTASection.astro';
+import Icon from '../components/Icon.astro';
+import { faqs as allFaqs } from '../lib/data';
+import { breadcrumbs, faqPage } from '../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Safety', path: '/safety/' }];
+const safetyFaqs = allFaqs.groups.find((g) => g.name === 'Safety')?.items || [];
+const wa = 'Hi, I want to understand your employee transport safety process for our Hyderabad office.';
+const pillars = [
+  { icon: 'user-check', title: 'Driver onboarding', items: ['Identity, licence and address verification', 'Police verification certificate on file', 'Driving-record and reference check', 'Induction on route discipline, conduct and the women-safety protocol', 'Periodic re-verification and refresher training'] },
+  { icon: 'radar', title: 'In-trip controls', items: ['GPS tracking on every vehicle, visible to the command desk', 'Geofences at pickup clusters and office gates; deviation alerts', 'SOS for employees and drivers, monitored 24×7', 'Number masking between employees and drivers', 'OTP or app-confirmed boarding and drop logs'] },
+  { icon: 'moon', title: 'Night & women-safety protocol', items: ['No woman employee as first pickup or last drop on a night route without an escort', 'Escort assignment rules agreed per shift with your HR team', 'Drop confirmation logged at the doorstep, not the colony gate', 'Driver stays until the employee confirms entry', 'Escalation matrix shared with HR and security'] },
+  { icon: 'shield-check', title: 'Vehicle compliance', items: ['Commercial registration, permit, fitness, insurance and PUC tracked by expiry', 'Pre-shift checks: brakes, tyres, lights, seat belts, first-aid kit', 'Cleaning between shifts; deep-clean schedule', 'Lapsed-document vehicles removed from roster automatically', 'Compliance summary in the monthly MIS'] },
+  { icon: 'siren', title: 'Incident response', items: ['Breakdown: replacement vehicle dispatched, employees informed with ETA', 'Accident: driver protocol, medical escalation, HR notification, written report within an agreed window', 'Behaviour complaints: driver stood down pending review, written closure to HR', 'Root-cause review for repeat issues', 'Incident log included in monthly MIS'] },
+  { icon: 'heart-handshake', title: 'POSH alignment', items: ['Conduct standards for drivers and escorts written into contracts', 'Clear complaint channel for employees, routed to your IC where required', 'Zero-tolerance removal for harassment complaints', 'Training refreshed on a fixed cycle', 'Records retained for audit'] },
+];
+---
+<PageLayout title="Safe Employee Transportation Standards" description="How we keep employee transport safe in Hyderabad: driver police verification, GPS, SOS, number masking, a women-safety night protocol and incident response." path="/safety/" h1="Safe employee transportation, by design" eyebrow="Safety & compliance" intro={['The practices below are what HR, admin and security teams should expect from any managed employee-transport programme in Hyderabad, and what we build every route around. Where your policy goes further, we adopt it.']} {crumbs} schema={[breadcrumbs(crumbs), faqPage(safetyFaqs)]} whatsapp={wa}>
+  <SafetyGrid compact title="Six controls on every route" text="From driver onboarding to the monthly compliance summary." />
+  <section class="section"><div class="wrap">
+    <div class="max-w-2xl reveal"><p class="eyebrow">In detail</p><h2 class="h2 mt-3">What each control actually involves</h2></div>
+    <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{pillars.map((p, i) => <div class:list={['card reveal', i % 3 && `reveal-d${i % 3}`]}><span class="icon-tile"><Icon name={p.icon} size={22} /></span><h3 class="h3 mt-4">{p.title}</h3><ul class="mt-3 space-y-2 text-sm text-slate">{p.items.map((it) => <li class="flex gap-2"><span class="tick mt-0.5"><Icon name="check" size={11} /></span>{it}</li>)}</ul></div>)}</div>
+  </div></section>
+  <section class="section-tight bg-mist"><div class="wrap grid gap-10 lg:grid-cols-2 lg:items-start">
+    <div class="prose-hc reveal"><h2>Night-shift women safety in Hyderabad: how the protocol runs</h2><p>Night routes are planned so that women employees are neither the first pickup nor the last drop unless an escort is on board. Where a roster makes that impossible — one woman on a 2 AM drop to Kompally, for instance — an escort is assigned or the route is re-sequenced, and the decision is logged. The driver waits until the employee confirms she is inside; the drop is time-stamped at the doorstep.</p><p>Employers in Telangana have obligations around night work and transport for women employees under state shops-and-establishments and factories rules. We design routes to support those obligations and share the trip logs your compliance team needs, but you should confirm current requirements with your legal advisers; this page is operational guidance, not legal advice.</p><p>See how this fits into a full programme on the <a href="/solutions/women-safety-employee-transport-hyderabad/">women-safety transport page</a> and the <a href="/services/night-shift-cab-hyderabad/">night-shift cab service</a>.</p><h2>What we report</h2><p>Every month your admin team receives a compliance pack: driver roster with verification status, vehicle document status, incident log with closure notes, SOS events, and route-deviation alerts with the command desk's response. It is the same data we use internally, not a summary written for the client.</p></div>
+    <div class="reveal reveal-d1"><QuoteForm title="Review our safety process for your team" note="We will walk your HR and security teams through the protocol and adapt it to your policy." whatsapp={wa} /></div>
+  </div></section>
+  <FAQ items={safetyFaqs} title="Safety FAQs" />
+  <CTASection whatsapp={wa} />
+</PageLayout>

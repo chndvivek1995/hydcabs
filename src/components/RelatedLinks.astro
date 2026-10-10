@@ -1,0 +1,26 @@
+---
+import Icon from './Icon.astro';
+interface Link { title: string; href: string; blurb?: string; icon?: string }
+interface Props { title: string; eyebrow?: string; links: Link[]; cols?: 2 | 3 }
+const { title, eyebrow = 'Related', links, cols = 3 } = Astro.props;
+---
+{links.length > 0 && (
+<section class="section-tight">
+  <div class="wrap">
+    <p class="eyebrow reveal">{eyebrow}</p>
+    <h2 class="h2 mt-3 reveal">{title}</h2>
+    <ul class:list={['mt-8 grid gap-4 reveal reveal-d1', cols === 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2']}>
+      {links.map((l) => (
+        <li>
+          <a href={l.href} class="card card-hover flex h-full flex-col gap-3">
+            <span class="icon-tile"><Icon name={l.icon || 'arrow-up-right'} size={20} /></span>
+            <span class="h3">{l.title}</span>
+            {l.blurb && <span class="text-sm text-slate">{l.blurb}</span>}
+            <span class="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-accent-700">Read more <Icon name="arrow-right" size={14} /></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+)}

@@ -1,0 +1,24 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, fullAddress, telLink, waLink, isPlaceholder } from '../config/site';
+import Ph from "../components/Ph.astro";
+import { breadcrumbs } from '../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }];
+const wa = 'Hi, I need corporate cab services in Hyderabad. Can we talk?';
+const mapQuery = encodeURIComponent(isPlaceholder(SITE.address.street) ? 'Hyderabad, Telangana' : fullAddress);
+---
+<PageLayout title="Contact Us — Corporate Cabs Hyderabad" description="Call, WhatsApp or email us for corporate cab and employee transportation in Hyderabad. 24×7 command desk, one-working-day quotes, free route study." path="/contact/" h1="Contact us" eyebrow="Contact" intro={['Call the command desk any hour, message us on WhatsApp, or send the form — we reply within one working day with a route plan.']} {crumbs} schema={[breadcrumbs(crumbs)]} whatsapp={wa} ctas={false} quoteHref="#quote">
+  <section class="section-tight"><div class="wrap grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+    <div class="space-y-4 reveal">
+      <a href={telLink} class="card card-hover flex items-center gap-4" data-track="contact_call"><span class="icon-tile"><Icon name="phone" size={22} /></span><span><span class="block text-xs font-bold uppercase tracking-wide text-slate">Call · 24×7</span><span class="h3">{SITE.phoneDisplay}</span></span></a>
+      <a href={waLink(wa)} target="_blank" rel="noopener" class="card card-hover flex items-center gap-4" data-track="contact_whatsapp"><span class="icon-tile"><Icon name="message-circle" size={22} /></span><span><span class="block text-xs font-bold uppercase tracking-wide text-slate">WhatsApp</span><span class="h3">Message us</span></span></a>
+      <div class="card flex items-center gap-4"><span class="icon-tile"><Icon name="mail" size={22} /></span><span><span class="block text-xs font-bold uppercase tracking-wide text-slate">Email</span><span class="h3 break-all"><Ph v={SITE.email} /></span></span></div>
+      <div class="card flex items-start gap-4"><span class="icon-tile shrink-0"><Icon name="map-pin" size={22} /></span><span><span class="block text-xs font-bold uppercase tracking-wide text-slate">Office</span><address class="h3 not-italic"><Ph v={fullAddress} /></address><span class="mt-1 block text-sm text-slate">Office hours Mon–Sat 9:30 AM – 6:30 PM · Command desk 24×7</span></span></div>
+      <div class="overflow-hidden rounded-2xl border border-mist-200 bg-mist"><iframe title="Office location map" src={`https://www.google.com/maps?q=${mapQuery}&output=embed`} width="600" height="300" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="h-[300px] w-full border-0"></iframe></div>
+    </div>
+    <div class="reveal reveal-d1"><QuoteForm title="Send us your requirement" note="Routes, shifts, headcount — whatever you have. We will come back with questions and a plan." whatsapp={wa} /></div>
+  </div></section>
+  <section class="section-tight bg-mist"><div class="wrap grid gap-4 sm:grid-cols-3">{[['Vendor or driver?', 'Attach your cab to our corporate fleet.', '/attach-your-cab/', 'key-round'], ['Looking for rates?', 'See how pricing works and use the estimator.', '/pricing/', 'wallet'], ['Questions first?', '27 answers on pricing, safety, operations and contracts.', '/faq/', 'message-circle']].map(([t, b, h, i]) => <a href={h} class="card card-hover flex items-center gap-4 reveal"><span class="icon-tile"><Icon name={i} size={22} /></span><span><span class="h3 block">{t}</span><span class="text-sm text-slate">{b}</span></span></a>)}</div></section>
+</PageLayout>

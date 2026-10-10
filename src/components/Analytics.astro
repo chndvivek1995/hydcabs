@@ -1,0 +1,51 @@
+---
+// GA4 + Meta Pixel loaded after consent-banner interaction or requestIdleCallback — never blocks render.
+// Also tracks click-to-call / WhatsApp / CTA clicks via [data-track] as GA4 events.
+import { SITE } from '../config/site';
+const cfg = { ga: SITE.ga4, px: SITE.metaPixel };
+---
+<script is:inline define:vars={{ cfg }}>window.__hc = cfg;</script>
+<script>
+  type W = Window & { __hc: { ga: string; px: string }; dataLayer: any[]; gtag: (...a: any[]) => void; fbq: any };
+  const w = window as unknown as W;
+  const KEY = 'hc_consent';
+  let loaded = false;
+  function loadTags() {
+    if (loaded) return; loaded = true;
+    if (w.__hc.ga) {
+      w.dataLayer = w.dataLayer || []; w.gtag = function () { w.dataLayer.push(arguments); };
+      w.gtag('js', new Date()); w.gtag('config', w.__hc.ga, { anonymize_ip: true });
+      const s = document.createElement('script'); s.async = true; s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(w.__hc.ga)}`; document.head.appendChild(s);
+    }
+    if (w.__hc.px) {
+      const f: any = (w.fbq = function () { f.callMethod ? f.callMethod.apply(f, arguments) : f.queue.push(arguments); }); f.push = f; f.loaded = true; f.version = '2.0'; f.queue = [];
+      const s = document.createElement('script'); s.async = true; s.src = 'https://connect.facebook.net/en_US/fbevents.js'; document.head.appendChild(s);
+      w.fbq('init', w.__hc.px); w.fbq('track', 'PageView');
+    }
+    document.dispatchEvent(new CustomEvent('hc:tags-ready'));
+  }
+  function track(name: string, params: Record<string, string> = {}) {
+    if (w.gtag) w.gtag('event', name, params);
+  }
+  // Consent banner
+  const consent = (() => { try { return localStorage.getItem(KEY); } catch { return null; } })();
+  const banner = document.getElementById('consent');
+  if (consent === 'all') { schedule(); }
+  else if (consent === 'essential') { banner?.remove(); }
+  else if (banner) {
+    banner.classList.remove('hidden');
+    banner.querySelectorAll<HTMLButtonElement>('button[data-consent]').forEach((b) => b.addEventListener('click', () => {
+      const v = b.dataset.consent!; try { localStorage.setItem(KEY, v); } catch {}
+      banner.remove(); if (v === 'all') loadTags();
+    }));
+  }
+  function schedule() { if ('requestIdleCallback' in w) (w as any).requestIdleCallback(loadTags, { timeout: 3000 }); else setTimeout(loadTags, 1500); }
+  // Click tracking for calls / WhatsApp / CTAs
+  document.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLElement>('[data-track]'); if (!a) return;
+    const id = a.dataset.track || ''; const kind = id.includes('call') ? 'click_to_call' : id.includes('whatsapp') ? 'click_whatsapp' : 'cta_click';
+    track(kind, { cta_id: id, page_path: location.pathname });
+    if (w.fbq && kind !== 'cta_click') w.fbq('trackCustom', kind, { cta_id: id });
+  }, { passive: true });
+  (w as any).hcTrack = track;
+</script>

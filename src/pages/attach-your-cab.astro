@@ -1,0 +1,35 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import FAQ from '../components/FAQ.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, telLink } from '../config/site';
+import { breadcrumbs, faqPage } from '../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Attach your cab', path: '/attach-your-cab/' }];
+const wa = 'Hi, I want to attach my car to your corporate fleet in Hyderabad.';
+const need = ['Commercial (yellow-board) registration with valid permit', 'Vehicle within the contract age limit, AC working, clean interiors', 'Insurance, fitness certificate and PUC current', 'Driver with a valid commercial licence and badge', 'Willingness to complete police verification and induction', 'Smartphone for trip tracking and OTP boarding'];
+const benefits = [
+  { icon: 'calendar-check', title: 'Fixed monthly routes', text: 'Corporate contracts give predictable duty days and hours instead of waiting for app rides.' },
+  { icon: 'wallet', title: 'On-time settlements', text: 'Payments follow the agreed cycle against trip records in the MIS — no disputes about what ran.' },
+  { icon: 'route', title: 'Planned kilometres', text: 'Routes are clubbed and sequenced, so dead km are lower than ad hoc city driving.' },
+  { icon: 'shield-check', title: 'Safe, respectful work', text: 'Corporate employees, verified pickups, a command desk to call when something goes wrong.' },
+];
+const faqs = [
+  { q: 'Which vehicles can be attached to the corporate fleet?', a: 'Sedans such as Dzire or Etios class, SUVs such as Ertiga or XL6, premium MUVs such as Innova Crysta, 12 and 17-seater tempo travellers, mini buses, buses and electric sedans. Every vehicle must be commercially registered with a valid permit, within the model-age limit, air-conditioned and in good interior condition.' },
+  { q: 'Do I need to be the driver, or can I attach a vehicle with my own driver?', a: 'Both work. Owner-drivers and small fleet owners with their own drivers are welcome. Every driver, whether owner or employed, must complete the same police verification, licence and address checks and the induction on route discipline and the women-safety protocol before being rostered.' },
+  { q: 'How are payments made?', a: 'Payments are settled on an agreed cycle against the trips recorded in the tracking system, with a statement that lists each trip. Fuel, tolls and parking treatment is set out in the vendor agreement so there are no surprises about what is reimbursed and what is included in the rate.' },
+  { q: 'Which areas of Hyderabad do you need vehicles in?', a: 'Demand is highest for vehicles based near the residential pickup belts that feed the IT corridor — Kukatpally, Miyapur, Chandanagar, Manikonda, LB Nagar, Uppal, Secunderabad and Kompally — and for buses near the Balanagar, Jeedimetla, Patancheru and Genome Valley industrial areas. Tell us where you are based.' },
+  { q: 'What happens after I submit the form?', a: 'Our vendor team calls to confirm the vehicle and document details, schedules an inspection and the driver verification, and completes the induction. Once the documents are verified and the vehicle passes inspection, you are added to the roster pool and assigned to routes as corporate demand in your area requires.' },
+];
+---
+<PageLayout title="Attach Your Cab — Vendor Partners" description="Attach your cab, SUV, Innova, tempo traveller or bus to our corporate fleet in Hyderabad. Fixed monthly routes, on-time settlements and verified corporate work." path="/attach-your-cab/" h1="Attach your car to our corporate fleet in Hyderabad" eyebrow="Vendor & driver partners" intro={['Owner-drivers and fleet owners: put your vehicle on fixed corporate routes with predictable duty hours and settlements that follow the trip record.']} {crumbs} schema={[breadcrumbs(crumbs), faqPage(faqs)]} whatsapp={wa} quoteHref="#vendor">
+  <section class="section-tight"><div class="wrap grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start">
+    <div class="space-y-8 reveal">
+      <div><p class="eyebrow">Why partner with us</p><h2 class="h2 mt-3">Steady corporate work, fairly settled</h2><ul class="mt-6 grid gap-4 sm:grid-cols-2">{benefits.map((b) => <li class="flex gap-3"><span class="icon-tile shrink-0"><Icon name={b.icon} size={20} /></span><div><h3 class="font-display font-bold">{b.title}</h3><p class="mt-1 text-sm text-slate">{b.text}</p></div></li>)}</ul></div>
+      <div class="card"><h2 class="h3">What you need to attach a vehicle</h2><ul class="mt-4 space-y-2 text-sm">{need.map((n) => <li class="flex gap-2"><span class="tick mt-0.5"><Icon name="check" size={11} /></span>{n}</li>)}</ul><p class="mt-4 text-sm text-slate">Questions? Call the vendor desk on <a href={telLink} class="font-semibold text-ink underline">{SITE.phoneDisplay}</a>.</p></div>
+    </div>
+    <div class="reveal reveal-d1"><QuoteForm id="vendor" leadType="vendor" title="Register your vehicle" note="Fill in the vehicle details and our vendor team will call to schedule inspection and verification." whatsapp={wa} /></div>
+  </div></section>
+  <section class="section-tight bg-mist"><div class="wrap prose-hc max-w-3xl reveal"><h2>How vehicle attachment works</h2><p>After you submit the form, the vendor desk calls within two working days to confirm the vehicle, model year, permit type and the area you operate from. We then schedule a physical inspection — interiors, AC, tyres, seat belts, lights, first-aid kit — and collect copies of the registration certificate, permit, insurance, fitness certificate and PUC. Documents are logged by expiry date; you will be reminded before anything lapses.</p><p>Drivers complete police verification and a half-day induction covering pickup discipline, the women-safety protocol for night routes, how OTP boarding works on the tracking app, and what to do when a vehicle breaks down or an employee does not show. Owner-drivers and employed drivers go through the same process.</p><p>Once verified, the vehicle joins the roster pool for your area. Routes are assigned as corporate demand requires — a Kukatpally-based sedan is likely to run HITEC City or Gachibowli pickups; a bus based near Jeedimetla is likely to run plant shifts. Duty hours, kilometre treatment, fuel, tolls and the settlement cycle are fixed in the vendor agreement before the first trip, and every settlement statement lists the trips it pays for.</p><p>Partners who keep on-time pickups and clean vehicles are prioritised when new routes open. Read more about the standards we hold every vehicle to on the <a href="/safety/">safety page</a> and the <a href="/fleet/">fleet page</a>.</p></div></section>
+  <FAQ items={faqs} title="Vendor & driver FAQs" />
+</PageLayout>

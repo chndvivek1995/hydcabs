@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import DashboardMockup from './DashboardMockup.astro';
+interface Props { title?: string; eyebrow?: string; text?: string; showMockup?: boolean }
+const { title = 'GPS-tracked fleet, automated routing and reports your admin team can act on', eyebrow = 'Technology', text = 'Transport runs on data: roster upload, route optimisation, live trip tracking and monthly MIS that reconciles to the invoice.', showMockup = true } = Astro.props;
+const feats = [
+  { icon: 'navigation', title: 'Live ETA & trip tracking', text: 'Employees see the cab approaching; admins see every active trip on one map.' },
+  { icon: 'route', title: 'Automated routing', text: 'Pickups clubbed by corridor and shift to cut dead km and vehicle count.' },
+  { icon: 'layout-dashboard', title: 'Roster upload & shift mapping', text: 'Upload weekly rosters; changes flow to routes without phone calls.' },
+  { icon: 'smartphone', title: 'OTP boarding & no-show logs', text: 'Boarding confirmed per employee, so no-shows and billing disputes are traceable.' },
+  { icon: 'bar-chart-3', title: 'MIS & billing reports', text: 'On-time %, trips, km, no-shows and exceptions in a monthly pack that matches the invoice.' },
+  { icon: 'headset', title: '24×7 command centre', text: 'Exceptions — breakdowns, late drivers, route changes — handled by people, not tickets.' },
+];
+---
+<section class="section bg-mist" id="technology">
+  <div class="wrap">
+    <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.1fr]">
+      <div class="reveal">
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 class="h2 mt-3">{title}</h2>
+        <p class="lede">{text}</p>
+        <ul class="mt-8 grid gap-5 sm:grid-cols-2">
+          {feats.map((f) => (
+            <li class="flex gap-3">
+              <span class="icon-tile shrink-0"><Icon name={f.icon} size={20} /></span>
+              <div><h3 class="font-display text-[1.02rem] font-bold text-ink">{f.title}</h3><p class="mt-1 text-sm leading-relaxed text-slate">{f.text}</p></div>
+            </li>
+          ))}
+        </ul>
+        <a href="/technology/" class="btn btn-ghost mt-8 -ml-4">How the platform works <Icon name="arrow-right" size={16} /></a>
+      </div>
+      {showMockup && <div class="reveal reveal-d1"><DashboardMockup /></div>}
+    </div>
+  </div>
+</section>

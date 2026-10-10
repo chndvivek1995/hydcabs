@@ -1,0 +1,19 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { SITE, isPlaceholder } from '../config/site';
+import Ph from "../components/Ph.astro";
+import { breadcrumbs } from '../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Terms', path: '/terms/' }];
+---
+<PageLayout title="Terms of Use" description="Terms governing use of this website and the general basis on which corporate transport services are offered." path="/terms/" h1="Terms of use" eyebrow="Legal" intro={['Last updated 10 October 2026.']} {crumbs} schema={[breadcrumbs(crumbs)]} ctas={false}>
+  <section class="section-tight"><div class="wrap prose-hc max-w-3xl">
+    <h2>Use of this website</h2><p>This website is operated by <Ph v={SITE.legalName} />. Content is provided for general information about our corporate cab and employee transportation services in Hyderabad. You may browse and submit enquiries; you may not scrape, copy or republish content without permission.</p>
+    <h2>Quotes and estimates</h2><p>Indicative figures on this site, including the pricing estimator, are planning aids and not offers. Binding prices, service levels and terms are set out only in a written agreement signed by both parties after a route study.</p>
+    <h2>Service agreements</h2><p>Transport services are provided under a separate client agreement covering scope, routes, service levels, pricing, billing, safety protocols, liability and termination. In case of conflict, the client agreement prevails over this website.</p>
+    <h2>Vendor applications</h2><p>Submitting the vehicle-attachment form is an application, not an engagement. Vehicles and drivers are onboarded only after document verification, inspection and induction, under a separate vendor agreement.</p>
+    <h2>Third-party links and content</h2><p>Links to third-party sites (for example maps or messaging services) are provided for convenience; we are not responsible for their content or policies.</p>
+    <h2>Limitation</h2><p>To the extent permitted by law, we are not liable for loss arising from reliance on general information on this website. Nothing here limits liabilities that cannot be excluded under Indian law.</p>
+    <h2>Governing law</h2><p>These terms are governed by the laws of India, with courts in Hyderabad, Telangana having jurisdiction.</p>
+    <h2>Contact</h2><p><Ph v={SITE.email} /> · {SITE.phone}</p>
+  </div></section>
+</PageLayout>

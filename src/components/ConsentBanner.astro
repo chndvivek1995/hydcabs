@@ -1,0 +1,13 @@
+---
+import { SITE } from '../config/site';
+const hasTags = Boolean(SITE.ga4 || SITE.metaPixel);
+---
+{hasTags && (
+<div class="fixed inset-x-3 bottom-20 z-50 hidden rounded-2xl border border-mist-200 bg-paper p-4 text-sm shadow-lift sm:left-auto sm:right-6 sm:bottom-6 sm:max-w-sm" id="consent" role="dialog" aria-label="Cookie preferences">
+  <p class="text-ink">We use analytics cookies to understand how companies use this site and to measure enquiries. <a href="/privacy-policy/" class="underline">Privacy policy</a>.</p>
+  <div class="mt-3 flex gap-2">
+    <button class="btn btn-outline !min-h-9 flex-1 !px-3 !py-1.5 text-xs" data-consent="essential">Essential only</button>
+    <button class="btn btn-brand !min-h-9 flex-1 !px-3 !py-1.5 text-xs" data-consent="all">Accept analytics</button>
+  </div>
+</div>
+)}

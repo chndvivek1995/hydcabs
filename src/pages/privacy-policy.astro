@@ -1,0 +1,18 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { SITE, isPlaceholder } from '../config/site';
+import Ph from "../components/Ph.astro";
+import { breadcrumbs } from '../lib/schema';
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Privacy policy', path: '/privacy-policy/' }];
+---
+<PageLayout title="Privacy Policy" description="How we collect, use and protect information submitted through this website and during employee transport services." path="/privacy-policy/" h1="Privacy policy" eyebrow="Legal" intro={['Last updated 10 October 2026. This policy explains what we collect through this website and our services, why, and your choices.']} {crumbs} schema={[breadcrumbs(crumbs)]} ctas={false}>
+  <section class="section-tight"><div class="wrap prose-hc max-w-3xl">
+    <h2>Who we are</h2><p><Ph v={SITE.legalName} /> ("we", "us") operates this website and provides corporate cab and employee transportation services in Hyderabad, Telangana. Contact: <Ph v={SITE.email} />, {SITE.phone}.</p>
+    <h2>Information we collect</h2><ul><li><strong>Enquiry forms:</strong> name, company, phone, work email, headcount, service interest, pickup and office locations, shift type and any message you add.</li><li><strong>Vendor forms:</strong> name, phone, vehicle type, model year, permit type and operating area.</li><li><strong>Technical data:</strong> page URL, referrer, UTM parameters and click identifiers (gclid, fbclid) attached to a form submission so we know which campaign brought you.</li><li><strong>Analytics cookies:</strong> only after you accept them in the cookie banner — Google Analytics 4 and Meta Pixel to measure site usage and enquiries.</li><li><strong>Service data:</strong> for clients, employee rosters, pickup addresses and trip records needed to run transport, processed under the client agreement.</li></ul>
+    <h2>How we use it</h2><ul><li>To respond to enquiries and prepare quotes and route plans.</li><li>To onboard vendors and drivers, including statutory verification.</li><li>To run, track and report transport services for clients.</li><li>To measure marketing performance and improve the website.</li></ul><p>We do not sell personal data. We share it only with service providers who process it for us (form webhooks, CRM, analytics, tracking platform) and with clients in respect of their own programmes.</p>
+    <h2>Cookies and consent</h2><p>Essential cookies and session storage keep forms working. Analytics cookies load only after you choose "Accept analytics". You can change your choice by clearing site data in your browser.</p>
+    <h2>Retention</h2><p>Enquiry data is kept for as long as needed to respond and for a reasonable period afterwards for follow-up and record-keeping. Service data is retained as required by the client agreement and applicable law.</p>
+    <h2>Your rights</h2><p>You may ask us to access, correct or delete your personal data, or to stop contacting you, by writing to <Ph v={SITE.email} />. We will respond within a reasonable time and in line with applicable Indian data-protection law.</p>
+    <h2>Changes</h2><p>We may update this policy; the date above shows the latest revision.</p>
+  </div></section>
+</PageLayout>

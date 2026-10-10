@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, telLink, waLink } from '../config/site';
+---
+<BaseLayout title="Thank you — we have your request" description="Your enquiry has been received. Our team will reply within one working day." path="/thank-you/" noindex hideSticky>
+  <section class="section"><div class="wrap max-w-2xl text-center">
+    <span class="mx-auto inline-flex size-16 items-center justify-center rounded-2xl bg-success/15 text-success-700"><Icon name="circle-check-big" size={36} /></span>
+    <h1 class="mt-6 !text-4xl">Thank you — we have your request</h1>
+    <p class="lede mx-auto">Our team will review your routes and shifts and reply within one working day with a plan and indicative pricing. If it is urgent, the command desk is available now.</p>
+    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><a href={telLink} class="btn btn-brand" data-track="ty_call"><Icon name="phone" size={18} /> {SITE.phoneDisplay}</a><a href={waLink('Hi, I just sent an enquiry on your website.')} target="_blank" rel="noopener" class="btn btn-wa" data-track="ty_whatsapp"><Icon name="message-circle" size={18} /> WhatsApp</a></div>
+    <p class="mt-10 text-sm text-slate">While you wait: <a href="/pricing/" class="font-semibold text-accent-700 underline">how pricing works</a> · <a href="/safety/" class="font-semibold text-accent-700 underline">our safety standards</a> · <a href="/blog/" class="font-semibold text-accent-700 underline">guides for admin teams</a></p>
+  </div></section>
+  <script>
+    // Fire conversion events once, using the event_id generated at submit time for CAPI dedup.
+    type W = Window & { gtag?: (...a: any[]) => void; fbq?: (...a: any[]) => void };
+    const w = window as W; let ctx: any = {};
+    try { ctx = JSON.parse(sessionStorage.getItem('lead_ctx') || '{}'); sessionStorage.removeItem('lead_ctx'); } catch {}
+    if (ctx.event_id) {
+      const fire = () => { w.gtag?.('event', 'generate_lead', { event_id: ctx.event_id, lead_type: ctx.lead_type, service: ctx.service, area: ctx.area }); w.fbq?.('track', 'Lead', { content_name: ctx.service || 'quote' }, { eventID: ctx.event_id }); };
+      if (w.gtag || w.fbq) fire(); else document.addEventListener('hc:tags-ready', fire, { once: true });
+    }
+  </script>
+</BaseLayout>

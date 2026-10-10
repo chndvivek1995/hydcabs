@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+interface Props { items?: { icon: string; title: string; time: string; text: string }[]; title?: string; eyebrow?: string }
+const defaults = [
+  { icon: 'sun', title: 'Day commute', time: '8 AM – 7 PM', text: 'Fixed pickup windows from residential belts like Kukatpally, Miyapur and LB Nagar into the IT corridor, timed around ORR and flyover peaks.' },
+  { icon: 'repeat', title: 'Rotating shifts', time: 'Weekly roster changes', text: 'Routes rebuilt each week from your roster upload; vehicles sized to the actual headcount per shift, not a fixed fleet.' },
+  { icon: 'moon', title: 'Night & midnight drops', time: '10 PM – 4 AM', text: 'Women-safety protocol, escorts where needed, drop confirmations logged, and a command desk awake with the shift.' },
+  { icon: 'factory', title: 'Field & plant workers', time: 'A / B / C shifts', text: 'Buses and tempo travellers on trunk routes to Balanagar, Jeedimetla, Patancheru and Genome Valley with gate-time guarantees.' },
+];
+const { items = defaults, title = 'Built for every shift pattern Hyderabad runs on', eyebrow = 'Shift patterns' } = Astro.props;
+---
+<section class="section" id="shifts">
+  <div class="wrap">
+    <div class="max-w-2xl reveal"><p class="eyebrow">{eyebrow}</p><h2 class="h2 mt-3">{title}</h2></div>
+    <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {items.map((it, i) => (
+        <li class:list={['card card-hover reveal', i && `reveal-d${Math.min(i, 3)}`]}>
+          <div class="flex items-center justify-between"><span class="icon-tile"><Icon name={it.icon} size={22} /></span><span class="text-xs font-semibold text-slate">{it.time}</span></div>
+          <h3 class="h3 mt-4">{it.title}</h3>
+          <p class="mt-2 text-[15px] leading-relaxed text-slate">{it.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

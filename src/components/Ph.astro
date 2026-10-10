@@ -1,0 +1,7 @@
+---
+// Renders a config value; {{PLACEHOLDER}} values get a highlighted pill so they are obvious during review.
+import { isPlaceholder } from '../config/site';
+interface Props { v: string }
+const { v } = Astro.props;
+---
+{isPlaceholder(v) ? <span class="ph">{v}</span> : <Fragment>{v}</Fragment>}

@@ -1,0 +1,37 @@
+---
+// Count-up stats. Values come from config; "{{N}}+" placeholders render as-is (and fail the production build) until filled.
+import { SITE, isPlaceholder } from '../config/site';
+const items = [
+  { label: 'Vehicles on the platform', value: SITE.stats.vehicles },
+  { label: 'Corporate clients', value: SITE.stats.clients },
+  { label: 'Trips every month', value: SITE.stats.tripsPerMonth },
+  { label: 'Employees moved daily', value: SITE.stats.employeesDaily },
+];
+---
+<section class="relative z-10 -mt-px border-y border-mist-200 bg-paper" aria-label="Key numbers">
+  <div class="wrap grid grid-cols-2 divide-mist-200 sm:grid-cols-4 sm:divide-x">
+    {items.map((it) => (
+      <div class="px-2 py-7 text-center sm:px-6">
+        <p class="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl" data-count={isPlaceholder(it.value) ? undefined : it.value}>{isPlaceholder(it.value) ? <span class="ph">{it.value}</span> : it.value}</p>
+        <p class="mt-1 text-sm text-slate">{it.label}</p>
+      </div>
+    ))}
+  </div>
+</section>
+<script>
+  // Count-up on scroll for numeric values like "1200+" or "45,000+". Skips with reduced motion.
+  const els = document.querySelectorAll<HTMLElement>('[data-count]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (els.length && !reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return; io.unobserve(en.target);
+        const el = en.target as HTMLElement; const raw = el.dataset.count || ''; const num = parseInt(raw.replace(/[^\d]/g, ''), 10); const suffix = raw.replace(/[\d,]/g, '');
+        if (!num) return; const t0 = performance.now(); const dur = 1400;
+        const step = (t: number) => { const p = Math.min(1, (t - t0) / dur); const e = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(num * e).toLocaleString('en-IN') + suffix; if (p < 1) requestAnimationFrame(step); };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.4 });
+    els.forEach((el) => io.observe(el));
+  }
+</script>

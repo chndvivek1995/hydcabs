@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+import RouteMap from './RouteMap.astro';
+import { SITE, waLink, telLink } from '../config/site';
+interface Props { eyebrow?: string; title: string; text: string; whatsapp?: string; quoteHref?: string; bullets?: string[] }
+const { eyebrow = 'Corporate cab & employee transportation · Hyderabad', title, text, whatsapp = 'Hi, I need corporate cab services in Hyderabad for our team.', quoteHref = '#quote', bullets = ['GPS-tracked, verified drivers', '24×7 shift coverage incl. night drops', 'Monthly billing with MIS reports'] } = Astro.props;
+---
+<section class="dark relative overflow-hidden bg-ink text-paper">
+  <div class="glow absolute inset-0" aria-hidden="true"></div>
+  <div class="grid-bg absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_75%)]" aria-hidden="true"></div>
+  <div class="wrap relative grid items-center gap-10 pb-16 pt-28 sm:pt-32 lg:grid-cols-[1.1fr_1fr] lg:pb-24 lg:pt-36">
+    <div>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1 class="mt-5 text-paper">{title}</h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-400 sm:text-xl">{text}</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href={quoteHref} class="btn btn-brand" data-track="hero_quote">Get a quote <Icon name="arrow-right" size={18} /></a>
+        <a href={waLink(whatsapp)} class="btn btn-outline" target="_blank" rel="noopener" data-track="hero_whatsapp"><Icon name="message-circle" size={18} /> WhatsApp</a>
+      </div>
+      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-paper/85">
+        {bullets.map((b) => <li class="flex items-center gap-2"><span class="tick"><Icon name="check" size={12} /></span>{b}</li>)}
+      </ul>
+      <p class="mt-6 text-sm text-slate-400">Command desk: <a class="font-semibold text-paper hover:underline" href={telLink} data-track="hero_call">{SITE.phoneDisplay}</a> · 24×7</p>
+    </div>
+    <div class="relative mx-auto w-full max-w-[560px] lg:max-w-none">
+      <div class="rounded-3xl border border-white/10 bg-ink-800/60 p-3 shadow-lift backdrop-blur-sm sm:p-4">
+        <RouteMap />
+      </div>
+    </div>
+  </div>
+</section>

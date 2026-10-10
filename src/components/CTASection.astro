@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro';
+import { SITE, waLink, telLink } from '../config/site';
+interface Props { title?: string; text?: string; whatsapp?: string; quoteHref?: string; showRisk?: boolean }
+const {
+  title = 'Ready to fix your employee commute?',
+  text = 'Share your roster and shift timings. We map routes, propose a fleet mix and run a trial week before you sign anything.',
+  whatsapp = 'Hi, I need corporate cab services in Hyderabad for our team.',
+  quoteHref = '#quote',
+  showRisk = true,
+} = Astro.props;
+---
+<section class="section-tight">
+  <div class="wrap">
+    <div class="dark relative overflow-hidden rounded-3xl bg-ink px-6 py-12 text-paper sm:px-12 sm:py-16 reveal">
+      <div class="glow absolute inset-0" aria-hidden="true"></div>
+      <div class="grid-bg absolute inset-0 opacity-60" aria-hidden="true"></div>
+      <div class="relative grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
+        <div>
+          <p class="eyebrow">Get started</p>
+          <h2 class="h2 mt-3">{title}</h2>
+          <p class="lede">{text}</p>
+          {showRisk && (
+            <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-paper/90">
+              {SITE.riskReducers.map((r) => <li class="flex items-center gap-2"><span class="tick"><Icon name="check" size={12} /></span>{r}</li>)}
+            </ul>
+          )}
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row lg:flex-col">
+          <a href={quoteHref} class="btn btn-brand" data-track="cta_quote">Get a quote <Icon name="arrow-right" size={18} /></a>
+          <a href={waLink(whatsapp)} class="btn btn-wa" data-track="cta_whatsapp" target="_blank" rel="noopener"><Icon name="message-circle" size={18} /> WhatsApp us</a>
+          <a href={telLink} class="btn btn-outline" data-track="cta_call"><Icon name="phone" size={18} /> {SITE.phoneDisplay}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

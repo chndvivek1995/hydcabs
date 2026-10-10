@@ -1,0 +1,16 @@
+---
+// Inline lucide icon read from lucide-static at build time (no runtime JS, no sprite).
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+interface Props { name: string; size?: number; class?: string; stroke?: number }
+const { name, size = 24, class: cls = '', stroke = 2 } = Astro.props;
+const require = createRequire(import.meta.url);
+let raw = '';
+try { raw = readFileSync(require.resolve(`lucide-static/icons/${name}.svg`), 'utf8'); }
+catch { raw = readFileSync(require.resolve('lucide-static/icons/circle.svg'), 'utf8'); }
+raw = raw.replace(/<!--[\s\S]*?-->/g, '').trim();
+const svg = raw.replace(/^<svg[^>]*>/, (tag) => tag
+  .replace(/\s(width|height|class|stroke-width)="[^"]*"/g, '')
+  .replace('<svg', `<svg width="${size}" height="${size}" stroke-width="${stroke}" class="${cls}" aria-hidden="true" focusable="false"`));
+---
+<Fragment set:html={svg} />
