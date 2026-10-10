@@ -125,7 +125,7 @@
   .faq-plus { transition: transform .25s ease; }
 
   /* Placeholder highlight (dev only) — shows {{PLACEHOLDER}} text in a yellow pill */
-  .ph { @apply rounded bg-brand/30 px-1 font-mono text-[.85em] text-brand-ink; }
+  .ph { @apply rounded bg-brand px-1 font-mono text-[.85em] text-brand-ink; }
 }
 
 @utility text-balance { text-wrap: balance; }
