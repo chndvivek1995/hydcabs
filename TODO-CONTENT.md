@@ -1,6 +1,6 @@
 # TODO-CONTENT — fill before launch
 
-The production build (Vercel / CI) **fails** while any `{{PLACEHOLDER}}` remains in the built HTML. Locally the build only warns.
+The build **warns** while any `{{PLACEHOLDER}}` remains. Once site.ts is filled, set `STRICT_PLACEHOLDERS=1` on Vercel so the build fails if one slips back in. While the site runs on a vercel.app host or the domain is unfilled, every page is `noindex` and robots.txt disallows crawling.
 Everything below lives in one file unless noted: `src/config/site.ts`.
 
 ## 1. Business identity (`src/config/site.ts`)

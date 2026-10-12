@@ -39,6 +39,8 @@ export const SITE = {
 } as const;
 
 export const isPlaceholder = (v: string) => /\{\{.*\}\}/.test(v);
+// True on preview hosts (vercel.app) or while the domain is unfilled — pages render noindex so the placeholder site is never indexed.
+export const tempHost = /vercel\.app|\{\{/.test(SITE.domain);
 export const fullAddress = `${SITE.address.street}, ${SITE.address.locality}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.pin}`;
 
 export const waLink = (text: string) => `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text)}`;

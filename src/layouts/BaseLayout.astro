@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE } from '../config/site';
+import { SITE, tempHost } from '../config/site';
 import { graph, organization, website, webpage } from '../lib/schema';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -38,7 +38,7 @@ const ld = graph(organization(), website(), webpage(path, fullTitle, description
 <title>{fullTitle}</title>
 <meta name="description" content={description}>
 <link rel="canonical" href={canonical}>
-<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'}>
+<meta name="robots" content={noindex || tempHost ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'}>
 <meta name="theme-color" content="#0B0F19">
 <meta property="og:type" content={ogType}>
 <meta property="og:site_name" content={SITE.brand}>
