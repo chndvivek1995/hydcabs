@@ -61,3 +61,8 @@ All ₹ cells are `undefined` → render "On request". Fill from the owner's rat
 2. Replace `public/og-default.jpg` with a branded version if desired (1200×630, ≤ 120 KB).
 3. Submit `sitemap-index.xml` in Search Console; create Google Business Profile with the same NAP as `site.ts`.
 4. Add 301s to `vercel.json` → `redirects` if any URL changes later.
+
+## 10. Photography
+The six photos in `public/images/` (hero, night drop, metro shuttle, command desk, fleet depot, plant shift) were AI-generated on 1 Nov 2026
+as placeholders in the right style. Replace them with real photographs of the business's own vehicles, drivers and desk before launch —
+keep the same filenames and run `node scripts/optimise-images.mjs` (source files go in `src/assets/photos/`). The registry and alt text live in `src/data/images.ts`.
