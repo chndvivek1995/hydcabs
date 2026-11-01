@@ -38,6 +38,8 @@ export const SITE = {
   metaPixel: (import.meta.env.PUBLIC_META_PIXEL_ID as string | undefined) || "",
 } as const;
 
+// Display-only name for the logo lockup until BRAND_NAME is filled (the brief's own example). Titles, schema and copy still use SITE.brand.
+export const brandDisplay = /\{\{/.test(SITE.brand) ? "HydCorporate Cabs" : SITE.brand;
 export const isPlaceholder = (v: string) => /\{\{.*\}\}/.test(v);
 // True on preview hosts (vercel.app) or while the domain is unfilled — pages render noindex so the placeholder site is never indexed.
 export const tempHost = /vercel\.app|\{\{/.test(SITE.domain);

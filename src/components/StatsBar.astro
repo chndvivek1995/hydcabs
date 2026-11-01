@@ -1,5 +1,5 @@
 ---
-// Count-up stats. Values come from config; "{{N}}+" placeholders render as-is (and fail the production build) until filled.
+// Ledger-style stats row. Values come from config; "{{N}}+" placeholders render as-is until filled.
 import { SITE, isPlaceholder } from '../config/site';
 const items = [
   { label: 'Vehicles on the platform', value: SITE.stats.vehicles },
@@ -8,18 +8,17 @@ const items = [
   { label: 'Employees moved daily', value: SITE.stats.employeesDaily },
 ];
 ---
-<section class="relative z-10 -mt-px border-y border-mist-200 bg-paper" aria-label="Key numbers">
-  <div class="wrap grid grid-cols-2 divide-mist-200 sm:grid-cols-4 sm:divide-x">
-    {items.map((it) => (
-      <div class="px-2 py-7 text-center sm:px-6">
-        <p class="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl" data-count={isPlaceholder(it.value) ? undefined : it.value}>{isPlaceholder(it.value) ? <span class="ph">{it.value}</span> : it.value}</p>
-        <p class="mt-1 text-sm text-slate">{it.label}</p>
+<section class="border-b border-ink/10 bg-paper" aria-label="Key numbers">
+  <div class="wrap grid grid-cols-2 divide-ink/10 sm:grid-cols-4 sm:divide-x">
+    {items.map((it, i) => (
+      <div class:list={['py-8 sm:px-8', i === 0 && 'sm:pl-0']}>
+        <p class="font-display text-[2.5rem] leading-none text-ink sm:text-[3rem]" style="font-weight:400" data-count={isPlaceholder(it.value) ? undefined : it.value}>{isPlaceholder(it.value) ? <span class="ph !text-[1.1rem]">{it.value}</span> : it.value}</p>
+        <p class="mt-3 font-ui text-[11px] font-semibold uppercase tracking-[.2em] text-slate">{it.label}</p>
       </div>
     ))}
   </div>
 </section>
 <script>
-  // Count-up on scroll for numeric values like "1200+" or "45,000+". Skips with reduced motion.
   const els = document.querySelectorAll<HTMLElement>('[data-count]');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (els.length && !reduce && 'IntersectionObserver' in window) {

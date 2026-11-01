@@ -31,7 +31,7 @@ const usps = [
 ];
 ---
 <BaseLayout {title} {description} path="/" rawTitle={false} transparentHeader schema={[faqPage(faqs.home), serviceSchema({ path: '/', name: 'Corporate cab services in Hyderabad', description, areaServed: topAreas(16).map((a) => `${a.name}, Hyderabad`) })]}>
-  <Hero title="Corporate cab services in Hyderabad your employees actually show up for" text="Managed employee transportation for companies across HITEC City, Gachibowli, the Financial District and the ORR belt — office pickup and drop, monthly cab plans, night-shift cabs and shuttles, run on a GPS-tracked fleet with a 24×7 command desk." />
+  <Hero title="Corporate cab services in Hyderabad, run like a programme" text="Managed employee transportation for companies across HITEC City, Gachibowli, the Financial District and the ORR belt — office pickup and drop, monthly cab plans, night-shift cabs and shuttles, run on a GPS-tracked fleet with a 24×7 command desk." />
   <StatsBar />
   <LogoStrip />
 
@@ -41,14 +41,14 @@ const usps = [
         <div class="max-w-2xl"><p class="eyebrow">Services</p><h2 class="h2 mt-3">Employee transport services built around how Hyderabad offices work</h2><p class="lede">From a handful of sedans on a Kondapur loop to a bus fleet for a Patancheru plant — one vendor, one MIS, one invoice.</p></div>
         <a href="/services/" class="btn btn-ghost">All 16 services <Icon name="arrow-right" size={16} /></a>
       </div>
-      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{coreServices.map((s, i) => <ServiceCard service={s} delay={(i % 3) as 0 | 1 | 2} />)}</div>
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{coreServices.map((s, i) => <ServiceCard service={s} index={i} delay={(i % 3) as 0 | 1 | 2} />)}</div>
     </div>
   </section>
 
   <section class="section bg-mist" id="why-us">
     <div class="wrap grid gap-10 lg:grid-cols-[1fr_1.5fr]">
       <div class="reveal"><p class="eyebrow">Why companies switch to us</p><h2 class="h2 mt-3">Five things HR and admin teams stop worrying about</h2><p class="lede">Employee transport is usually the most complained-about line in an admin budget. These are the reasons it stops being one.</p><a href="/about/" class="btn btn-outline mt-6">About our team <Icon name="arrow-right" size={16} /></a></div>
-      <ul class="grid gap-4 sm:grid-cols-2">{usps.map((u, i) => <li class:list={['card reveal', i % 2 && 'reveal-d1']}><span class="icon-tile"><Icon name={u.icon} size={22} /></span><h3 class="h3 mt-4">{u.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate">{u.text}</p></li>)}</ul>
+      <ul class="grid gap-x-10 gap-y-8 sm:grid-cols-2">{usps.map((u, i) => <li class:list={['border-t border-ink/15 pt-5 reveal', i % 2 && 'reveal-d1']}><span class="num text-[1.5rem]">{String(i + 1).padStart(2, '0')}</span><h3 class="h3 mt-3">{u.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate">{u.text}</p></li>)}</ul>
     </div>
   </section>
 
@@ -68,7 +68,7 @@ const usps = [
 
   <section class="section" id="industries">
     <div class="wrap">
-      <div class="max-w-2xl reveal"><p class="eyebrow">Industries & use cases</p><h2 class="h2 mt-3">Transport programmes shaped by the shift pattern, not the other way round</h2></div>
+      <div class="max-w-2xl reveal"><p class="eyebrow">Industries & use cases</p><h2 class="h2 mt-3">Shaped by the shift pattern, not the other way round</h2></div>
       <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {industries.map((i) => <a href={url.industry(i.slug)} class="card card-hover flex items-center gap-4 reveal"><span class="icon-tile"><Icon name={i.icon} size={22} /></span><span><span class="h3 block">{i.name}</span><span class="text-sm text-slate">Employee transport for {i.name.toLowerCase()}</span></span></a>)}
         {solutions.map((s) => <a href={url.solution(s.slug)} class="card card-hover flex items-center gap-4 border-dashed reveal"><span class="icon-tile"><Icon name={s.icon} size={22} /></span><span><span class="text-[11px] font-bold uppercase tracking-wide text-accent-700">{s.kicker || 'Use case'}</span><span class="h3 block">{s.shortTitle}</span></span></a>)}

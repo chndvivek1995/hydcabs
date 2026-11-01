@@ -65,7 +65,7 @@ const ld = graph(organization(), website(), webpage(path, fullTitle, description
 <slot name="head" />
 <script type="application/ld+json" set:html={JSON.stringify(ld)} />
 </head>
-<body class:list={[transparentHeader ? '' : 'pt-[68px]']}>
+<body class:list={[transparentHeader ? '' : 'pt-[76px]']}>
 <a class="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:rounded-lg focus:bg-paper focus:p-3 focus:text-ink" href="#main">Skip to content</a>
 <Header transparent={transparentHeader} />
 <main id="main"><slot /></main>

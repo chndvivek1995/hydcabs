@@ -2,12 +2,12 @@
 import Icon from './Icon.astro';
 import { url } from '../lib/data';
 import type { Service } from '../lib/data';
-interface Props { service: Service; href?: string; delay?: 0 | 1 | 2 | 3 }
-const { service: s, href = url.service(s.slug), delay = 0 } = Astro.props;
+interface Props { service: Service; href?: string; delay?: 0 | 1 | 2 | 3; index?: number }
+const { service: s, href = url.service(s.slug), delay = 0, index = 0 } = Astro.props;
 ---
 <a href={href} class:list={['card card-hover group flex h-full flex-col gap-4 reveal', delay && `reveal-d${delay}`]}>
-  <span class="icon-tile"><Icon name={s.icon} size={22} /></span>
-  <span class="h3 group-hover:text-accent-700">{s.shortTitle}</span>
+  <span class="num text-[1.5rem]">{String(index + 1).padStart(2, '0')}</span>
+  <span class="h3">{s.shortTitle}</span>
   <span class="text-[15px] leading-relaxed text-slate">{s.cardBlurb}</span>
-  <span class="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-accent-700">Explore <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-0.5" /></span>
+  <span class="mt-auto inline-flex items-center gap-1 font-ui text-[13px] font-semibold text-ink">Explore <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-0.5" /></span>
 </a>

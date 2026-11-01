@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import { SITE, fullAddress, telLink, waLink, isPlaceholder } from '../config/site';
+import Logo from './Logo.astro';
 import Ph from "./Ph.astro";
 import { services, topAreas, url } from '../lib/data';
 const year = new Date().getFullYear();
@@ -10,27 +11,27 @@ const areas = topAreas(12);
 <footer class="dark border-t border-white/10 bg-ink text-paper">
   <div class="wrap grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
     <div>
-      <a href="/" class="flex items-center gap-2.5 font-display text-lg font-extrabold tracking-tight"><span class="inline-flex size-9 items-center justify-center rounded-xl bg-brand text-brand-ink"><Icon name="car-front" size={20} stroke={2.4} /></span><Ph v={SITE.brand} /></a>
+      <Logo dark size="lg" tagline />
       <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">Corporate cab and employee transportation services across Hyderabad — HITEC City, Gachibowli, Financial District, Secunderabad and the ORR belt. GPS-tracked fleet, verified drivers, 24×7 command desk.</p>
       <ul class="mt-5 space-y-2 text-sm">
-        <li class="flex items-start gap-2"><Icon name="phone" size={16} class="mt-0.5 text-brand" /><a href={telLink} class="hover:underline" data-track="footer_call">{SITE.phoneDisplay}</a></li>
-        <li class="flex items-start gap-2"><Icon name="message-circle" size={16} class="mt-0.5 text-brand" /><a href={waLink('Hi, I need corporate cab services in Hyderabad.')} target="_blank" rel="noopener" class="hover:underline" data-track="footer_whatsapp">WhatsApp us</a></li>
-        <li class="flex items-start gap-2"><Icon name="mail" size={16} class="mt-0.5 text-brand" /><span><Ph v={SITE.email} /></span></li>
-        <li class="flex items-start gap-2"><Icon name="map-pin" size={16} class="mt-0.5 text-brand" /><address class="not-italic"><Ph v={fullAddress} /></address></li>
+        <li class="flex items-start gap-2"><Icon name="phone" size={16} class="mt-0.5 text-brand-300" /><a href={telLink} class="hover:underline" data-track="footer_call">{SITE.phoneDisplay}</a></li>
+        <li class="flex items-start gap-2"><Icon name="message-circle" size={16} class="mt-0.5 text-brand-300" /><a href={waLink('Hi, I need corporate cab services in Hyderabad.')} target="_blank" rel="noopener" class="hover:underline" data-track="footer_whatsapp">WhatsApp us</a></li>
+        <li class="flex items-start gap-2"><Icon name="mail" size={16} class="mt-0.5 text-brand-300" /><span><Ph v={SITE.email} /></span></li>
+        <li class="flex items-start gap-2"><Icon name="map-pin" size={16} class="mt-0.5 text-brand-300" /><address class="not-italic"><Ph v={fullAddress} /></address></li>
       </ul>
     </div>
     <div>
-      <p class="font-display text-sm font-bold uppercase tracking-[.16em] text-slate-400">Services</p>
-      <ul class="mt-4 space-y-2 text-sm">{svc.map((s) => <li><a href={url.service(s.slug)} class="text-paper/85 hover:text-brand">{s.shortTitle}</a></li>)}<li><a href="/services/" class="font-semibold text-brand">All services →</a></li></ul>
+      <p class="font-ui text-[11px] font-semibold uppercase tracking-[.24em] text-brand-300">Services</p>
+      <ul class="mt-4 space-y-2 text-sm">{svc.map((s) => <li><a href={url.service(s.slug)} class="text-paper/80 hover:text-brand-300">{s.shortTitle}</a></li>)}<li><a href="/services/" class="font-semibold text-brand-300">All services →</a></li></ul>
     </div>
     <div>
-      <p class="font-display text-sm font-bold uppercase tracking-[.16em] text-slate-400">Top areas</p>
-      <ul class="mt-4 space-y-2 text-sm">{areas.map((a) => <li><a href={url.location(a.slug)} class="text-paper/85 hover:text-brand">Cabs in {a.name}</a></li>)}<li><a href="/locations/" class="font-semibold text-brand">All locations →</a></li></ul>
+      <p class="font-ui text-[11px] font-semibold uppercase tracking-[.24em] text-brand-300">Top areas</p>
+      <ul class="mt-4 space-y-2 text-sm">{areas.map((a) => <li><a href={url.location(a.slug)} class="text-paper/80 hover:text-brand-300">Cabs in {a.name}</a></li>)}<li><a href="/locations/" class="font-semibold text-brand-300">All locations →</a></li></ul>
     </div>
     <div>
-      <p class="font-display text-sm font-bold uppercase tracking-[.16em] text-slate-400">Company</p>
+      <p class="font-ui text-[11px] font-semibold uppercase tracking-[.24em] text-brand-300">Company</p>
       <ul class="mt-4 space-y-2 text-sm">
-        {[['About us', '/about/'], ['Pricing', '/pricing/'], ['Fleet', '/fleet/'], ['Safety', '/safety/'], ['Technology', '/technology/'], ['Industries', '/industries/'], ['Blog', '/blog/'], ['FAQ', '/faq/'], ['Attach your cab', '/attach-your-cab/'], ['Contact', '/contact/']].map(([t, h]) => <li><a href={h} class="text-paper/85 hover:text-brand">{t}</a></li>)}
+        {[['About us', '/about/'], ['Pricing', '/pricing/'], ['Fleet', '/fleet/'], ['Safety', '/safety/'], ['Technology', '/technology/'], ['Industries', '/industries/'], ['Blog', '/blog/'], ['FAQ', '/faq/'], ['Attach your cab', '/attach-your-cab/'], ['Contact', '/contact/']].map(([t, h]) => <li><a href={h} class="text-paper/80 hover:text-brand-300">{t}</a></li>)}
       </ul>
     </div>
   </div>

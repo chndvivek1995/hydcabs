@@ -18,12 +18,12 @@ const { steps = defaults, title = 'From roster to running routes in about a week
       {text && <p class="lede">{text}</p>}
     </div>
     <ol class="relative mt-12 grid gap-8 md:grid-cols-4">
-      <span class:list={['absolute left-0 right-0 top-6 hidden h-px md:block', dark ? 'bg-white/15' : 'bg-mist-300']} aria-hidden="true"></span>
+      
       {steps.map((s, i) => (
-        <li class:list={['relative reveal', i && `reveal-d${Math.min(i, 3)}`]}>
+        <li class:list={['relative border-t pt-6 reveal', dark ? 'border-white/15' : 'border-ink/15', i && `reveal-d${Math.min(i, 3)}`]}>
           <div class="flex items-center gap-3 md:block">
-            <span class:list={['relative z-10 inline-flex size-12 items-center justify-center rounded-2xl font-display text-lg font-extrabold', dark ? 'bg-brand text-brand-ink' : 'bg-ink text-paper']}>{i + 1}</span>
-            <span class:list={['icon-tile md:hidden']}><Icon name={icons[i] || 'circle'} size={18} /></span>
+            <span class="num relative z-10 text-[3rem] leading-none">{String(i + 1).padStart(2, '0')}</span>
+            
           </div>
           <h3 class="h3 mt-5">{s.title}</h3>
           <p class:list={['mt-2 text-[15px] leading-relaxed', dark ? 'text-slate-400' : 'text-slate']}>{s.text}</p>

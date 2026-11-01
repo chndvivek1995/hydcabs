@@ -21,8 +21,7 @@ const clusterLabel: Record<string, string> = { 'cost-pricing': 'Cost & pricing',
 <BaseLayout title={d.title} description={d.description} {path} {schema} ogType="article" rawTitle>
   <article>
     <header class="dark relative overflow-hidden bg-ink text-paper">
-      <div class="glow absolute inset-0" aria-hidden="true"></div><div class="grid-bg absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_80%)]" aria-hidden="true"></div>
-      <div class="wrap relative pb-12 pt-10 sm:pb-16 sm:pt-12">
+            <div class="wrap relative pb-12 pt-10 sm:pb-16 sm:pt-12">
         <Breadcrumbs items={crumbs.slice(0, 2)} dark />
         <div class="mt-6 max-w-3xl">
           <p class="eyebrow">{clusterLabel[d.cluster] || d.cluster}</p>

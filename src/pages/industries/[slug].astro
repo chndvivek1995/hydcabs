@@ -25,19 +25,18 @@ const schema = [breadcrumbs(crumbs), faqPage(i.faqs), serviceSchema({ path, name
     <div class="wrap grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-start">
       <div class="reveal">
         <p class="eyebrow">The challenge</p>
-        <h2 class="h2 mt-3">What makes transport hard for {i.name.toLowerCase()} teams</h2>
-        <ul class="mt-8 space-y-4">{i.challenges.map((c, n) => <li class="flex gap-4"><span class="inline-flex size-9 shrink-0 items-center justify-center rounded-xl bg-ink font-display text-sm font-extrabold text-paper">{n + 1}</span><div><h3 class="font-display text-[1.02rem] font-bold">{c.title}</h3><p class="mt-1 text-sm leading-relaxed text-slate">{c.text}</p></div></li>)}</ul>
+        <h2 class="h2 mt-3">What makes transport hard for {i.name} teams</h2>
+        <ul class="mt-8 space-y-4">{i.challenges.map((c, n) => <li class="flex gap-4"><span class="num w-10 shrink-0 text-[1.5rem] leading-none">{String(n + 1).padStart(2, '0')}</span><div><h3 class="font-display text-[1.02rem] font-bold">{c.title}</h3><p class="mt-1 text-sm leading-relaxed text-slate">{c.text}</p></div></li>)}</ul>
         {i.hubs.length > 0 && <p class="mt-8 text-sm text-slate"><strong class="text-ink">Where this industry clusters:</strong> {i.hubs.join(' · ')}</p>}
       </div>
-      <div class="reveal reveal-d1 lg:sticky lg:top-24"><QuoteForm whatsapp={wa} title={`Get a transport plan for your ${i.name.toLowerCase()} team`} /></div>
+      <div class="reveal reveal-d1 lg:sticky lg:top-24"><QuoteForm whatsapp={wa} title={`Get a transport plan for your ${i.name} team`} /></div>
     </div>
   </section>
 
   <section class="dark section relative overflow-hidden bg-ink text-paper">
-    <div class="grid-bg absolute inset-0 opacity-60" aria-hidden="true"></div><div class="glow absolute inset-0" aria-hidden="true"></div>
-    <div class="wrap relative">
-      <div class="max-w-2xl reveal"><p class="eyebrow">How we solve it</p><h2 class="h2 mt-3">A programme designed for {i.name.toLowerCase()}</h2></div>
-      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{i.solutions.map((s, n) => <li class:list={['rounded-2xl border border-white/10 bg-white/[.04] p-6 reveal', n % 3 && `reveal-d${n % 3}`]}><span class="icon-tile"><Icon name={s.icon} size={22} /></span><h3 class="h3 mt-4 text-paper">{s.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate-400">{s.text}</p></li>)}</ul>
+        <div class="wrap relative">
+      <div class="max-w-2xl reveal"><p class="eyebrow">How we solve it</p><h2 class="h2 mt-3">A programme designed for {i.name}</h2></div>
+      <ul class="mt-12 grid border-t border-white/15 sm:grid-cols-2 lg:grid-cols-3">{i.solutions.map((s, n) => <li class:list={['border-b border-white/15 py-7 pr-8 reveal', n % 3 && `reveal-d${n % 3}`]}><span class="num text-[1.5rem]">{String(n + 1).padStart(2, '0')}</span><h3 class="h3 mt-3 text-paper">{s.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate-400">{s.text}</p></li>)}</ul>
     </div>
   </section>
 
@@ -49,8 +48,8 @@ const schema = [breadcrumbs(crumbs), faqPage(i.faqs), serviceSchema({ path, name
     </div>
   </section>
 
-  <RelatedLinks title={`Services ${i.name.toLowerCase()} companies use most`} eyebrow="Services" links={svcs.map((s) => ({ title: s.shortTitle, href: url.service(s.slug), blurb: s.cardBlurb, icon: s.icon }))} />
-  <AreaGrid {areas} title={`Where we serve ${i.name.toLowerCase()} teams`} eyebrow="Areas" compact />
+  <RelatedLinks title={`Services ${i.name} companies use most`} eyebrow="Services" links={svcs.map((s) => ({ title: s.shortTitle, href: url.service(s.slug), blurb: s.cardBlurb, icon: s.icon }))} />
+  <AreaGrid {areas} title={`Where we serve ${i.name} teams`} eyebrow="Areas" compact />
   <FAQ items={i.faqs} title={`Employee transport for ${i.name}: FAQs`} />
   <RelatedLinks title="Further reading" eyebrow="From the blog" links={posts.map((p) => ({ title: p.data.title, href: url.blog(p.id), blurb: p.data.description, icon: 'file-check' }))} />
   <CTASection whatsapp={wa} />

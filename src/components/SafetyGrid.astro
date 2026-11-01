@@ -12,9 +12,7 @@ const defaults = [
 const { title = 'Safety is designed into every route, not added on', eyebrow = 'Safety & compliance', text = 'Practices that HR and admin teams expect from a managed employee-transport programme in Hyderabad.', compact = false, items = defaults } = Astro.props;
 ---
 <section class:list={['dark relative overflow-hidden bg-ink text-paper', compact ? 'section-tight' : 'section']} id="safety">
-  <div class="grid-bg absolute inset-0 opacity-60" aria-hidden="true"></div>
-  <div class="glow absolute inset-0" aria-hidden="true"></div>
-  <div class="wrap relative">
+    <div class="wrap relative">
     <div class="flex flex-wrap items-end justify-between gap-6 reveal">
       <div class="max-w-2xl">
         <p class="eyebrow">{eyebrow}</p>
@@ -23,11 +21,11 @@ const { title = 'Safety is designed into every route, not added on', eyebrow = '
       </div>
       <a href="/safety/" class="btn btn-outline">Our safety standards <Icon name="arrow-right" size={16} /></a>
     </div>
-    <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="mt-12 grid border-t border-white/15 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((it, i) => (
-        <li class:list={['rounded-2xl border border-white/10 bg-white/[.04] p-6 backdrop-blur-sm transition-colors hover:border-brand/50 reveal', i % 3 && `reveal-d${i % 3}`]}>
-          <span class="icon-tile"><Icon name={it.icon} size={22} /></span>
-          <h3 class="h3 mt-4 text-paper">{it.title}</h3>
+        <li class:list={['border-b border-white/15 py-7 pr-8 reveal', i % 3 && `reveal-d${i % 3}`]}>
+          <span class="num text-[1.5rem]">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="h3 mt-3 text-paper">{it.title}</h3>
           <p class="mt-2 text-[15px] leading-relaxed text-slate-400">{it.text}</p>
         </li>
       ))}

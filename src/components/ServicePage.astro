@@ -31,7 +31,7 @@ const who = ['building-2', 'headset', 'factory', 'hospital', 'briefcase', 'users
       <div class="reveal">
         <p class="eyebrow">What's included</p>
         <h2 class="h2 mt-3">Everything the programme covers</h2>
-        <ul class="mt-8 grid gap-4 sm:grid-cols-2">{s.whatsIncluded.map((f) => <li class="flex gap-3"><span class="icon-tile shrink-0"><Icon name={f.icon} size={20} /></span><div><h3 class="font-display text-[1.02rem] font-bold">{f.title}</h3><p class="mt-1 text-sm leading-relaxed text-slate">{f.text}</p></div></li>)}</ul>
+        <ul class="mt-10 grid gap-x-8 gap-y-7 sm:grid-cols-2">{s.whatsIncluded.map((f, n) => <li class="border-t border-ink/15 pt-4"><span class="num text-[1.25rem]">{String(n + 1).padStart(2, '0')}</span><h3 class="mt-2 font-ui text-[1.02rem] font-bold">{f.title}</h3><p class="mt-1.5 text-sm leading-relaxed text-slate">{f.text}</p></li>)}</ul>
       </div>
       <div class="reveal reveal-d1 lg:sticky lg:top-24"><QuoteForm defaultService={kind === 'service' ? s.slug : ''} whatsapp={s.whatsapp} title={`Get a quote for ${s.shortTitle.toLowerCase()}`} /></div>
     </div>
@@ -40,7 +40,7 @@ const who = ['building-2', 'headset', 'factory', 'hospital', 'briefcase', 'users
   <section class="section" id="who">
     <div class="wrap">
       <div class="max-w-2xl reveal"><p class="eyebrow">Who it's for</p><h2 class="h2 mt-3">Teams this works best for</h2></div>
-      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{s.whoItsFor.map((w, i) => <li class:list={['card reveal', i % 3 && `reveal-d${i % 3}`]}><span class="icon-tile"><Icon name={who[i % who.length]} size={20} /></span><h3 class="h3 mt-4">{w.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate">{w.text}</p></li>)}</ul>
+      <ul class="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">{s.whoItsFor.map((w, i) => <li class:list={['border-t border-ink/15 pt-5 reveal', i % 3 && `reveal-d${i % 3}`]}><span class="num text-[1.5rem]">{String(i + 1).padStart(2, '0')}</span><h3 class="h3 mt-3">{w.title}</h3><p class="mt-2 text-[15px] leading-relaxed text-slate">{w.text}</p></li>)}</ul>
     </div>
   </section>
 
@@ -55,8 +55,8 @@ const who = ['building-2', 'headset', 'factory', 'hospital', 'briefcase', 'users
         <p><a href="/pricing/">See how pricing works and use the estimator →</a></p>
       </div>
       <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
-        <div class="dark rounded-2xl bg-ink p-6 text-paper">
-          <span class="icon-tile"><Icon name="shield-check" size={22} /></span>
+        <div class="dark rounded-lg bg-ink p-6 text-paper">
+          <p class="eyebrow">Standards</p>
           <h2 class="h3 mt-4 text-paper">Safety & compliance</h2>
           <p class="mt-2 text-sm leading-relaxed text-slate-400">{s.safetyNote}</p>
           <a href="/safety/" class="btn btn-outline mt-5 w-full">Our safety standards</a>
