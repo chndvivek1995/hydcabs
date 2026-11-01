@@ -76,7 +76,7 @@ const uid = id;
               <span class="field-label">Shift type</span>
               <div class="flex flex-wrap gap-2">
                 {['Day shift', 'Night shift', '24x7 rotational', 'Ad hoc / events'].map((s, i) => (
-                  <label class:list={['chip cursor-pointer has-[:checked]:border-accent has-[:checked]:bg-accent/10 has-[:checked]:text-accent-700', dark && 'border-white/15 bg-transparent text-paper']}>
+                  <label class:list={['chip cursor-pointer has-[:checked]:border-ink has-[:checked]:bg-ink has-[:checked]:text-paper', dark && 'border-white/20 text-paper has-[:checked]:border-brand has-[:checked]:bg-brand has-[:checked]:text-brand-ink']}>
                     <input type="radio" name="shift_type" value={s} class="sr-only" checked={i === 0}>{s}
                   </label>
                 ))}

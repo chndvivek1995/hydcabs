@@ -11,7 +11,7 @@ const first = parts.join(' ');
 const px = size === 'lg' ? 44 : size === 'sm' ? 28 : 34;
 const text = size === 'lg' ? 'text-[1.75rem]' : size === 'sm' ? 'text-[1.05rem]' : 'text-[1.3rem]';
 ---
-<a href="/" class:list={['inline-flex items-center gap-3', cls]} aria-label={`${name} — home`} data-placeholder={isPlaceholder(SITE.brand) ? SITE.brand : undefined}>
+<a href="/" class:list={['inline-flex items-center gap-3', cls]} data-placeholder={isPlaceholder(SITE.brand) ? SITE.brand : undefined}>
   <svg width={px} height={px} viewBox="0 0 48 48" aria-hidden="true" class="shrink-0">
     <circle cx="24" cy="24" r="22.5" fill={dark ? '#171B22' : '#0E1116'} stroke="#C9A24A" stroke-width="1.25"/>
     <path d="M15 35 L24 13 L33 35" fill="none" stroke="#C9A24A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
@@ -19,7 +19,7 @@ const text = size === 'lg' ? 'text-[1.75rem]' : size === 'sm' ? 'text-[1.05rem]'
     <circle cx="24" cy="13" r="2.4" fill="#C9A24A"/>
   </svg>
   <span class:list={['font-display leading-none tracking-[-0.01em]', text, dark ? 'text-paper' : 'text-ink']} style="font-weight:500">
-    {first}{last && <span class="font-light italic text-brand-600"> {last}</span>}
+    {first}{last && <span class:list={['font-light italic', dark ? 'text-brand-300' : 'text-accent-700']}> {last}</span>}
     {tagline && <span class:list={['mt-1.5 block font-ui text-[9px] font-semibold uppercase not-italic tracking-[.26em]', dark ? 'text-slate-400' : 'text-slate']}>Corporate mobility · Hyderabad</span>}
   </span>
 </a>
