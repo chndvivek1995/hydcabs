@@ -6,23 +6,23 @@
 
 /* Brand system — ink, warm paper, restrained gold. Serif display for headlines, grotesk for UI, Inter for body. */
 @theme {
-  --color-ink: #0E1116;
-  --color-ink-800: #171B22;
-  --color-ink-700: #22272F;
-  --color-ink-600: #343A44;
-  --color-paper: #FBFAF7;
-  --color-mist: #F3F1EB;
-  --color-mist-200: #E6E2D8;
-  --color-mist-300: #CFC9BA;
-  --color-slate: #555B66;      /* body-muted on paper (≥ 6:1) */
-  --color-slate-400: #9AA0AB;  /* muted on ink */
-  --color-brand: #C9A24A;      /* gold — rules, marks, CTAs on dark */
-  --color-brand-600: #B38E3B;
-  --color-brand-300: #E7D39A;  /* gold text on ink */
-  --color-brand-ink: #1A1403;  /* text on gold */
-  --color-accent: #8A6A1E;     /* gold-700: link/text-safe on paper (≥ 5:1) */
-  --color-accent-700: #8A6A1E;
-  --color-accent-200: #EFE4C4;
+  --color-ink: #1A1C1F;
+  --color-ink-800: #24272B;
+  --color-ink-700: #2F3338;
+  --color-ink-600: #42474E;
+  --color-paper: #FAF8F3;
+  --color-mist: #F1EEE7;
+  --color-mist-200: #E4E0D7;
+  --color-mist-300: #CBC5B9;
+  --color-slate: #5B5F66;      /* body-muted on paper (≥ 6:1) */
+  --color-slate-400: #A3A7AE;  /* muted on ink */
+  --color-brand: #0F55C0;      /* corporate blue — CTAs, links, marks */
+  --color-brand-600: #0C45A0;
+  --color-brand-300: #9CBCF2;  /* blue text on ink */
+  --color-brand-ink: #FFFFFF;  /* text on blue */
+  --color-accent: #0F55C0;     /* link colour on paper (≥ 5:1) */
+  --color-accent-700: #0C45A0;
+  --color-accent-200: #DCE7FA;
   --color-success: #2E7D5B;
   --color-success-700: #22624A;
   --color-danger: #B42318;
@@ -46,7 +46,7 @@
   img { height: auto; }
   body.lock { overflow: hidden; }
   [id] { scroll-margin-top: 92px; }
-  ::selection { background: var(--color-brand-300); color: var(--color-ink); }
+  ::selection { background: var(--color-accent-200); color: var(--color-ink); }
   em { font-style: italic; }
 }
 
@@ -68,8 +68,8 @@
 
   .btn { @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 font-ui text-[14px] font-semibold tracking-[.01em] transition-[background-color,color,border-color,transform] duration-200 cursor-pointer select-none; }
   .btn:active { transform: translateY(1px); }
-  .btn-brand { @apply bg-ink text-paper hover:bg-ink-700; }
-  .dark .btn-brand { @apply bg-brand text-brand-ink hover:bg-brand-300; }
+  .btn-brand { @apply bg-brand text-white hover:bg-brand-600; }
+  .dark .btn-brand { @apply bg-paper text-ink hover:bg-white; }
   .btn-outline { @apply border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-paper; }
   .dark .btn-outline { @apply border-white/30 text-paper hover:bg-paper hover:text-ink hover:border-paper; }
   .btn-ghost { @apply px-0 text-ink underline decoration-brand decoration-1 underline-offset-[6px] hover:decoration-2; }
@@ -85,7 +85,7 @@
   .icon-tile { @apply inline-flex size-10 items-center justify-center rounded-full border border-ink/15 text-ink; }
   .dark .icon-tile { @apply border-white/20 text-brand-300; }
   .chip { @apply inline-flex items-center gap-1.5 rounded-full border border-ink/15 bg-transparent px-3 py-1.5 font-ui text-[13px] font-medium text-ink transition-colors hover:border-ink; }
-  .tick { @apply inline-flex size-5 shrink-0 items-center justify-center rounded-full border border-brand/60 text-accent-700; }
+  .tick { @apply inline-flex size-5 shrink-0 items-center justify-center rounded-full border border-brand/50 text-accent-700; }
   .dark .tick { @apply text-brand-300; }
   .field { @apply w-full rounded-md border border-ink/20 bg-paper px-3.5 py-3 text-base text-ink outline-none transition-colors placeholder:text-slate-400 focus:border-ink; }
   .field-label { @apply mb-1.5 block font-ui text-[13px] font-semibold text-ink; }
@@ -138,7 +138,7 @@
   .faq-plus { transition: transform .25s ease; }
 
   /* Placeholder highlight */
-  .ph { @apply rounded-sm bg-brand px-1 font-mono text-[.85em] text-brand-ink; }
+  .ph { @apply rounded-sm bg-[#F2D479] px-1 font-mono text-[.85em] text-[#3A2E05]; }
 }
 
 @utility text-balance { text-wrap: balance; }

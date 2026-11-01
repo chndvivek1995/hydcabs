@@ -13,10 +13,10 @@ const text = size === 'lg' ? 'text-[1.75rem]' : size === 'sm' ? 'text-[1.05rem]'
 ---
 <a href="/" class:list={['inline-flex items-center gap-3', cls]} data-placeholder={isPlaceholder(SITE.brand) ? SITE.brand : undefined}>
   <svg width={px} height={px} viewBox="0 0 48 48" aria-hidden="true" class="shrink-0">
-    <circle cx="24" cy="24" r="22.5" fill={dark ? '#171B22' : '#0E1116'} stroke="#C9A24A" stroke-width="1.25"/>
-    <path d="M15 35 L24 13 L33 35" fill="none" stroke="#C9A24A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <path d="M24 20 V35" stroke="#C9A24A" stroke-width="1.5" stroke-dasharray="2.5 3" stroke-linecap="round"/>
-    <circle cx="24" cy="13" r="2.4" fill="#C9A24A"/>
+    <circle cx="24" cy="24" r="22.5" fill={dark ? '#24272B' : '#1A1C1F'} stroke={dark ? '#9CBCF2' : '#0F55C0'} stroke-width="1.25"/>
+    <path d="M15 35 L24 13 L33 35" fill="none" stroke="#FAF8F3" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M24 20 V35" stroke="#9CBCF2" stroke-width="1.5" stroke-dasharray="2.5 3" stroke-linecap="round"/>
+    <circle cx="24" cy="13" r="2.4" fill="#9CBCF2"/>
   </svg>
   <span class:list={['font-display leading-none tracking-[-0.01em]', text, dark ? 'text-paper' : 'text-ink']} style="font-weight:500">
     {first}{last && <span class:list={['font-light italic', dark ? 'text-brand-300' : 'text-accent-700']}> {last}</span>}

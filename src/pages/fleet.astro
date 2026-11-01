@@ -5,6 +5,8 @@ import QuoteForm from '../components/QuoteForm.astro';
 import CTASection from '../components/CTASection.astro';
 import FAQ from '../components/FAQ.astro';
 import Icon from '../components/Icon.astro';
+import PhotoBand from '../components/PhotoBand.astro';
+import { photos } from '../data/images';
 import { fleet } from '../lib/data';
 import { breadcrumbs, faqPage } from '../lib/schema';
 const crumbs = [{ name: 'Home', path: '/' }, { name: 'Fleet', path: '/fleet/' }];
@@ -17,6 +19,7 @@ const faqs = [
 ];
 ---
 <PageLayout title="Corporate Cab Fleet in Hyderabad" description="Our corporate cab fleet in Hyderabad: sedans, SUVs, Innova Crysta MUVs, 12 and 17-seater tempo travellers, mini buses, 40-seat buses and EV sedans." path="/fleet/" h1="Corporate cab fleet for Hyderabad employee transport" eyebrow="Fleet" intro="Every vehicle class we deploy, what it carries, and where it fits. The right mix is chosen per route from occupancy data, not from a fixed fleet." {crumbs} schema={[breadcrumbs(crumbs), faqPage(faqs)]} whatsapp="Hi, I'd like to know about your fleet for employee transport in Hyderabad.">
+  <PhotoBand image={photos.fleet.src} alt={photos.fleet.alt} eyebrow="The fleet" title="Sized to the route, inspected before the shift" text="Sedans for colony lanes, SUVs and MUVs for clubbed corridor routes, tempo travellers for metro feeders, buses for plant trunk routes. Every vehicle is commercially registered and checked at the start of its roster day." caption="Depot inspection · dawn" />
   <section class="section-tight"><div class="wrap"><div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{fleet.map((v) => <div id={v.slug} class="reveal"><FleetCard v={v} detailed /></div>)}</div></div></section>
   <section class="section bg-mist"><div class="wrap"><div class="max-w-2xl reveal"><p class="eyebrow">Specification summary</p><h2 class="h2 mt-3">Fleet at a glance</h2></div>
     <div class="card mt-8 !p-0 overflow-x-auto reveal"><table class="w-full text-left text-sm"><thead class="bg-mist text-xs uppercase tracking-wide text-slate"><tr><th class="px-5 py-3 font-semibold">Class</th><th class="px-4 py-3 font-semibold">Examples</th><th class="px-4 py-3 font-semibold">Seats</th><th class="px-4 py-3 font-semibold">Luggage</th><th class="px-4 py-3 font-semibold">AC</th><th class="px-4 py-3 font-semibold">Best use</th></tr></thead><tbody class="divide-y divide-mist-200">{fleet.map((v) => <tr><th scope="row" class="px-5 py-3 font-semibold">{v.name}</th><td class="px-4 py-3 text-slate">{v.examples}</td><td class="px-4 py-3">{v.seats}</td><td class="px-4 py-3 text-slate">{v.luggage}</td><td class="px-4 py-3">{v.ac ? 'Yes' : 'No'}</td><td class="px-4 py-3 text-slate">{v.useCases.join(', ')}</td></tr>)}</tbody></table></div>

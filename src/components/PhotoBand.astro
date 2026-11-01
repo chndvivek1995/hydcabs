@@ -1,0 +1,23 @@
+---
+// Editorial image + copy band. `flip` puts the image on the right. Images are lazy below the fold.
+import Icon from './Icon.astro';
+interface Props { image: string; alt: string; eyebrow?: string; title: string; text?: string; bullets?: string[]; cta?: { label: string; href: string }; flip?: boolean; dark?: boolean; caption?: string }
+const { image, alt, eyebrow, title, text, bullets = [], cta, flip = false, dark = false, caption } = Astro.props;
+---
+<section class:list={['section', dark && 'dark bg-ink text-paper']}>
+  <div class:list={['wrap grid items-center gap-10 lg:grid-cols-2 lg:gap-16', flip && 'lg:[&>*:first-child]:order-2']}>
+    <figure class="reveal">
+      <div class="overflow-hidden rounded-lg">
+        <img src={image} srcset={`${image.replace('.webp', '-768.webp')} 768w, ${image} 1024w`} sizes="(min-width: 1024px) 50vw, 100vw" alt={alt} width="1024" height="688" loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover transition-transform duration-700 hover:scale-[1.02]" />
+      </div>
+      {caption && <figcaption class:list={['mt-3 font-ui text-[11px] uppercase tracking-[.2em]', dark ? 'text-slate-400' : 'text-slate']}>{caption}</figcaption>}
+    </figure>
+    <div class="reveal reveal-d1">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2 class="h2 mt-3">{title}</h2>
+      {text && <p class="lede">{text}</p>}
+      {bullets.length > 0 && <ul class="mt-7 space-y-3 text-[15px]">{bullets.map((b) => <li class="flex items-start gap-3"><span class:list={['mt-[9px] inline-block h-px w-4 shrink-0', dark ? 'bg-brand-300' : 'bg-brand']}></span><span>{b}</span></li>)}</ul>}
+      {cta && <a href={cta.href} class="btn btn-outline mt-8">{cta.label} <Icon name="arrow-right" size={16} /></a>}
+    </div>
+  </div>
+</section>

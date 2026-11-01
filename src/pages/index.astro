@@ -14,6 +14,8 @@ import QuoteForm from '../components/QuoteForm.astro';
 import FAQ from '../components/FAQ.astro';
 import CTASection from '../components/CTASection.astro';
 import PlaceholderTestimonial from '../components/PlaceholderTestimonial.astro';
+import PhotoBand from '../components/PhotoBand.astro';
+import { photos } from '../data/images';
 import Icon from '../components/Icon.astro';
 import { coreServices, fleet, topAreas, industries, solutions, faqs, url } from '../lib/data';
 import { getCollection } from 'astro:content';
@@ -53,8 +55,10 @@ const usps = [
   </section>
 
   <HowItWorks />
+  <PhotoBand image={photos.nightDrop.src} alt={photos.nightDrop.alt} eyebrow="Night shifts" title="The 2 AM drop is where a transport vendor is judged" text="Night routes are sequenced so no woman employee is first pickup or last drop without an escort, every drop is confirmed at the doorstep, and the command desk stays awake with the shift." bullets={['Escort assignment agreed per shift with your HR team', 'Drop confirmation logged at the gate, not the colony entrance', 'Driver stays until the employee confirms entry']} cta={{ label: 'How night routes are run', href: '/services/night-shift-cab-hyderabad/' }} caption="Night drop · residential colony, Hyderabad" />
   <SafetyGrid />
   <TechFeatures />
+  <PhotoBand flip image={photos.shuttle.src} alt={photos.shuttle.alt} eyebrow="Metro last-mile" title="Shuttles that meet the train, not the other way round" text="Fixed-route tempo travellers from Raidurg, Miyapur and LB Nagar stations into office clusters, timed to the metro and sized to the headcount each week." bullets={['Raidurg Metro ↔ Financial District loops', 'Miyapur ↔ Gachibowli and Kondapur feeders', 'Plant trunk routes to Balanagar, Jeedimetla and Patancheru']} cta={{ label: 'Employee shuttle service', href: '/services/employee-shuttle-bus-hyderabad/' }} caption="Morning shuttle · metro station kerb" />
   <ShiftPatterns />
 
   <section class="section bg-mist" id="fleet">

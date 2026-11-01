@@ -1,29 +1,29 @@
 ---
+// Photo-led hero: full-bleed image with a left gradient so the serif headline stays legible. The image is an
+// <img> (not CSS background) so it is preloaded and counted as LCP.
 import Icon from './Icon.astro';
-import RouteMap from './RouteMap.astro';
 import { SITE, waLink, telLink } from '../config/site';
-interface Props { eyebrow?: string; title: string; text: string; whatsapp?: string; quoteHref?: string; bullets?: string[] }
-const { eyebrow = 'Corporate cab & employee transportation · Hyderabad', title, text, whatsapp = 'Hi, I need corporate cab services in Hyderabad for our team.', quoteHref = '#quote', bullets = ['Verified drivers, GPS on every trip', 'Day, rotating and 2 AM night shifts', 'One monthly invoice that matches the MIS'] } = Astro.props;
+interface Props { eyebrow?: string; title: string; text: string; whatsapp?: string; quoteHref?: string; bullets?: string[]; image?: string; imageAlt?: string }
+const { eyebrow = 'Corporate cab & employee transportation · Hyderabad', title, text, whatsapp = 'Hi, I need corporate cab services in Hyderabad for our team.', quoteHref = '#quote', bullets = ['Verified drivers, GPS on every trip', 'Day, rotating and 2 AM night shifts', 'One monthly invoice that matches the MIS'], image = '/images/hero-hitec-city-dawn.webp', imageAlt = 'Employees boarding a corporate cab outside an IT office tower in HITEC City, Hyderabad, at dawn' } = Astro.props;
 ---
-<section class="dark relative overflow-hidden bg-ink text-paper">
-  <div class="wrap relative grid items-end gap-12 pb-16 pt-32 sm:pt-36 lg:grid-cols-[1.15fr_1fr] lg:pb-24 lg:pt-44">
-    <div>
+<section class="dark relative isolate overflow-hidden bg-ink text-paper" style="min-height:clamp(620px,86svh,880px)">
+  <img src={image} srcset={`${image.replace('.webp', '-960.webp')} 960w, ${image} 1920w`} sizes="100vw" alt={imageAlt} width="1920" height="1086" fetchpriority="high" decoding="async" class="absolute inset-0 -z-20 h-full w-full object-cover object-[70%_center] max-sm:object-[62%_center]" />
+  <div class="absolute inset-0 -z-10 sm:hidden bg-[linear-gradient(180deg,rgba(26,28,31,.55)_0%,rgba(26,28,31,.82)_45%,rgba(26,28,31,.92)_100%)]" aria-hidden="true"></div>
+  <div class="absolute inset-0 -z-10 max-sm:hidden bg-[linear-gradient(90deg,rgba(26,28,31,.92)_0%,rgba(26,28,31,.72)_42%,rgba(26,28,31,.15)_75%,rgba(26,28,31,0)_100%)]" aria-hidden="true"></div>
+  <div class="absolute inset-x-0 bottom-0 -z-10 h-40 bg-[linear-gradient(180deg,rgba(26,28,31,0),rgba(26,28,31,.6))]" aria-hidden="true"></div>
+  <div class="wrap relative flex flex-col justify-end pb-14 pt-36 sm:pb-20 lg:pt-44" style="min-height:clamp(620px,86svh,880px)">
+    <div class="max-w-2xl">
       <p class="eyebrow">{eyebrow}</p>
-      <h1 class="mt-7 max-w-[17ch] text-paper">{title}</h1>
-      <p class="mt-7 max-w-xl text-[1.125rem] leading-relaxed text-slate-400 sm:text-xl">{text}</p>
-      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+      <h1 class="mt-6 text-paper">{title}</h1>
+      <p class="mt-6 max-w-xl text-[1.125rem] leading-relaxed text-paper/80 sm:text-xl">{text}</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
         <a href={quoteHref} class="btn btn-brand" data-track="hero_quote">Request a route study <Icon name="arrow-right" size={16} /></a>
         <a href={waLink(whatsapp)} class="btn btn-outline" target="_blank" rel="noopener" data-track="hero_whatsapp"><Icon name="message-circle" size={16} /> WhatsApp</a>
       </div>
-      <ul class="mt-10 grid gap-x-8 gap-y-2 border-t border-white/12 pt-6 text-[14px] text-paper/85 sm:grid-cols-3">
-        {bullets.map((b) => <li class="flex items-start gap-2.5"><span class="mt-[7px] inline-block h-px w-4 shrink-0 bg-brand"></span>{b}</li>)}
-      </ul>
     </div>
-    <div class="relative mx-auto w-full max-w-[560px] lg:max-w-none">
-      <div class="rounded-lg border border-white/12 p-3 sm:p-4">
-        <RouteMap />
-        <div class="mt-3 flex items-center justify-between border-t border-white/10 pt-3 font-ui text-[11px] uppercase tracking-[.2em] text-slate-400"><span>Live routes · illustrative</span><a class="text-paper hover:text-brand-300" href={telLink} data-track="hero_call">Command desk {SITE.phoneDisplay}</a></div>
-      </div>
-    </div>
+    <ul class="mt-12 grid gap-x-8 gap-y-3 border-t border-white/20 pt-6 text-[14px] text-paper/85 sm:grid-cols-3 lg:max-w-4xl">
+      {bullets.map((b) => <li class="flex items-start gap-2.5"><span class="mt-[7px] inline-block h-px w-4 shrink-0 bg-brand-300"></span>{b}</li>)}
+      <li class="hidden items-start gap-2.5 sm:flex lg:hidden"></li>
+    </ul>
   </div>
 </section>

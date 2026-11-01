@@ -61,6 +61,7 @@ const ld = graph(organization(), website(), webpage(path, fullTitle, description
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/plus-jakarta-sans-var.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var.woff2">
+{path === '/' && <link rel="preload" as="image" href="/images/hero-hitec-city-dawn.webp" fetchpriority="high">}
 <script is:inline>document.documentElement.classList.remove('no-js');</script>
 <slot name="head" />
 <script type="application/ld+json" set:html={JSON.stringify(ld)} />

@@ -5,6 +5,8 @@ import QuoteForm from '../components/QuoteForm.astro';
 import FAQ from '../components/FAQ.astro';
 import CTASection from '../components/CTASection.astro';
 import Icon from '../components/Icon.astro';
+import PhotoBand from '../components/PhotoBand.astro';
+import { photos } from '../data/images';
 import { faqs as allFaqs } from '../lib/data';
 import { breadcrumbs, faqPage } from '../lib/schema';
 const crumbs = [{ name: 'Home', path: '/' }, { name: 'Safety', path: '/safety/' }];
@@ -20,6 +22,7 @@ const pillars = [
 ];
 ---
 <PageLayout title="Safe Employee Transportation Standards" description="How we keep employee transport safe in Hyderabad: driver police verification, GPS, SOS, number masking, a women-safety night protocol and incident response." path="/safety/" h1="Safe employee transportation, by design" eyebrow="Safety & compliance" intro={['The practices below are what HR, admin and security teams should expect from any managed employee-transport programme in Hyderabad, and what we build every route around. Where your policy goes further, we adopt it.']} {crumbs} schema={[breadcrumbs(crumbs), faqPage(safetyFaqs)]} whatsapp={wa}>
+  <PhotoBand image={photos.nightDrop.src} alt={photos.nightDrop.alt} eyebrow="Night protocol" title="Every night drop is confirmed at the doorstep" text="No woman employee is first pickup or last drop without an escort. The driver waits until she confirms entry, the drop is time-stamped, and the command desk closes the trip." caption="Night drop · Hyderabad residential colony" />
   <SafetyGrid compact title="Six controls on every route" text="From driver onboarding to the monthly compliance summary." />
   <section class="section"><div class="wrap">
     <div class="max-w-2xl reveal"><p class="eyebrow">In detail</p><h2 class="h2 mt-3">What each control actually involves</h2></div>

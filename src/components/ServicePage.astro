@@ -9,6 +9,8 @@ import AreaGrid from './AreaGrid.astro';
 import RelatedLinks from './RelatedLinks.astro';
 import CTASection from './CTASection.astro';
 import HowItWorks from './HowItWorks.astro';
+import PhotoBand from './PhotoBand.astro';
+import { photos, servicePhoto } from '../data/images';
 import { locationBySlug, serviceBySlug, vehicleBySlug, url, type Service } from '../lib/data';
 import { breadcrumbs, faqPage, service as serviceSchema } from '../lib/schema';
 import { getCollection } from 'astro:content';
@@ -24,6 +26,9 @@ const allPosts = await getCollection('blog');
 const posts = s.blogs.map((b) => allPosts.find((p) => p.id === b)).filter(Boolean) as typeof allPosts;
 const schema = [breadcrumbs(crumbs), faqPage(s.faqs), serviceSchema({ path, name: s.h1, description: s.metaDescription, areaServed: areas.map((a) => `${a.name}, Hyderabad`), serviceType: s.primaryKeyword })];
 const who = ['building-2', 'headset', 'factory', 'hospital', 'briefcase', 'users'];
+const photo = photos[servicePhoto[s.slug] || 'hero'];
+const firstSection = s.sections[0];
+const restSections = s.sections.slice(1);
 ---
 <PageLayout title={s.metaTitle} description={s.metaDescription} {path} h1={s.h1} eyebrow={s.kicker || (kind === 'service' ? 'Service' : 'Use case')} intro={s.intro} {crumbs} {schema} whatsapp={s.whatsapp}>
   <section class="section-tight bg-mist" id="quote-section">
@@ -45,11 +50,13 @@ const who = ['building-2', 'headset', 'factory', 'hospital', 'briefcase', 'users
   </section>
 
   <HowItWorks steps={s.process} title="How we set it up" dark />
+  {firstSection && <PhotoBand image={photo.src} alt={photo.alt} eyebrow="On the ground" title={firstSection.h2} text={firstSection.paragraphs[0]} bullets={firstSection.bullets?.slice(0, 4) || []} />}
 
   <section class="section" id="content">
     <div class="wrap grid gap-12 lg:grid-cols-[2fr_1fr]">
       <div class="prose-hc">
-        {s.sections.map((sec) => <><h2>{sec.h2}</h2>{sec.paragraphs.map((p) => <p>{p}</p>)}{sec.bullets?.length ? <ul>{sec.bullets.map((b) => <li>{b}</li>)}</ul> : null}</>)}
+        {firstSection && firstSection.paragraphs.length > 1 && <>{firstSection.paragraphs.slice(1).map((p) => <p>{p}</p>)}</>}
+        {restSections.map((sec) => <><h2>{sec.h2}</h2>{sec.paragraphs.map((p) => <p>{p}</p>)}{sec.bullets?.length ? <ul>{sec.bullets.map((b) => <li>{b}</li>)}</ul> : null}</>)}
         <h2>Pricing guidance</h2>
         <p>{s.pricingNote}</p>
         <p><a href="/pricing/">See how pricing works and use the estimator →</a></p>
